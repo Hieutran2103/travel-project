@@ -1,0 +1,114 @@
+@import "../../style.scss";
+
+.leftBar {
+  @include themify($themes) {
+    flex: 2;
+    position: sticky;
+    top: 0px;
+    height: 663px;
+    background: themed("bg");
+    padding: 40px 0 10px 10px;
+    .container {
+      .menu {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+
+        .logo {
+          overflow: hidden;
+
+          img {
+            width: 15rem;
+            height: 92px;
+            object-fit: cover;
+          }
+        }
+        .active {
+          background: themed("bgnewfeed");
+          border-top-left-radius: 20px;
+          border-bottom-left-radius: 20px;
+          width: 275px;
+
+          img {
+            border: 2px solid #e84be5;
+          }
+          .icon {
+            color: #e84be5 !important;
+          }
+          span {
+            color: themed("textColorActive") !important;
+            font-weight: 550;
+          }
+        }
+        .items {
+          display: flex;
+          justify-self: center;
+          align-items: center;
+          height: 40px;
+          padding: 12px;
+          cursor: pointer;
+          padding-left: 40px;
+          .icon {
+            color: themed("icon");
+          }
+          span {
+            color: themed("textColorsoft");
+            font-size: 18px;
+            padding: 0 0 0 16px;
+          }
+        }
+        .profile {
+          display: flex;
+          justify-self: center;
+          align-items: center;
+          padding: 13px;
+          cursor: pointer;
+          padding-left: 40px;
+          img {
+            border-radius: 50%;
+            width: 30px;
+            height: 30px;
+            object-fit: cover;
+          }
+          span {
+            color: themed("textColorsoft");
+
+            font-size: 18px;
+            padding: 0 0 0 16px;
+          }
+        }
+        .logout:hover {
+          .icon {
+            color: #e84be5 !important;
+            transition: all 0.5s;
+          }
+          span {
+            color: #e84be5 !important;
+            transition: all 0.5s;
+          }
+        }
+        .logout {
+          display: flex;
+          justify-self: center;
+          align-items: center;
+          height: 40px;
+          padding: 12px;
+          margin-top: 50px;
+          cursor: pointer;
+          padding-left: 40px;
+          .icon {
+            color: themed("icon");
+
+            object-fit: cover;
+          }
+          span {
+            color: themed("textColorsoft");
+
+            font-size: 18px;
+            padding: 0 0 0 16px;
+          }
+        }
+      }
+    }
+  }
+}

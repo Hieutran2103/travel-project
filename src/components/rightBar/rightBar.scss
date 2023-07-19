@@ -1,0 +1,123 @@
+@import "../../style.scss";
+
+.rightBar {
+  @include themify($themes) {
+    flex: 3;
+    position: sticky;
+    top: 0px;
+    height: 663px;
+    background: themed("bg");
+    padding: 40px 0 10px 10px;
+    border-left: 1px solid rgb(227, 217, 217, 0.1);
+
+    .container {
+      .menu {
+        display: flex;
+        flex-direction: column;
+        gap: 5px;
+        .myself {
+          background: themed("bgnewfeed");
+          border-top-left-radius: 20px;
+          border-bottom-left-radius: 20px;
+          border-top-right-radius: 20px;
+          border-bottom-right-radius: 20px;
+          display: flex;
+          align-items: center;
+          padding: 13px;
+          gap: 20px;
+
+          img {
+            position: relative;
+            background-clip: padding-box;
+            border: 3.5px solid #e200de99;
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            object-fit: cover;
+          }
+
+          .info {
+            width: 270px;
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+            .name {
+              cursor: pointer;
+              color: themed("textColorActive");
+              font-weight: 500;
+              font-style: normal;
+              font-size: 18px;
+            }
+            .email {
+              color: themed("textColorsoft");
+              font-weight: 400;
+            }
+          }
+          .switch {
+            color: #e84be5;
+            cursor: pointer;
+          }
+        }
+
+        .suggest {
+          margin-left: 10px;
+          color: themed("textColorsoft");
+          font-weight: 600;
+        }
+
+        .other:hover {
+          transition: 0.5s;
+          background: themed("bgnewfeed");
+        }
+        .other {
+          //
+
+          border-top-left-radius: 20px;
+          border-bottom-left-radius: 20px;
+          border-top-right-radius: 20px;
+          border-bottom-right-radius: 20px;
+          display: flex;
+          align-items: center;
+          padding: 13px;
+          margin-top: 1px;
+          gap: 20px;
+
+          img {
+            position: relative;
+            background-clip: padding-box;
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            object-fit: cover;
+          }
+
+          .info {
+            width: 250px;
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+            .name {
+              cursor: pointer;
+              color: themed("textColorActive");
+              font-weight: 500;
+              font-style: normal;
+              font-size: 18px;
+            }
+            .text {
+              color: themed("textColorsoft");
+              font-weight: 300;
+            }
+          }
+          .follow {
+            cursor: pointer;
+            color: themed("textColorActive");
+          }
+          .follow:hover {
+            transition: 0.5s;
+            color: #e84be5;
+          }
+        }
+      }
+    }
+  }
+}

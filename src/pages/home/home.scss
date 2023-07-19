@@ -1,0 +1,8 @@
+@import "../../style.scss";
+
+.home {
+  @include themify($themes) {
+    background: themed("bgnewfeed");
+    padding: 20px 60px;
+  }
+}

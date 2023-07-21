@@ -52,15 +52,17 @@
             align-items: center;
             gap: 10px;
             cursor: pointer;
-
+            color: gray;
+            transition: 0.5s;
             img {
               height: 20px;
             }
-
             span {
               font-size: 12px;
-              color: gray;
             }
+          }
+          .item:hover {
+            color: #e84be5;
           }
         }
         .right {

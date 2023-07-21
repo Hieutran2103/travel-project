@@ -5,6 +5,7 @@ $themes: (
     bg: #fff,
     icon: #000,
     bgnewfeed: #f6f3f3,
+    input: #efefef,
   ),
   dark: (
     textColorActive: #ffffff,
@@ -12,6 +13,7 @@ $themes: (
     bg: #111111,
     icon: #d0c9c9,
     bgnewfeed: #1a1a1a,
+    input: #262626,
   ),
 );
 @mixin themify($themes: $themes) {

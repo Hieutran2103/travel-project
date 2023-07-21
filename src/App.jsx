@@ -23,7 +23,7 @@ function App() {
       <div className={`theme-${darkMode ? "dark" : "light"}`}>
         <div style={{ display: "flex" }}>
           <LeftBar />
-          <div style={{ flex: 6 }}>
+          <div style={{ flex: 7 }}>
             <Outlet />
           </div>
           <RightBar />
@@ -35,7 +35,11 @@ function App() {
   const router = createBrowserRouter([
     {
       path: "/",
-      element: <Layout />,
+      element: (
+        <ProtectedRouter>
+          <Layout />
+        </ProtectedRouter>
+      ),
       children: [
         {
           path: "/",

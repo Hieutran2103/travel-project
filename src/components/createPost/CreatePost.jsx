@@ -32,9 +32,9 @@ const CreatePost = () => {
               <span>Create Vacation</span>
             </div>
           </div>
-          <div className="right">
+          {/* <div className="right">
             <button>Share</button>
-          </div>
+          </div> */}
         </div>
       </div>
     </div>

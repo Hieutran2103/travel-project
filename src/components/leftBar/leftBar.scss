@@ -8,6 +8,7 @@
     height: 663px;
     background: themed("bg");
     padding: 40px 0 10px 10px;
+
     .container {
       .menu {
         display: flex;
@@ -27,7 +28,7 @@
           background: themed("bgnewfeed");
           border-top-left-radius: 20px;
           border-bottom-left-radius: 20px;
-          width: 275px;
+          width: 212px;
 
           img {
             border: 2px solid #e84be5;

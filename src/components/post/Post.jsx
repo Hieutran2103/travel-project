@@ -9,9 +9,10 @@ import TextsmsOutlinedIcon from "@mui/icons-material/TextsmsOutlined";
 // import BookmarkOutlinedIcon from "@mui/icons-material/BookmarkOutlined";
 import { useState } from "react";
 import Comments from "../comments/Comments";
+import { useTranslation } from "react-i18next";
 const Post = ({ post }) => {
   const { img, profilePic, desc, name, userId } = post;
-
+  const [t, i18] = useTranslation("global");
   //State Comments
   const [commentOpen, setCommentOpen] = useState(false);
 
@@ -47,10 +48,10 @@ const Post = ({ post }) => {
             ) : (
               <FavoriteOutlinedIcon style={{ color: "red" }} />
             )}{" "}
-            12 Likes
+            12 {t("newfeed.like")}
           </div>
           <div className="item" onClick={() => setCommentOpen(!commentOpen)}>
-            <TextsmsOutlinedIcon /> 10 Comments
+            <TextsmsOutlinedIcon /> 10 {t("newfeed.comment")}
           </div>
           {/* <div className="item">
             <BookmarkBorderOutlinedIcon />

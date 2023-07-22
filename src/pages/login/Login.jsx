@@ -5,7 +5,7 @@ import { useGlobalContextAuth } from "../../context/AuthContext";
 const Login = () => {
   const { login } = useGlobalContextAuth();
   return (
-    <div>
+    <div className="login">
       <Link to={"/"}>
         <button onClick={login}>Login</button>
       </Link>

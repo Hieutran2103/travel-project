@@ -14,11 +14,26 @@ import { Link } from "react-router-dom";
 import { useGlobalContextAuth } from "../../context/AuthContext";
 import Search from "../search/Search";
 import { useGlobalSearch } from "../../context/Search&Notification";
+import { useTranslation } from "react-i18next";
+import { useState } from "react";
 
 const LeftBar = () => {
   const { toggle, darkMode } = useGlobalContextDarkMode();
   const { logout } = useGlobalContextAuth();
   const { openSearch } = useGlobalSearch();
+
+  const [t, i18] = useTranslation("global");
+  const [isLanguageViet, setIsLanguageViet] = useState(false);
+
+  const handleChangeViet = () => {
+    i18.changeLanguage("vi");
+    setIsLanguageViet(true);
+  };
+  const handleChangeEng = () => {
+    i18.changeLanguage("en");
+    setIsLanguageViet(false);
+  };
+
   return (
     <>
       <div className="leftBar">
@@ -34,13 +49,13 @@ const LeftBar = () => {
                 <HomeOutlinedIcon style={{ height: "30px", width: "30px" }} />
               </div>
 
-              <span>Home</span>
+              <span>{t("leftBar.home")}</span>
             </div>
             <div className="items " onClick={openSearch}>
               <div className="icon">
                 <SearchOutlinedIcon style={{ height: "30px", width: "30px" }} />
               </div>
-              <span>Search</span>
+              <span>{t("leftBar.search")}</span>
             </div>
             <div className="items ">
               <div className="icon">
@@ -50,7 +65,7 @@ const LeftBar = () => {
                 />
               </div>
 
-              <span>Notification</span>
+              <span>{t("leftBar.notifi")}</span>
             </div>
             <div className="items " onClick={toggle}>
               <div className="icon">
@@ -65,9 +80,16 @@ const LeftBar = () => {
                 )}
               </div>
 
-              <span>{!darkMode ? "Dark mode" : "Light mode"}</span>
+              <span>{!darkMode ? t("leftBar.dark") : t("leftBar.light")}</span>
             </div>
-            <div className="items ">
+            <div
+              className="items "
+              onClick={
+                !isLanguageViet
+                  ? () => handleChangeViet()
+                  : () => handleChangeEng()
+              }
+            >
               <div className="icon">
                 {" "}
                 <GTranslateOutlinedIcon
@@ -75,7 +97,7 @@ const LeftBar = () => {
                 />
               </div>
 
-              <span>Translate</span>
+              <span>{t("leftBar.language")}</span>
             </div>
             <div className="profile ">
               <img
@@ -83,7 +105,7 @@ const LeftBar = () => {
                 alt=""
               />
 
-              <span>Profile</span>
+              <span>{t("leftBar.profile")}</span>
             </div>
 
             <div className="logout ">
@@ -94,7 +116,7 @@ const LeftBar = () => {
                 style={{ textDecoration: "none", color: "inherit" }}
                 to="/login"
               >
-                <span onClick={logout}>Logout</span>
+                <span onClick={logout}>{t("leftBar.logout")}</span>
               </Link>
             </div>
           </div>

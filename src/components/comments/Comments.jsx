@@ -1,5 +1,5 @@
 import { useGlobalContextAuth } from "../../context/AuthContext";
-import comments from "./comments.scss";
+import "./comments.scss";
 import SendIcon from "@mui/icons-material/Send";
 const Comments = () => {
   const { currentUser } = useGlobalContextAuth();

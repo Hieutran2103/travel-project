@@ -3,9 +3,10 @@ import "./createPost.scss";
 import { useGlobalContextAuth } from "../../context/AuthContext";
 import AddPhotoAlternateOutlinedIcon from "@mui/icons-material/AddPhotoAlternateOutlined";
 import CollectionsOutlinedIcon from "@mui/icons-material/CollectionsOutlined";
+import { useTranslation } from "react-i18next";
 const CreatePost = () => {
   const { currentUser } = useGlobalContextAuth();
-
+  const [t, i18] = useTranslation("global");
   return (
     <div className="createPost">
       <div className="container">
@@ -13,7 +14,7 @@ const CreatePost = () => {
           <img src={currentUser.profilePic} alt="" />
           <input
             type="text"
-            placeholder={`What's on your mind ${currentUser.name}?`}
+            placeholder={`${t("newfeed.inputPost")} ${currentUser.name}?`}
           />
         </div>
         <br />
@@ -23,13 +24,13 @@ const CreatePost = () => {
               <span className="logo">
                 <AddPhotoAlternateOutlinedIcon />
               </span>
-              <span>Add Image</span>
+              <span>{t("newfeed.addPost")}</span>
             </div>
             <div className="item">
               <span className="logo">
                 <CollectionsOutlinedIcon />
               </span>
-              <span>Create Vacation</span>
+              <span>{t("newfeed.createPost")}</span>
             </div>
           </div>
           {/* <div className="right">

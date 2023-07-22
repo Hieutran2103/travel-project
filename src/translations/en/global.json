@@ -1,0 +1,26 @@
+{
+  "leftBar": {
+    "home": "Home",
+    "search": "Search",
+    "notifi": "Notification",
+    "dark": "Dark mode",
+    "light": "Light mode",
+    "language": "Tiếng Việt",
+    "profile": "Profile",
+    "logout": "Logout",
+    "listSearch": "List search"
+  },
+  "newfeed": {
+    "inputPost": "What's on your mind",
+    "addPost": "Add image",
+    "createPost": "Create vacation",
+    "like": "Likes",
+    "comment": "Comments",
+    "share": "Share"
+  },
+  "rightBar": {
+    "suggest": "suggested for you",
+    "follow": "Follow",
+    "follower": "followers"
+  }
+}

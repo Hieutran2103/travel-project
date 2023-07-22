@@ -1,0 +1,26 @@
+{
+  "leftBar": {
+    "home": "Trang chủ",
+    "search": "Tìm kiếm",
+    "notifi": "Thông báo",
+    "dark": "Chế độ tối",
+    "light": "Chế độ sáng",
+    "language": "English",
+    "profile": "Cá nhân",
+    "logout": "Đăng xuất",
+    "listSearch": "Danh sách tìm kiếm"
+  },
+  "newfeed": {
+    "inputPost": "Bạn đang nghĩ cái gì thế",
+    "addPost": "Thêm ảnh",
+    "createPost": "Tạo kỳ nghỉ",
+    "like": "Thích",
+    "comment": "Bình luận",
+    "share": "Đăng"
+  },
+  "rightBar": {
+    "suggest": "Gợi ý cho bạn",
+    "follow": "Theo dõi",
+    "follower": "Người theo dõi"
+  }
+}

@@ -1,0 +1,26 @@
+@import "../../style.scss";
+.searchBar {
+  @include themify($themes) {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+
+    .title {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      p {
+        font-size: xx-large;
+        color: themed("textColorActive");
+      }
+      button {
+        font-size: 4rem;
+        background: transparent;
+        border-color: transparent;
+        color: themed("textColorActive");
+        cursor: pointer;
+        color: gray;
+      }
+    }
+  }
+}

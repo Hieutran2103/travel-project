@@ -24,11 +24,10 @@
             object-fit: cover;
           }
         }
-        #active {
+        .items:hover {
           background: themed("bgnewfeed");
           border-top-left-radius: 20px;
           border-bottom-left-radius: 20px;
-          width: 212px;
 
           img {
             border: 2px solid #e84be5;
@@ -38,7 +37,7 @@
           }
           span {
             color: themed("textColorActive") !important;
-            font-weight: 550;
+            font-weight: 450;
           }
         }
         .items {
@@ -76,6 +75,18 @@
 
             font-size: 18px;
             padding: 0 0 0 16px;
+          }
+        }
+        .profile:hover {
+          background: themed("bgnewfeed");
+          border-top-left-radius: 20px;
+          border-bottom-left-radius: 20px;
+          img {
+            border: 1px solid #e84be5;
+          }
+          span {
+            color: themed("textColorActive") !important;
+            font-weight: 450;
           }
         }
         .logout:hover {

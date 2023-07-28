@@ -1,0 +1,193 @@
+@import "../../style.scss";
+.vacation {
+  @include themify($themes) {
+    background: themed("bgnewfeed");
+    padding-bottom: 10px;
+
+    .introduce {
+      position: relative;
+      width: 100%;
+      height: 500px;
+
+      .overlay {
+        position: absolute;
+        top: 0;
+        left: 0;
+
+        background-color: themed("overlay");
+        height: 90%;
+        width: 92%;
+        position: absolute;
+        object-fit: cover;
+        margin-left: 50px;
+        border-radius: 20px;
+      }
+      img {
+        height: 90%;
+        width: 92%;
+        position: absolute;
+        object-fit: cover;
+        margin-left: 50px;
+        border-radius: 20px;
+      }
+      .detail {
+        position: absolute;
+        height: 100%;
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        justify-items: center;
+        align-items: center;
+        margin-top: 20px;
+        img {
+          object-fit: cover;
+          height: 200px;
+          width: 200px;
+          border-radius: 50%;
+          border: 3px solid white;
+          margin-right: 50px;
+        }
+        .topic {
+          margin-top: 215px;
+          display: block;
+          display: flex;
+          flex-direction: column;
+          justify-items: center;
+          align-items: center;
+          text-align: center;
+          width: 500px;
+          height: 500px;
+          .name {
+            font-size: x-large;
+            font-weight: 700;
+            font-family: Arial, Helvetica, sans-serif;
+            margin-bottom: 10px;
+            color: rgb(255, 255, 255);
+          }
+          .something {
+            color: themed("textoverlay");
+          }
+        }
+      }
+    }
+    .detailVacation {
+      margin: 20px 0 20px;
+      display: flex;
+      position: relative;
+      .postVacation {
+        margin-left: 50px;
+        margin-right: 50px;
+        flex: 4;
+      }
+      .rightVacation {
+        margin-right: 50px;
+        width: 100%;
+        background: themed("bgnewfeed");
+        flex: 2;
+        align-items: center;
+        justify-content: center;
+
+        .member {
+          background: themed("bg");
+          padding: 20px;
+          height: fit-content;
+          border-radius: 20px;
+          margin-bottom: 20px;
+
+          .topDetail {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            .title {
+              color: themed("textColorActive");
+              font-size: x-large;
+              margin: 5px 0;
+            }
+            .detail {
+              color: themed("textColorsoft");
+            }
+          }
+          .bottonDetail {
+            margin-top: 10px;
+            .item {
+              margin-top: 5px;
+              display: flex;
+              gap: 10px;
+              .icon {
+                color: themed("icon");
+              }
+              .detail {
+                display: flex;
+                flex-direction: column;
+                gap: 5px;
+                .title {
+                  color: themed("textColorActive");
+                  font-size: large;
+                }
+                .nd {
+                  color: themed("textColorsoft");
+                }
+              }
+            }
+          }
+          .more {
+            text-align: center;
+            background-color: themed("more");
+            color: themed("textColorActive");
+            margin-top: 15px;
+            width: 100%;
+            border-radius: 5px;
+            padding: 8px 0 8px;
+            cursor: pointer;
+            span {
+              color: themed("textColorActive");
+            }
+          }
+        }
+        .imageVacation {
+          background: themed("bg");
+          padding: 20px;
+          height: fit-content;
+          border-radius: 20px;
+          margin-bottom: 20px;
+
+          .title {
+            color: themed("textColorActive");
+            font-size: large;
+            margin: 5px 0;
+          }
+          .post {
+            margin: 20px 0px;
+            display: grid;
+            grid-template-columns: auto auto;
+            grid-template-rows: auto auto;
+            row-gap: 2px;
+            column-gap: 2px;
+
+            .image {
+              img {
+                border-radius: 5px;
+                object-fit: cover;
+                width: 160px;
+                height: 160px;
+              }
+            }
+          }
+          .more {
+            text-align: center;
+            background-color: themed("more");
+            color: themed("textColorActive");
+            margin-top: 15px;
+            width: 100%;
+            border-radius: 5px;
+            padding: 8px 0 8px;
+            cursor: pointer;
+            span {
+              color: themed("textColorActive");
+            }
+          }
+        }
+      }
+    }
+  }
+}

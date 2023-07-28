@@ -7,6 +7,7 @@ import Home from "./pages/home/Home";
 import "./style.scss";
 import { useGlobalContextDarkMode } from "./context/darkModeContext";
 import { useGlobalContextAuth } from "./context/AuthContext";
+import Vacation from "./pages/vacation/Vacation";
 function App() {
   const { currentUser } = useGlobalContextAuth();
   const { darkMode } = useGlobalContextDarkMode();
@@ -18,7 +19,7 @@ function App() {
     return children;
   };
 
-  const Layout = () => {
+  const LayoutHome = () => {
     return (
       <div className={`theme-${darkMode ? "dark" : "light"}`}>
         <div style={{ display: "flex" }}>
@@ -32,7 +33,34 @@ function App() {
     );
   };
 
+  const Layout = () => {
+    return (
+      <div className={`theme-${darkMode ? "dark" : "light"}`}>
+        <div style={{ display: "flex" }}>
+          <LeftBar />
+          <div style={{ flex: 10 }}>
+            <Outlet />
+          </div>
+        </div>
+      </div>
+    );
+  };
+
   const router = createBrowserRouter([
+    {
+      path: "/",
+      element: (
+        <ProtectedRouter>
+          <LayoutHome />
+        </ProtectedRouter>
+      ),
+      children: [
+        {
+          path: "/",
+          element: <Home />,
+        },
+      ],
+    },
     {
       path: "/",
       element: (
@@ -42,8 +70,8 @@ function App() {
       ),
       children: [
         {
-          path: "/",
-          element: <Home />,
+          path: "/vacation/:id",
+          element: <Vacation />,
         },
       ],
     },

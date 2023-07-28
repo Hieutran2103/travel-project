@@ -6,6 +6,9 @@ $themes: (
     icon: #000,
     bgnewfeed: #f6f3f3,
     input: #efefef,
+    more: rgb(238, 238, 238),
+    overlay: rgba(255, 255, 255, 0.2),
+    textoverlay: rgb(255, 255, 255),
   ),
   dark: (
     textColorActive: #ffffff,
@@ -14,6 +17,9 @@ $themes: (
     icon: #d0c9c9,
     bgnewfeed: #1a1a1a,
     input: #262626,
+    more: rgb(65, 64, 64),
+    overlay: rgba(0, 0, 0, 0.3),
+    textoverlay: rgb(212, 212, 212),
   ),
 );
 @mixin themify($themes: $themes) {

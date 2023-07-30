@@ -52,7 +52,7 @@ const Vacation = () => {
       <div className="detailVacation">
         <div className="postVacation">
           <CreatePostVacation />
-          <Posts />
+          {/* <Posts /> */}
           <Introduces />
         </div>
         <div className="rightVacation">

@@ -1,0 +1,146 @@
+@import "../../style.scss";
+
+.introduces {
+  @include themify($themes) {
+    height: 100%;
+    width: 100%;
+    position: fixed;
+    top: 0;
+    left: 0;
+    display: grid;
+    place-items: center;
+    opacity: 0;
+    visibility: hidden;
+    z-index: 0;
+  }
+}
+.show-introduces {
+  @include themify($themes) {
+    height: 100%;
+    width: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    position: fixed;
+    top: 0;
+    left: 0;
+    opacity: 1 !important;
+    visibility: visible !important;
+    z-index: 100 !important;
+    display: grid;
+    place-items: center;
+    opacity: 1;
+    visibility: hidden;
+    z-index: -100;
+    transition: 0.5s;
+    .container {
+      -webkit-box-shadow: 0px 0px 25px -10px rgba(0, 0, 0, 0.38);
+      -moz-box-shadow: 0px 0px 25px -10px rgba(0, 0, 0, 0.38);
+      box-shadow: 0px 0px 25px -10px rgba(0, 0, 0, 0.38);
+      position: relative;
+      border-radius: 1rem;
+      width: 100vh;
+      height: fit-content;
+      background-color: themed("bgintro");
+      display: grid;
+      place-items: center;
+      padding: 20px;
+      button {
+        position: absolute;
+        top: -10px;
+        right: 2px;
+        font-size: 4rem;
+        background: transparent;
+        border-color: transparent;
+        color: themed("textColorActive");
+        cursor: pointer;
+        color: gray;
+      }
+      .founder {
+        background-color: themed("itemintro");
+        display: flex;
+        flex-direction: column;
+        width: 500px;
+        padding: 20px;
+        border-radius: 20px;
+        margin: 20px 0px;
+        span {
+          font-size: x-large;
+          color: themed("textColorActive");
+        }
+        hr {
+          margin: 20px 0;
+          border: none;
+          height: 0.5px !important;
+          background-color: rgb(103, 101, 101) !important;
+        }
+        .other {
+          display: flex;
+          align-items: center;
+          gap: 20px;
+          // background-color: aqua;
+          img {
+            border-radius: 50% !important;
+            object-fit: cover !important;
+            height: 70px;
+            width: 70px;
+          }
+          .info {
+            width: 270px;
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+            .name {
+              cursor: pointer;
+              color: themed("textColorActive");
+              font-weight: 400;
+              font-size: 18px;
+            }
+            .text {
+              color: themed("textColorsoft");
+              font-weight: 400;
+            }
+          }
+        }
+      }
+
+      .gr {
+        background-color: themed("itemintro");
+        display: flex;
+        flex-direction: column;
+        width: 500px;
+        padding: 20px;
+        border-radius: 20px;
+        margin-bottom: 20px;
+        .topic {
+          font-size: x-large;
+          color: themed("textColorActive");
+        }
+        hr {
+          margin: 20px 0;
+          border: none;
+          height: 0.5px !important;
+          background-color: rgb(103, 101, 101) !important;
+        }
+        .item {
+          margin-top: 10px;
+          display: flex;
+          gap: 10px;
+          .icon {
+            color: themed("icon");
+          }
+          .detail {
+            display: flex;
+            flex-direction: column;
+            gap: 2px;
+            .title {
+              color: themed("textColorActive");
+              font-size: large;
+            }
+            .nd {
+              color: themed("textColorsoft");
+            }
+          }
+        }
+      }
+    }
+  }
+}

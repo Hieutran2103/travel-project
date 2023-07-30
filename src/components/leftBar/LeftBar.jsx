@@ -4,7 +4,6 @@ import SearchOutlinedIcon from "@mui/icons-material/SearchOutlined";
 import FavoriteBorderOutlinedIcon from "@mui/icons-material/FavoriteBorderOutlined";
 import LogoutOutlinedIcon from "@mui/icons-material/LogoutOutlined";
 // import logo from "../../assets/logo.svg";
-
 import logoNewfeed from "../../assets/logonewfeed.svg";
 import DarkModeOutlinedIcon from "@mui/icons-material/DarkModeOutlined";
 import WbSunnyOutlinedIcon from "@mui/icons-material/WbSunnyOutlined";
@@ -22,8 +21,6 @@ const LeftBar = () => {
   const { toggle, darkMode } = useGlobalContextDarkMode();
   const { logout } = useGlobalContextAuth();
   const { openSearch, openNotifi } = useGlobalSearch();
-
-  const [isActive, setIsActive] = useState("1");
   const [t, i18] = useTranslation("global");
   const [isLanguageViet, setIsLanguageViet] = useState(false);
 
@@ -101,11 +98,7 @@ const LeftBar = () => {
 
               <span>{t("leftBar.language")}</span>
             </div>
-            <div
-              className="profile"
-              onClick={() => setIsActive("2")}
-              // id={isActive === "2" ? "active" : " "}
-            >
+            <div className="profile" onClick={() => setIsActive("2")}>
               <img
                 src="https://scontent.fsgn2-8.fna.fbcdn.net/v/t1.15752-9/333777571_873881007235574_6229213634839464353_n.jpg?_nc_cat=102&ccb=1-7&_nc_sid=ae9488&_nc_ohc=-vCR427BOdkAX-p-jA9&_nc_ht=scontent.fsgn2-8.fna&oh=03_AdSp0tPk6yip7E_PS95KmB1gWy1cawYuipIVldtj6EE9vA&oe=64DD9BF7"
                 alt=""

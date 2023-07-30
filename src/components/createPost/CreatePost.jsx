@@ -17,7 +17,7 @@ const CreatePost = () => {
             placeholder={`${t("newfeed.inputPost")} ${currentUser.name}?`}
           />
         </div>
-        <br />
+        <hr />
         <div className="bottom">
           <div className="left">
             <div className="item">

@@ -2,9 +2,14 @@ import PublicOutlinedIcon from "@mui/icons-material/PublicOutlined";
 import VisibilityOutlinedIcon from "@mui/icons-material/VisibilityOutlined";
 import CreatePostVacation from "../../components/createPostVacation/CreatePostVacation";
 import Posts from "../../components/posts/Posts";
+
 import "./vacation.scss";
+import { useGlobalSearch } from "../../context/Search&Notification";
+import Introduces from "../../components/introduces/Introduce";
 
 const Vacation = () => {
+  const { openIntroduce, openImageVacation } = useGlobalSearch();
+
   const images = [
     {
       img: "https://images.unsplash.com/photo-1506744038136-46273834b3fb?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=870&q=80",
@@ -47,7 +52,8 @@ const Vacation = () => {
       <div className="detailVacation">
         <div className="postVacation">
           <CreatePostVacation />
-          {/* <Posts /> */}
+          <Posts />
+          <Introduces />
         </div>
         <div className="rightVacation">
           <div className="member">
@@ -84,10 +90,11 @@ const Vacation = () => {
                 </div>
               </div>
             </div>
-            <div className="more">
+            <div className="more" onClick={openIntroduce}>
               <span>Tìm hiểu thêm</span>
             </div>
           </div>
+
           <div className="imageVacation">
             <div className="title">Ảnh được chia sẻ</div>
             <div className="post">
@@ -99,7 +106,7 @@ const Vacation = () => {
                 );
               })}
             </div>
-            <div className="more">
+            <div className="more" onClick={openImageVacation}>
               <span>Xem tất cả</span>
             </div>
           </div>

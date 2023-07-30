@@ -71,7 +71,7 @@
       }
     }
     .detailVacation {
-      margin: 20px 0 20px;
+      margin-bottom: 20px;
       display: flex;
       position: relative;
       .postVacation {
@@ -93,7 +93,9 @@
           height: fit-content;
           border-radius: 20px;
           margin-bottom: 20px;
-
+          -webkit-box-shadow: 0px 0px 25px -10px rgba(0, 0, 0, 0.38);
+          -moz-box-shadow: 0px 0px 25px -10px rgba(0, 0, 0, 0.38);
+          box-shadow: 0px 0px 25px -10px rgba(0, 0, 0, 0.38);
           .topDetail {
             display: flex;
             flex-direction: column;
@@ -109,6 +111,7 @@
           }
           .bottonDetail {
             margin-top: 10px;
+
             .item {
               margin-top: 5px;
               display: flex;
@@ -150,7 +153,9 @@
           height: fit-content;
           border-radius: 20px;
           margin-bottom: 20px;
-
+          -webkit-box-shadow: 0px 0px 25px -10px rgba(0, 0, 0, 0.38);
+          -moz-box-shadow: 0px 0px 25px -10px rgba(0, 0, 0, 0.38);
+          box-shadow: 0px 0px 25px -10px rgba(0, 0, 0, 0.38);
           .title {
             color: themed("textColorActive");
             font-size: large;

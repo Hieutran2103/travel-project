@@ -9,6 +9,7 @@ import { useGlobalContextDarkMode } from "./context/darkModeContext";
 import { useGlobalContextAuth } from "./context/AuthContext";
 import Vacation from "./pages/vacation/Vacation";
 import Setting from "./pages/setting/Setting";
+import SettingPass from "./pages/setting/settingPass";
 function App() {
   const { currentUser } = useGlobalContextAuth();
   const { darkMode } = useGlobalContextDarkMode();
@@ -74,9 +75,14 @@ function App() {
           path: "/vacation/:id",
           element: <Vacation />,
         },
+
         {
-          path: "/setting/:id",
+          path: "/setting/account",
           element: <Setting />,
+        },
+        {
+          path: "/setting/password",
+          element: <SettingPass />,
         },
       ],
     },

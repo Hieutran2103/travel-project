@@ -1,4 +1,4 @@
-.container-set{
+.container-set-pass{
     border-left: 1px solid rgb(182, 179, 179);
     height: 100%;
     h1{
@@ -51,11 +51,10 @@
             padding: 0px 25px;
             width: 75%;
             display: flex;
-            .left{
-                border-right: 1px solid rgb(182, 179, 179);
+
                 .form{
                     padding-top: 15px;
-                    width: 450px;
+                    width: 550px;
                     height: 100%;
                 h2{
                     font-size: 30px;
@@ -75,7 +74,7 @@
                 .input-group{
                     display: flex;
                     flex-direction: column;
-                    margin-left: 5px;
+                    margin-left:50px;
                     padding-left: 5px;
                     span{
                         font-size: 20px;
@@ -83,34 +82,16 @@
                 }
                 button{
                     margin: 15px;
-                    padding: 10px 30px;
+                    padding: 10px 45px;
                     border: none;
                     border-radius: 5px;
                     background-color: burlywood;
                     position: relative;
-                    left: 150px;
+                    left: 190px;
                     cursor: pointer;
+                    font-size: 18px;
                 }
-            }
-            }
-
-            .right{
-                display: flex;
-                flex-direction: column;
-                justify-content: center;
-                margin-left: 90px;
-                button{
-                    border: none;
-                    border-radius: 5px;
-                    background-color: burlywood;
-                    padding: 10px 30px;
-                    margin-top: 15px;
-                }
-                img{
-                    border-radius: 50%;
-                    height: 150px;
-                    width: 145px;
-                }
+            
             }
             
         }

@@ -24,3 +24,18 @@ export const schema = yup.object({
     .max(15, "Do dai ky tu 5-15")
     .oneOf([yup.ref("password")], "nhap lai mk chua khop"),
 });
+
+const handleConfirmPassword = (refString) => {
+  return yup
+    .string()
+    .required("confirm_password is required")
+    .min(5, "Do dai ky tu 5-15")
+    .max(15, "Do dai ky tu 5-15")
+    .oneOf([yup.ref(refString)], "nhap lai mk chua khop");
+};
+
+export const userSchema = yup.object({
+  old_password: schema.fields["password"],
+  password: schema.fields["password"],
+  confirm_password: handleConfirmPassword("password"),
+});

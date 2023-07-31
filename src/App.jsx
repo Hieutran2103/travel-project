@@ -10,6 +10,7 @@ import { useGlobalContextAuth } from "./context/AuthContext";
 import Vacation from "./pages/vacation/Vacation";
 import Setting from "./pages/setting/Setting";
 import SettingPass from "./pages/setting/settingPass";
+
 function App() {
   const { currentUser } = useGlobalContextAuth();
   const { darkMode } = useGlobalContextDarkMode();
@@ -95,7 +96,6 @@ function App() {
       element: <Register />,
     },
   ]);
-
   return <RouterProvider router={router} />;
 }
 

@@ -50,7 +50,7 @@ const LeftBar = () => {
 
               <span>{t("leftBar.home")}</span>
             </div>
-            <div className="items " onClick={openSearch}>
+            <div className="items" onClick={openSearch}>
               <div className="icon">
                 <SearchOutlinedIcon style={{ height: "30px", width: "30px" }} />
               </div>

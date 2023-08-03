@@ -16,7 +16,7 @@ const CreatePostVacation = () => {
             placeholder={`${t("newfeed.inputPost")} ${currentUser.name}?`}
           />
         </div>
-        <br />
+        <hr />
         <div className="bottom">
           <div className="left">
             <div className="item">
@@ -26,9 +26,9 @@ const CreatePostVacation = () => {
               <span>{t("newfeed.addPost")}</span>
             </div>
           </div>
-          {/* <div className="right">
+          <div className="right">
             <button>Share</button>
-          </div> */}
+          </div>
         </div>
       </div>
     </div>

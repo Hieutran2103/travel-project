@@ -65,7 +65,6 @@ const Vacation = () => {
                 deleniti provident optio obcaecati debitis{" "}
               </span>
             </div>
-
             <div className="bottonDetail">
               <div className="item">
                 <div className="icon">
@@ -94,7 +93,6 @@ const Vacation = () => {
               <span>Tìm hiểu thêm</span>
             </div>
           </div>
-
           <div className="imageVacation">
             <div className="title">Ảnh được chia sẻ</div>
             <div className="post">

@@ -1,4 +1,9 @@
-import { createBrowserRouter, Outlet, RouterProvider } from "react-router-dom";
+import {
+  createBrowserRouter,
+  Navigate,
+  Outlet,
+  RouterProvider,
+} from "react-router-dom";
 import Login from "./pages/login/Login";
 import Register from "./pages/register/Register";
 import LeftBar from "./components/leftBar/LeftBar";
@@ -10,6 +15,7 @@ import { useGlobalContextAuth } from "./context/AuthContext";
 import Vacation from "./pages/vacation/Vacation";
 import Setting from "./pages/setting/Setting";
 import SettingPass from "./pages/setting/settingPass";
+import CreateVacation from "./pages/createVacation/CreateVacation";
 
 function App() {
   const { currentUser } = useGlobalContextAuth();
@@ -17,7 +23,7 @@ function App() {
 
   const ProtectedRouter = ({ children }) => {
     if (!currentUser) {
-      return <Navigator to="/login" />;
+      return <Navigate to="/login" />;
     }
     return children;
   };
@@ -94,6 +100,10 @@ function App() {
     {
       path: "/register",
       element: <Register />,
+    },
+    {
+      path: "/createVacation",
+      element: <CreateVacation />,
     },
   ]);
   return <RouterProvider router={router} />;

@@ -23,6 +23,7 @@ const LeftBar = () => {
   const { openSearch, openNotifi } = useGlobalSearch();
   const [t, i18] = useTranslation("global");
   const [isLanguageViet, setIsLanguageViet] = useState(false);
+  const { currentUser } = useGlobalContextAuth();
 
   const handleChangeViet = () => {
     i18.changeLanguage("vi");
@@ -99,10 +100,7 @@ const LeftBar = () => {
               <span>{t("leftBar.language")}</span>
             </div>
             <div className="profile" onClick={() => setIsActive("2")}>
-              <img
-                src="https://scontent.fsgn2-8.fna.fbcdn.net/v/t1.15752-9/333777571_873881007235574_6229213634839464353_n.jpg?_nc_cat=102&ccb=1-7&_nc_sid=ae9488&_nc_ohc=-vCR427BOdkAX-p-jA9&_nc_ht=scontent.fsgn2-8.fna&oh=03_AdSp0tPk6yip7E_PS95KmB1gWy1cawYuipIVldtj6EE9vA&oe=64DD9BF7"
-                alt=""
-              />
+              <img src={currentUser.profilePic} alt="" />
 
               <span>{t("leftBar.profile")}</span>
             </div>

@@ -80,6 +80,7 @@
         flex: 4;
       }
       .rightVacation {
+        margin-top: 0;
         margin-right: 50px;
         width: 100%;
         background: themed("bgnewfeed");
@@ -90,6 +91,7 @@
         .member {
           background: themed("bg");
           padding: 20px;
+
           height: fit-content;
           border-radius: 20px;
           margin-bottom: 20px;

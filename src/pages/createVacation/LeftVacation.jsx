@@ -1,24 +1,32 @@
 import "./leftVacation.scss";
-import logoNewfeedz from "../../assets/logo.svg";
-import { useGlobalContextAuth } from "../../context/AuthContext";
 
-import { useRef, useState } from "react";
+import { useGlobalContextAuth } from "../../context/AuthContext";
+import ClearIcon from "@mui/icons-material/Clear";
+import { Link } from "react-router-dom";
 const LeftVacation = ({
   handleImageClick,
   handleImageChange,
   isPublic,
   inputRef,
-  setIsPublic,
   name,
   something,
   intro,
   handleName,
   handleSomething,
   handleIntro,
+  handleSubmit,
+  handleOption,
 }) => {
   const { currentUser } = useGlobalContextAuth();
   return (
     <div className="leftVacation">
+      <div className="out">
+        <Link to="/">
+          <ClearIcon
+            style={{ height: "40px", width: "40px", color: "black" }}
+          />
+        </Link>
+      </div>
       <div className="cover">
         <div className="title">Tạo kỳ nghỉ</div>
         <div className="founder">
@@ -28,33 +36,7 @@ const LeftVacation = ({
             <div className="position">Quản trị viên</div>
           </div>
         </div>
-        <form>
-          <input
-            type="text"
-            placeholder="Tên kỳ nghỉ"
-            value={name}
-            onChange={handleName}
-          />
-          <input
-            type="text"
-            placeholder="Giới thiệu về kỳ nghỉ"
-            value={something}
-            onChange={handleSomething}
-          />
-          <input
-            type="text"
-            placeholder="Giới thiệu về nhóm"
-            value={intro}
-            onChange={handleIntro}
-          />
-          <select
-            value={isPublic}
-            onChange={(e) => setIsPublic(e.target.value)}
-          >
-            <option>Công khai</option>
-            <option>Riêng tư</option>
-          </select>
-
+        <form onSubmit={handleSubmit}>
           <div className="uploadImage" onClick={handleImageClick}>
             Chọn ảnh
             <input
@@ -62,10 +44,36 @@ const LeftVacation = ({
               ref={inputRef}
               onChange={handleImageChange}
               style={{ display: "none" }}
+              name="image"
             />
           </div>
+          <input
+            type="text"
+            placeholder="Tên kỳ nghỉ"
+            name="name"
+            value={name}
+            onChange={handleName}
+          />
+          <input
+            type="text"
+            name="something"
+            placeholder="Giới thiệu về kỳ nghỉ"
+            value={something}
+            onChange={handleSomething}
+          />
+          <input
+            type="text"
+            name="intro"
+            placeholder="Giới thiệu về nhóm"
+            value={intro}
+            onChange={handleIntro}
+          />
+          <select value={isPublic} name="option" onChange={handleOption}>
+            <option>Công khai</option>
+            <option>Riêng tư</option>
+          </select>
 
-          <button>Tạo</button>
+          <button type="submit">Tạo</button>
         </form>
       </div>
     </div>

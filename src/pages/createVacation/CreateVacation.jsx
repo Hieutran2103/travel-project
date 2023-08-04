@@ -11,14 +11,24 @@ const CreateVacation = () => {
   const [something, setSomething] = useState("");
   const [intro, setIntro] = useState("");
 
+  const [information, setInfomation] = useState({
+    name: "",
+    something: "",
+    intro: "",
+    option: "Công khai",
+    image: "",
+  });
   const handleName = (e) => {
     setName(e.target.value);
+    setInfomation({ ...information, [e.target.name]: e.target.value });
   };
   const handleSomething = (e) => {
     setSomething(e.target.value);
+    setInfomation({ ...information, [e.target.name]: e.target.value });
   };
   const handleIntro = (e) => {
     setIntro(e.target.value);
+    setInfomation({ ...information, [e.target.name]: e.target.value });
   };
 
   const handleImageClick = () => {
@@ -26,8 +36,17 @@ const CreateVacation = () => {
   };
   const handleImageChange = (e) => {
     const file = e.target.files[0];
-    console.log(file);
+    setInfomation({ ...information, [e.target.name]: file });
     setImage(file);
+  };
+  const handleOption = (e) => {
+    setIsPublic(e.target.value);
+    setInfomation({ ...information, [e.target.name]: e.target.value });
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    console.log(information);
   };
 
   return (
@@ -42,6 +61,8 @@ const CreateVacation = () => {
         handleName={handleName}
         handleSomething={handleSomething}
         handleIntro={handleIntro}
+        handleSubmit={handleSubmit}
+        handleOption={handleOption}
       />
       <RightVacation
         image={image}

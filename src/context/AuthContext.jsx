@@ -16,7 +16,7 @@ const Auth = ({ children }) => {
   //Nhét vào button của Login
   const login = () => {
     setCurrentUser({
-      id: 1,
+      id: 100,
       name: "Dương Văn Cải",
       profilePic:
         "https://images.unsplash.com/photo-1640951613773-54706e06851d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=580&q=80",

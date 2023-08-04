@@ -5,13 +5,21 @@ import FavoriteBorderOutlinedIcon from "@mui/icons-material/FavoriteBorderOutlin
 import FavoriteOutlinedIcon from "@mui/icons-material/FavoriteOutlined";
 import MoreHorizOutlinedIcon from "@mui/icons-material/MoreHorizOutlined";
 import TextsmsOutlinedIcon from "@mui/icons-material/TextsmsOutlined";
-// import BookmarkBorderOutlinedIcon from "@mui/icons-material/BookmarkBorderOutlined";
-// import BookmarkOutlinedIcon from "@mui/icons-material/BookmarkOutlined";
+
 import { useState } from "react";
 import Comments from "../comments/Comments";
 import { useTranslation } from "react-i18next";
-const Post = ({ post }) => {
+import EditPost from "../editPost/EditPost";
+import { useGlobalContextAuth } from "../../context/AuthContext";
+
+import { useGlobalSearch } from "../../context/Search&Notification";
+
+const Post = ({ post, index, setCurrentpost, currentpost }) => {
   const { img, profilePic, desc, name, userId } = post;
+  const currentPost = index;
+
+  const { editPost, openEdit } = useGlobalSearch();
+
   const [t, i18] = useTranslation("global");
   //State Comments
   const [commentOpen, setCommentOpen] = useState(false);
@@ -35,7 +43,10 @@ const Post = ({ post }) => {
               <span className="date">1 min ago</span>
             </div>
           </div>
-          <MoreHorizOutlinedIcon />
+          <div className="edit" onClick={openEdit}>
+            <MoreHorizOutlinedIcon onClick={() => setCurrentpost(index)} />
+          </div>
+          {editPost ? <EditPost currentpost={currentpost} post={post} /> : null}
         </div>
         <div className="content">
           <p>{desc}</p>
@@ -53,9 +64,6 @@ const Post = ({ post }) => {
           <div className="item" onClick={() => setCommentOpen(!commentOpen)}>
             <TextsmsOutlinedIcon /> 10 {t("newfeed.comment")}
           </div>
-          {/* <div className="item">
-            <BookmarkBorderOutlinedIcon />
-          </div> */}
         </div>
         {commentOpen && <Comments />}
       </div>

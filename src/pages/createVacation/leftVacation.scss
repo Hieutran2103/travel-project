@@ -2,6 +2,11 @@
   flex: 2;
   background: rgb(253, 253, 253);
   padding: 20px;
+  .out {
+    position: fixed;
+    top: 22px;
+    left: 326px;
+  }
   .cover {
     display: flex;
     flex-direction: column;

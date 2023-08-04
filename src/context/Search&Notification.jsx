@@ -8,6 +8,22 @@ const Search = ({ children }) => {
   const [isNotifiOpen, setIsNotifichOpen] = useState(false);
   const [isIntroduceOpen, setIntroduceOpen] = useState(false);
   const [isImageVacationOpen, setImageVacationOpen] = useState(false);
+  const [editPost, setEditPost] = useState(false);
+  const [editSpecific, setEditSpecific] = useState(false);
+
+  const openEditSpecific = () => {
+    setEditSpecific(true);
+  };
+  const closeEditSpecific = () => {
+    setEditSpecific(false);
+  };
+
+  const openEdit = () => {
+    setEditPost(true);
+  };
+  const closeEdit = () => {
+    setEditPost(false);
+  };
 
   const openIntroduce = () => {
     setIntroduceOpen(true);
@@ -40,10 +56,12 @@ const Search = ({ children }) => {
   return (
     <SearchContext.Provider
       value={{
+        editPost,
         isSearchOpen,
         isIntroduceOpen,
         isNotifiOpen,
         isImageVacationOpen,
+        editSpecific,
         setIsSearchOpen,
         setIsNotifichOpen,
         openSearch,
@@ -54,6 +72,10 @@ const Search = ({ children }) => {
         closeIntroduce,
         openImageVacation,
         closeImageVacation,
+        openEdit,
+        closeEdit,
+        openEditSpecific,
+        closeEditSpecific,
       }}
     >
       {children}

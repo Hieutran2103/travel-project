@@ -1,0 +1,152 @@
+.show-specificEdit {
+  position: fixed;
+  z-index: 9999;
+  height: 500px;
+  width: 500px;
+  background-color: rgb(255, 255, 255);
+  width: 900px;
+  height: 500px;
+  border-radius: 15px;
+  padding: 10px;
+  transition: 0.5s;
+  transform: scale(1);
+  opacity: 1;
+
+  form {
+    display: flex;
+    flex-direction: column;
+    .tren {
+      background-color: rgb(255, 255, 255);
+      padding: 10px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 1px solid rgb(201, 201, 201);
+      .cancel {
+        cursor: pointer;
+      }
+      .EditInfo {
+        font-size: 22px;
+      }
+      button {
+        cursor: pointer;
+        outline: none;
+        border: transparent;
+        background-color: transparent;
+        color: rgb(230, 148, 230);
+        font-weight: 700;
+        font-size: 15px;
+      }
+    }
+    .duoi {
+      display: flex;
+      .image {
+        flex: 3;
+        width: 100%;
+        margin: auto 10px auto 0;
+        img {
+          height: 300px;
+          width: 100%;
+          object-fit: cover;
+        }
+      }
+      .writeEdit {
+        flex: 2;
+        width: 100%;
+        height: 462px;
+        border-left: 1px solid rgb(201, 201, 201);
+        .userCurrent {
+          display: flex;
+          gap: 5px;
+          margin: 0 16px;
+          padding: 20px 0;
+          // justify-content: center;
+          align-items: center;
+          img {
+            height: 28px;
+            width: 28px;
+            border-radius: 50%;
+            object-fit: cover;
+          }
+        }
+      }
+    }
+  }
+}
+.specificEdit {
+  position: fixed;
+  z-index: 999;
+  height: 500px;
+  width: 500px;
+  background-color: rgb(255, 255, 255);
+  width: 900px;
+  height: 500px;
+  border-radius: 15px;
+  padding: 10px;
+  z-index: -1;
+  overflow: hidden;
+  transition: 0.5s;
+  transform: scale(0);
+  opacity: 0;
+  form {
+    display: flex;
+    flex-direction: column;
+    .tren {
+      background-color: rgb(255, 255, 255);
+      padding: 10px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 1px solid rgb(201, 201, 201);
+
+      .cancel {
+        cursor: pointer;
+      }
+      .EditInfo {
+        font-size: 22px;
+      }
+      button {
+        cursor: pointer;
+        outline: none;
+        border: transparent;
+        background-color: transparent;
+        color: rgb(230, 148, 230);
+        font-weight: 700;
+        font-size: 15px;
+      }
+    }
+    .duoi {
+      display: flex;
+      .image {
+        flex: 3;
+        width: 100%;
+        margin: auto 10px auto 0;
+        img {
+          height: 300px;
+          width: 100%;
+          object-fit: cover;
+        }
+      }
+      .writeEdit {
+        flex: 2;
+        width: 100%;
+        height: 462px;
+        border-left: 1px solid rgb(201, 201, 201);
+        .userCurrent {
+          display: flex;
+          gap: 5px;
+          margin: 0 16px;
+          padding: 20px 0;
+          // justify-content: center;
+          align-items: center;
+          img {
+            height: 28px;
+            width: 28px;
+            border-radius: 50%;
+            object-fit: cover;
+          }
+        }
+      }
+    }
+  }
+}

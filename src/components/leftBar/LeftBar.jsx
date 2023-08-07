@@ -43,7 +43,7 @@ const LeftBar = () => {
               <img src={logoNewfeed} alt="" />
             </div>
 
-            <div className="items" onClick={() => setIsActive("1")}>
+            <div className="items">
               <div className="icon">
                 {" "}
                 <HomeOutlinedIcon style={{ height: "30px", width: "30px" }} />
@@ -99,7 +99,7 @@ const LeftBar = () => {
 
               <span>{t("leftBar.language")}</span>
             </div>
-            <div className="profile" onClick={() => setIsActive("2")}>
+            <div className="profile">
               <img src={currentUser.profilePic} alt="" />
 
               <span>{t("leftBar.profile")}</span>

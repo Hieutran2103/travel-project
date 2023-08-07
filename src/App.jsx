@@ -17,7 +17,6 @@ import Setting from "./pages/setting/Setting";
 import SettingPass from "./pages/setting/settingPass";
 import CreateVacation from "./pages/createVacation/CreateVacation";
 import Profile from "./pages/profile/Profile";
-import PostList from "./components/postList/PostList";
 
 function App() {
   const { currentUser } = useGlobalContextAuth();

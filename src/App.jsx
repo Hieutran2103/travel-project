@@ -44,20 +44,6 @@ function App() {
     );
   };
 
-  const LayoutProfile = () => {
-    return (
-      <div
-        className={`theme-${darkMode ? "dark" : "light"}`}
-        style={{ display: "flex", justifyContent: "space-between" }}
-      >
-        <LeftBar style={{ flex: 1 }} />
-        <div style={{ flex: 10, display: "flex", justifyContent: "center" }}>
-          <Profile />
-        </div>
-      </div>
-    );
-  };
-
   const Layout = () => {
     return (
       <div className={`theme-${darkMode ? "dark" : "light"}`}>
@@ -107,6 +93,10 @@ function App() {
           path: "/setting/password",
           element: <SettingPass />,
         },
+        {
+          path: "/profile/:id",
+          element: <Profile />,
+        },
       ],
     },
     {
@@ -120,14 +110,6 @@ function App() {
     {
       path: "/createVacation",
       element: <CreateVacation />,
-    },
-    {
-      path: "/profile/:id",
-      element: (
-        <ProtectedRouter>
-          <LayoutProfile />
-        </ProtectedRouter>
-      ),
     },
   ]);
   return <RouterProvider router={router} />;

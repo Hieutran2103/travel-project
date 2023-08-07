@@ -1,0 +1,35 @@
+@import "../../style.scss";
+
+.vacationList {
+  @include themify($themes) {
+    display: flex;
+    margin: 20px 100px;
+    font-size: 20px;
+    width: 1000px;
+    -webkit-box-shadow: 0px 0px 25px -10px rgba(0, 0, 0, 0.38);
+    -moz-box-shadow: 0px 0px 25px -10px rgba(0, 0, 0, 0.38);
+    box-shadow: 0px 0px 25px -10px rgba(0, 0, 0, 0.38);
+    border-radius: 20px;
+    color: themed("textColorActive");
+    background: themed("bg");
+    .container {
+      display: flex;
+      margin: 10px;
+      .imgVacation {
+        height: 275px;
+        width: 400px;
+        border-radius: 10px;
+      }
+      .details {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-left: 40px;
+        width: 500px;
+        .info {
+          width: 275px;
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,136 @@
+@import "../../style.scss";
+
+.profileInfo {
+  @include themify($themes) {
+    display: flex;
+    margin: 40px 100px;
+    width: 1000px;
+    -webkit-box-shadow: 0px 0px 25px -10px rgba(0, 0, 0, 0.38);
+    -moz-box-shadow: 0px 0px 25px -10px rgba(0, 0, 0, 0.38);
+    box-shadow: 0px 0px 25px -10px rgba(0, 0, 0, 0.38);
+    border-radius: 20px;
+    color: themed("textColorActive");
+    background: themed("bg");
+    padding-top: 30px;
+    padding-bottom: 20px;
+    .leftProfile {
+      display: flex;
+      align-items: center;
+      margin-left: 100px;
+      .avatar {
+        width: 150px;
+        height: 150px;
+        border-radius: 50%;
+        margin-bottom: 10px;
+      }
+    }
+    .rightProfile {
+      font-size: 20px;
+      margin-left: 80px;
+      width: 600px;
+      .info {
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 15px;
+        width: 350px;
+        .editButton {
+          font-family: themed("fontFamily");
+          font-size: 15px;
+          font-weight: 600;
+          border: none;
+          border-radius: 5px;
+          padding: 8px 10px;
+          cursor: pointer;
+          transition: background-color 0.1s;
+          &:hover {
+            background-color: #d6d6d6;
+          }
+        }
+        .userName {
+          display: flex;
+          align-items: center;
+          font-weight: 600;
+          cursor: pointer;
+        }
+        .btn-modal-follow {
+          cursor: pointer;
+        }
+        .modal {
+          z-index: 4;
+        }
+        .modal,
+        .overlay {
+          width: 100vw;
+          height: 100vh;
+          top: 0;
+          left: 0;
+          right: 0;
+          bottom: 0;
+          position: fixed;
+        }
+        .overlay {
+          background: rgba(49, 49, 49, 0.8);
+        }
+        .modal-content {
+          position: absolute;
+          top: 50%;
+          left: 50%;
+          transform: translate(-50%, -50%);
+          line-height: 1.4;
+          background: white;
+          margin: 14px 40px;
+          border-radius: 10px;
+          min-width: 500px;
+          max-height: 400px;
+          overflow: auto;
+          .modalTitle {
+            display: flex;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 30px;
+            margin: 10px 0px;
+          }
+          .followerUser {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            border-bottom: 1px solid #bdbdbd;
+            .followButton {
+              display: flex;
+              justify-content: flex-end;
+              border: none;
+              border-radius: 5px;
+              padding: 10px 10px;
+              font-weight: 600;
+              margin-right: 25px;
+            }
+            .modalContainer {
+              display: flex;
+              align-items: center;
+              .avaU {
+                margin: 10px 20px;
+                width: 70px;
+                height: 70px;
+                border-radius: 50%;
+              }
+              .nameU {
+                font-weight: 600;
+                font-size: 22px;
+              }
+              .locaU {
+                font-size: 12px;
+              }
+            }
+          }
+        }
+        .close-modal {
+          position: absolute;
+          top: 14px;
+          right: 10px;
+          padding: 5px 7px;
+          cursor: pointer;
+        }
+      }
+    }
+  }
+}

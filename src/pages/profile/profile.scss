@@ -1,0 +1,9 @@
+@import "../../style.scss";
+
+.profile {
+  @include themify($themes) {
+    background: themed("bgnewfeed");
+    padding-right: 100px;
+    padding-left: 100px;
+  }
+}

@@ -16,6 +16,8 @@ import Vacation from "./pages/vacation/Vacation";
 import Setting from "./pages/setting/Setting";
 import SettingPass from "./pages/setting/settingPass";
 import CreateVacation from "./pages/createVacation/CreateVacation";
+import Profile from "./pages/profile/Profile";
+import PostList from "./components/postList/PostList";
 
 function App() {
   const { currentUser } = useGlobalContextAuth();
@@ -37,6 +39,20 @@ function App() {
             <Outlet />
           </div>
           <RightBar />
+        </div>
+      </div>
+    );
+  };
+
+  const LayoutProfile = () => {
+    return (
+      <div
+        className={`theme-${darkMode ? "dark" : "light"}`}
+        style={{ display: "flex", justifyContent: "space-between" }}
+      >
+        <LeftBar style={{ flex: 1 }} />
+        <div style={{ flex: 10, display: "flex", justifyContent: "center" }}>
+          <Profile />
         </div>
       </div>
     );
@@ -104,6 +120,14 @@ function App() {
     {
       path: "/createVacation",
       element: <CreateVacation />,
+    },
+    {
+      path: "/profile/:id",
+      element: (
+        <ProtectedRouter>
+          <LayoutProfile />
+        </ProtectedRouter>
+      ),
     },
   ]);
   return <RouterProvider router={router} />;

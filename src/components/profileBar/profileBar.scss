@@ -1,0 +1,47 @@
+@import "../../style.scss";
+
+.profileBar {
+  @include themify($themes) {
+    display: flex;
+    margin: 0px 100px;
+    padding: 10px 0px;
+    font-size: 20px;
+    width: 1000px;
+    -webkit-box-shadow: 0px 0px 25px -10px rgba(0, 0, 0, 0.38);
+    -moz-box-shadow: 0px 0px 25px -10px rgba(0, 0, 0, 0.38);
+    box-shadow: 0px 0px 25px -10px rgba(0, 0, 0, 0.38);
+    border-radius: 20px;
+    color: themed("textColorActive");
+    background: themed("bg");
+    .profileButton {
+      width: 100%;
+      display: flex;
+      justify-content: space-evenly;
+      .icon {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        cursor: pointer;
+        position: relative;
+
+        &::before {
+          content: "";
+          position: absolute;
+          top: -8px;
+          left: 50%;
+          transform: translateX(-50%) translateY(-100%);
+          width: 100%;
+          height: 3px;
+          background-color: #000;
+          opacity: 0;
+          transition: opacity 0.2s;
+        }
+
+        &:focus::before,
+        &.active::before {
+          opacity: 1;
+        }
+      }
+    }
+  }
+}

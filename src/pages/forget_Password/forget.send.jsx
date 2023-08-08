@@ -1,14 +1,14 @@
 import { Link } from "react-router-dom";
-import "./login.scss";
+import "./forget.send.scss";
 import Logo from "../../assets/logonewfeed2.svg";
-import { useGlobalContextAuth } from "../../context/AuthContext";
+// import { useGlobalContextAuth } from "../../context/AuthContext";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useForm } from "react-hook-form";
 import { schema } from "../../utils/rules";
 import InputForm from "../../components/input/inputForm";
 
-const Login = () => {
-  const { login } = useGlobalContextAuth();
+const ForgetSend = () => {
+  //   const { login } = useGlobalContextAuth();
   const {
     handleSubmit,
     register,
@@ -18,13 +18,13 @@ const Login = () => {
     console.log(data);
   };
   return (
-    <div className="loginForm">
+    <div className="forgetForm">
       <div className="container">
         <div className="item">
           <div className="logo">
             <img src={Logo} alt="logo" />
           </div>
-          <div className="text-item">
+          {/* <div className="text-item">
             <h2>
               Welcome! <br />
               <span>To Our Web</span>
@@ -47,16 +47,21 @@ const Login = () => {
                 <i className="bx bxl-linkedin" id="linkedin" />
               </a>
             </div>
-          </div>
+          </div> */}
         </div>
-        <div className="login-section">
+        <div className="forget-section">
           <div className="form-box login">
             <form
               noValidate
-              className="form-login"
+              className="form-forget"
               onSubmit={handleSubmit(formSubmit)}
             >
-              <h2>Sign In</h2>
+              <div className="icon-lock">
+                <i className="bx bxs-lock"></i>
+              </div>
+              <h2>Forget Password</h2>
+
+              <p>Lorem ipsum dolor sit amet consectetur, adielit.</p>
               <InputForm
                 // className="input-box"
                 classNameicon="icon"
@@ -68,45 +73,32 @@ const Login = () => {
                 errormessage={errors.email?.message}
                 register={{ ...register("email") }}
               />
-              <InputForm
-                // className="input-box"
-                classNameicon="icon"
-                classNameI="bx bxs-lock"
-                name="password"
-                labelName="Password"
-                type="password"
-                classNameLabel="label"
-                errormessage={errors.password?.message}
-                register={{ ...register("password") }}
-              />
-
-              <button className="btn" onClick={login}>
-                <Link to="/" className="loginToHome">
-                  Login
-                </Link>
-              </button>
-              <div className="or">
-                <p>OR</p>
-              </div>
               <button className="btn">
-                Login With Google <i className="bx bxl-google" />
+                <Link to="/confirm" className="link">
+                  Send
+                </Link>
               </button>
             </form>
-            <div className="remember-password">
-              <Link to="/forget">Forget Password</Link>
-            </div>
+
             <div className="create-account">
-              <p>
-                Create A New Account?{" "}
-                <Link to="/register" className="register-link">
-                  Sign Up
-                </Link>
-              </p>
+              <Link to="/register">
+                <p>Create A New Account</p>
+              </Link>
             </div>
+            <div className="border-line">
+              <hr />
+            </div>
+
+            <button className="backLogin">
+              <Link to="/login" className="link">
+                Back to login
+              </Link>
+            </button>
           </div>
         </div>
       </div>
     </div>
   );
 };
-export default Login;
+
+export default ForgetSend;

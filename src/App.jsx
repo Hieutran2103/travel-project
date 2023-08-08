@@ -16,6 +16,9 @@ import Vacation from "./pages/vacation/Vacation";
 import Setting from "./pages/setting/Setting";
 import SettingPass from "./pages/setting/settingPass";
 import CreateVacation from "./pages/createVacation/CreateVacation";
+import ForgetSend from "./pages/forget_Password/forget.send";
+import ConfirmEmail from "./pages/forget_Password/confirmEmail";
+import ResetPass from "./pages/reset_Password/resetPass";
 
 function App() {
   const { currentUser } = useGlobalContextAuth();
@@ -104,6 +107,18 @@ function App() {
     {
       path: "/createVacation",
       element: <CreateVacation />,
+    },
+    {
+      path: "/forget",
+      element: <ForgetSend />,
+    },
+    {
+      path: "/confirm",
+      element: <ConfirmEmail />,
+    },
+    {
+      path: "/resetpassword",
+      element: <ResetPass />,
     },
   ]);
   return <RouterProvider router={router} />;

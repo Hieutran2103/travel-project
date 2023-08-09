@@ -3,6 +3,7 @@ import "./leftVacation.scss";
 import { useGlobalContextAuth } from "../../context/AuthContext";
 import ClearIcon from "@mui/icons-material/Clear";
 import { Link } from "react-router-dom";
+import AddUser from "./AddUser";
 const LeftVacation = ({
   handleImageClick,
   handleImageChange,
@@ -16,19 +17,23 @@ const LeftVacation = ({
   handleIntro,
   handleSubmit,
   handleOption,
+  information,
+  selectUser,
+  userAdded,
+  deleteUser,
 }) => {
   const { currentUser } = useGlobalContextAuth();
   return (
     <div className="leftVacation">
-      <div className="out">
-        <Link to="/">
-          <ClearIcon
-            style={{ height: "40px", width: "40px", color: "black" }}
-          />
-        </Link>
-      </div>
       <div className="cover">
-        <div className="title">Tạo kỳ nghỉ</div>
+        <div className="topp">
+          <div className="title">Tạo kỳ nghỉ</div>{" "}
+          <Link to="/">
+            <ClearIcon
+              style={{ height: "40px", width: "40px", color: "black" }}
+            />
+          </Link>
+        </div>
         <div className="founder">
           <img src={currentUser.profilePic} alt="" />
           <div className="moree">
@@ -72,7 +77,16 @@ const LeftVacation = ({
             <option>Công khai</option>
             <option>Riêng tư</option>
           </select>
-
+          {information.option == "Riêng tư" ? (
+            <AddUser
+              selectUser={selectUser}
+              userAdded={userAdded}
+              information={information}
+              deleteUser={deleteUser}
+            />
+          ) : (
+            ""
+          )}
           <button type="submit">Tạo</button>
         </form>
       </div>

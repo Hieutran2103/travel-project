@@ -10,6 +10,9 @@ const CreateVacation = () => {
   const [name, setName] = useState("");
   const [something, setSomething] = useState("");
   const [intro, setIntro] = useState("");
+  const arrayBegin = [];
+
+  const userAdded = useRef([]);
 
   const [information, setInfomation] = useState({
     name: "",
@@ -17,6 +20,7 @@ const CreateVacation = () => {
     intro: "",
     option: "Công khai",
     image: "",
+    userAdd: userAdded,
   });
   const handleName = (e) => {
     setName(e.target.value);
@@ -44,8 +48,21 @@ const CreateVacation = () => {
     setInfomation({ ...information, [e.target.name]: e.target.value });
   };
 
+  const selectUser = (e) => {
+    arrayBegin.push(e);
+    let uniqueSet = [...new Set(arrayBegin)];
+    userAdded.current = uniqueSet;
+  };
+
+  const deleteUser = (id) => {
+    const newUser = userAdded.current.filter((item) => item.userId !== id);
+    userAdded.current = newUser;
+    setInfomation({ ...information, userAdd: newUser });
+  };
+
   const handleSubmit = (e) => {
     e.preventDefault();
+    setInfomation({ ...information, userAdd: userAdded.current });
     console.log(information);
   };
 
@@ -63,6 +80,10 @@ const CreateVacation = () => {
         handleIntro={handleIntro}
         handleSubmit={handleSubmit}
         handleOption={handleOption}
+        information={information}
+        selectUser={selectUser}
+        userAdded={userAdded}
+        deleteUser={deleteUser}
       />
       <RightVacation
         image={image}

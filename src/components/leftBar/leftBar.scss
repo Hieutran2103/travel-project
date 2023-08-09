@@ -81,8 +81,10 @@
           background: themed("bgnewfeed");
           border-top-left-radius: 20px;
           border-bottom-left-radius: 20px;
+
           img {
             border: 1px solid #e84be5;
+            box-sizing: border-box;
           }
           span {
             color: themed("textColorActive") !important;

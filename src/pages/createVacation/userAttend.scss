@@ -1,0 +1,40 @@
+.userAttend {
+  width: 100%;
+  background: transparent;
+  display: flex;
+  flex-wrap: wrap;
+  row-gap: 4px;
+  column-gap: 4px;
+  margin-bottom: 4px;
+  .attend {
+    padding: 6px 10px;
+    display: flex;
+    align-items: center;
+    background: #fae5fd;
+    width: fit-content;
+    border-radius: 8px;
+    img {
+      width: 24px;
+      height: 24px;
+      border-radius: 50%;
+      object-fit: cover;
+      margin-right: 8px;
+    }
+    .nameAttend {
+      margin-right: 5px;
+      color: #fb76fb;
+    }
+    .deleteAttend {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      color: #e498e2;
+      border-radius: 50%;
+    }
+    .deleteAttend:hover {
+      cursor: pointer;
+      background-color: rgb(207, 212, 218);
+      transition: 0.5s;
+    }
+  }
+}

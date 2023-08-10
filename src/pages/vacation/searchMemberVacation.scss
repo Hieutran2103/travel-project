@@ -1,0 +1,49 @@
+.searchMemberVacation {
+  width: 80vh;
+  background-color: #ffffff;
+  align-items: center;
+  padding: 10px 0;
+  border-top-left-radius: 8px;
+  border-top-right-radius: 8px;
+  .divIcon {
+    position: relative !important;
+    right: 3;
+  }
+  .nameMember {
+    width: 555px;
+    margin-left: 10px;
+    margin-bottom: 5px;
+    .T {
+      font-size: 20px;
+    }
+    .H {
+      color: #65676b;
+      font-size: 15px;
+      font-family: inherit;
+    }
+    .D {
+      margin-top: 0;
+      margin-left: 410px;
+      font-size: 20px;
+      width: 20px;
+    }
+  }
+  .checkUsers {
+    margin: 0 auto;
+    width: 95%;
+    background-color: #f1f1f1;
+    display: flex;
+    align-items: center;
+    justify-items: center;
+    border-radius: 8px;
+    height: 30px;
+    input {
+      background-color: #f1f1f1;
+      outline: none;
+      border: none;
+      margin-left: 2px;
+      height: 25px;
+      width: 450px;
+    }
+  }
+}

@@ -6,9 +6,120 @@ import Posts from "../../components/posts/Posts";
 import "./vacation.scss";
 import { useGlobalSearch } from "../../context/Search&Notification";
 import Introduces from "../../components/introduces/Introduce";
+import MemberVacation from "./MemberVacation";
 
 const Vacation = () => {
   const { openIntroduce, openImageVacation } = useGlobalSearch();
+
+  const posts = [
+    {
+      id: 1,
+      name: "John Doe",
+      userId: 1,
+      profilePic:
+        "https://plus.unsplash.com/premium_photo-1689539137236-b68e436248de?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=871&q=80",
+      desc: "Lorem ipsum dolor sit amet consectetur adipisicing elit",
+      img: "https://images.unsplash.com/photo-1503220317375-aaad61436b1b?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80",
+    },
+    {
+      id: 2,
+      name: "Kien Ngu",
+      userId: 2,
+      profilePic:
+        "https://images.unsplash.com/photo-1527980965255-d3b416303d12?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1yZWxhdGVkfDF8fHxlbnwwfHx8fHw%3D&auto=format&fit=crop&w=500&q=60",
+      desc: "Tenetur iste voluptates dolorem rem commodi voluptate pariatur, voluptatum, laboriosam consequatur enim nostrum cumque! Maiores a nam non adipisci minima modi tempore.",
+    },
+    {
+      id: 3,
+      name: "HieuNongBong",
+      userId: 3,
+      profilePic:
+        "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80",
+      desc: "Lorem ipsum dolor sit amet consectetur adipisicing elit",
+      img: "https://images.unsplash.com/photo-1527631746610-bca00a040d60?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=387&q=80",
+    },
+    {
+      id: 4,
+      name: "KienTop8",
+      userId: 4,
+      profilePic:
+        "https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=387&q=80",
+      desc: "Lorem ipsum dolor sit amet consectetur adipisicing elit",
+      img: "https://images.unsplash.com/photo-1527631746610-bca00a040d60?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=387&q=80",
+    },
+    {
+      id: 5,
+      name: "Huy Cai",
+      userId: 5,
+      profilePic:
+        "https://images.unsplash.com/photo-1534528741775-53994a69daeb?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=464&q=80",
+      desc: "Lorem ipsum dolor sit amet consectetur adipisicing elit",
+      img: "https://images.unsplash.com/photo-1527631746610-bca00a040d60?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=387&q=80",
+    },
+    {
+      id: 6,
+      name: "kiki",
+      userId: 6,
+      profilePic:
+        "https://plus.unsplash.com/premium_photo-1689568126014-06fea9d5d341?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1yZWxhdGVkfDh8fHxlbnwwfHx8fHw%3D&auto=format&fit=crop&w=500&q=60",
+      desc: "Lorem ipsum dolor sit amet consectetur adipisicing elit",
+      img: "https://images.unsplash.com/photo-1527631746610-bca00a040d60?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=387&q=80",
+    },
+    {
+      id: 7,
+      name: "heheee",
+      userId: 7,
+      profilePic:
+        "https://images.unsplash.com/photo-1637664067109-a6a00840d894?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1332&q=80",
+      desc: "Lorem ipsum dolor sit amet consectetur adipisicing elit",
+      img: "https://images.unsplash.com/photo-1527631746610-bca00a040d60?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=387&q=80",
+    },
+    {
+      id: 8,
+      name: "huhu",
+      userId: 7,
+      profilePic:
+        "https://images.unsplash.com/photo-1691531315982-f6bccf4bd875?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=387&q=80",
+      desc: "Lorem ipsum dolor sit amet consectetur adipisicing elit",
+      img: "https://images.unsplash.com/photo-1527631746610-bca00a040d60?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=387&q=80",
+    },
+    {
+      id: 9,
+      name: "vcnawee",
+      userId: 7,
+      profilePic:
+        "https://images.unsplash.com/photo-1690375159022-5f08b2ac9d2d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=387&q=80",
+      desc: "Lorem ipsum dolor sit amet consectetur adipisicing elit",
+      img: "https://images.unsplash.com/photo-1527631746610-bca00a040d60?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=387&q=80",
+    },
+    {
+      id: 10,
+      name: "heheee",
+      userId: 7,
+      profilePic:
+        "https://images.unsplash.com/photo-1687360440102-78d15c3e5045?ixlib=rb-4.0.3&ixid=M3wxMjA3fDF8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1332&q=80",
+      desc: "Lorem ipsum dolor sit amet consectetur adipisicing elit",
+      img: "https://images.unsplash.com/photo-1527631746610-bca00a040d60?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=387&q=80",
+    },
+    {
+      id: 11,
+      name: "hieutop1",
+      userId: 7,
+      profilePic:
+        "https://images.unsplash.com/photo-1687360440648-ec9708d52086?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=676&q=80",
+      desc: "Lorem ipsum dolor sit amet consectetur adipisicing elit",
+      img: "https://images.unsplash.com/photo-1527631746610-bca00a040d60?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=387&q=80",
+    },
+    {
+      id: 12,
+      name: "caitop2",
+      userId: 7,
+      profilePic:
+        "https://images.unsplash.com/photo-1687360441348-1bb4a85824e8?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=870&q=80",
+      desc: "Lorem ipsum dolor sit amet consectetur adipisicing elit",
+      img: "https://images.unsplash.com/photo-1527631746610-bca00a040d60?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=387&q=80",
+    },
+  ];
 
   const images = [
     {
@@ -53,7 +164,8 @@ const Vacation = () => {
         <div className="postVacation">
           <CreatePostVacation />
           {/* <Posts /> */}
-          <Introduces />
+          <Introduces posts={posts} />
+          <MemberVacation posts={posts} />
         </div>
         <div className="rightVacation">
           <div className="member">

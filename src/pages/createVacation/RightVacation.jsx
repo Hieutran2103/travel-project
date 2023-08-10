@@ -65,45 +65,58 @@ const RightVacation = ({ image, isPublic, name, something, intro }) => {
 
               <div className="bottonDetaila">
                 {isPublic == "Công khai" ? (
-                  <div className="itema">
-                    <div className="icona">
-                      <PublicOutlinedIcon />
+                  <>
+                    <div className="itema">
+                      <div className="icona">
+                        <PublicOutlinedIcon />
+                      </div>
+                      <div className="detaila">
+                        <span className="titlea"> Công khai</span>
+                        <span className="nda">
+                          Bất kì ai cũng có thể thấy mọi người trong nhóm và
+                          những bài đăng
+                        </span>
+                      </div>
                     </div>
-                    <div className="detaila">
-                      <span className="titlea"> Công khai</span>
-                      <span className="nda">
-                        Bất kì ai cũng có thể thấy mọi người trong nhóm và những
-                        bài đăng
-                      </span>
+                    <div className="itema">
+                      <div className="icona">
+                        <VisibilityOutlinedIcon />
+                      </div>
+                      <div className="detaila">
+                        <span className="titlea"> Hiển thị</span>
+                        <span className="nda">
+                          Ai cũng có thể tìm thấy nhóm này
+                        </span>
+                      </div>
                     </div>
-                  </div>
+                  </>
                 ) : (
-                  <div className="itema">
-                    <div className="icona">
-                      <LockOutlinedIcon />
+                  <>
+                    <div className="itema">
+                      <div className="icona">
+                        <LockOutlinedIcon />
+                      </div>
+                      <div className="detaila">
+                        <span className="titlea">Riêng tư</span>
+                        <span className="nda">
+                          Chỉ thành viên mới nhìn thấy mọi người trong nhóm và
+                          những bài đăng
+                        </span>
+                      </div>
                     </div>
-                    <div className="detaila">
-                      <span className="titlea">Riêng tư</span>
-                      <span className="nda">
-                        Chỉ thành viên mới nhìn thấy mọi người trong nhóm và
-                        những bài đăng
-                      </span>
+                    <div className="itema">
+                      <div className="icona">
+                        <VisibilityOutlinedIcon />
+                      </div>
+                      <div className="detaila">
+                        <span className="titlea"> Hiển thị</span>
+                        <span className="nda">
+                          Chỉ thành viên mới có thể tìm thấy nhóm này
+                        </span>
+                      </div>
                     </div>
-                  </div>
+                  </>
                 )}
-
-                <div className="itema">
-                  <div className="icona">
-                    <VisibilityOutlinedIcon />
-                  </div>
-
-                  <div className="detaila">
-                    <span className="titlea"> Hiển thị</span>
-                    <span className="nda">
-                      Ai cũng có thể tìm thấy nhóm này
-                    </span>
-                  </div>
-                </div>
               </div>
             </div>
           </div>

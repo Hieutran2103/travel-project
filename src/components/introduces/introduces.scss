@@ -29,20 +29,20 @@
     place-items: center;
     opacity: 1;
     visibility: hidden;
-    z-index: -100;
     transition: 0.5s;
     .container {
       -webkit-box-shadow: 0px 0px 25px -10px rgba(0, 0, 0, 0.38);
       -moz-box-shadow: 0px 0px 25px -10px rgba(0, 0, 0, 0.38);
       box-shadow: 0px 0px 25px -10px rgba(0, 0, 0, 0.38);
       position: relative;
-      border-radius: 1rem;
+      border-radius: 8px;
       width: 100vh;
-      height: fit-content;
+      height: 500px;
       background-color: themed("bgintro");
       display: grid;
       place-items: center;
       padding: 20px;
+      overflow-y: scroll;
       button {
         position: absolute;
         top: -10px;
@@ -141,6 +141,87 @@
           }
         }
       }
+      .memberVacationn {
+        background-color: themed("itemintro");
+        display: flex;
+        flex-direction: column;
+        width: 500px;
+        padding: 20px;
+        border-radius: 20px;
+        margin: 20px 0px;
+        span {
+          font-size: x-large;
+          color: themed("textColorActive");
+        }
+        hr {
+          margin: 20px 0;
+          border: none;
+          height: 0.5px !important;
+          background-color: rgb(103, 101, 101) !important;
+        }
+        .avaUsers {
+          display: flex;
+
+          .seeAva {
+            // background-color: aqua;
+            width: 374px;
+            overflow: hidden;
+            padding: 2px 0;
+            height: 32px;
+            // display: flex;
+            align-items: center;
+
+            img {
+              height: 32px;
+              width: 32px;
+              object-fit: cover;
+              border-radius: 50%;
+              margin-right: 2px;
+            }
+          }
+          .morePeople {
+            position: relative;
+            left: -34px;
+            top: 2px;
+            height: 32px;
+            width: 32px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            margin-right: 2px;
+            background-color: rgba(0, 0, 0, 0.5);
+            color: white;
+          }
+        }
+        .seeAll {
+          text-align: center;
+          background-color: themed("more");
+          color: themed("textColorActive");
+          margin-top: 15px;
+          width: 100%;
+          border-radius: 5px;
+          padding: 8px 0 8px;
+          cursor: pointer;
+          color: themed("textColorActive");
+        }
+      }
+    }
+    ::-webkit-scrollbar {
+      width: 8px;
+      height: 8px;
+    }
+    ::-webkit-scrollbar-thumb {
+      border-radius: 8px;
+      background: #888;
+    }
+    .container::-webkit-scrollbar {
+      width: 6px;
+      height: 8px;
+    }
+    .container::-webkit-scrollbar-thumb {
+      border-radius: 8px;
+      background: #888;
     }
   }
 }

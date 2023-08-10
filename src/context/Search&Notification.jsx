@@ -10,6 +10,14 @@ const Search = ({ children }) => {
   const [isImageVacationOpen, setImageVacationOpen] = useState(false);
   const [editPost, setEditPost] = useState(false);
   const [editSpecific, setEditSpecific] = useState(false);
+  const [userVacation, setUserVacation] = useState(false);
+
+  const openUserVacation = () => {
+    setUserVacation(true);
+  };
+  const closeUserVacation = () => {
+    setUserVacation(false);
+  };
 
   const openEditSpecific = () => {
     setEditSpecific(true);
@@ -62,6 +70,7 @@ const Search = ({ children }) => {
         isNotifiOpen,
         isImageVacationOpen,
         editSpecific,
+        userVacation,
         setIsSearchOpen,
         setIsNotifichOpen,
         openSearch,
@@ -76,6 +85,8 @@ const Search = ({ children }) => {
         closeEdit,
         openEditSpecific,
         closeEditSpecific,
+        openUserVacation,
+        closeUserVacation,
       }}
     >
       {children}

@@ -4,18 +4,14 @@ import PublicOutlinedIcon from "@mui/icons-material/PublicOutlined";
 import VisibilityOutlinedIcon from "@mui/icons-material/VisibilityOutlined";
 import AccessTimeOutlinedIcon from "@mui/icons-material/AccessTimeOutlined";
 import ClearIcon from "@mui/icons-material/Clear";
-
+import MoreHorizOutlinedIcon from "@mui/icons-material/MoreHorizOutlined";
 import "./introduces.scss";
 
-const Introduces = () => {
+const Introduces = ({ posts }) => {
   const [t, i18] = useTranslation("global");
 
-  const {
-    isIntroduceOpen,
-    isImageVacationOpen,
-    closeIntroduce,
-    closeImageVacation,
-  } = useGlobalSearch();
+  const { isIntroduceOpen, closeIntroduce, openUserVacation } =
+    useGlobalSearch();
 
   return (
     <div className={isIntroduceOpen ? "show-introduces" : "introduces"}>
@@ -70,6 +66,26 @@ const Introduces = () => {
               <span className="title"> Lịch sử</span>
               <span className="nd">Đã tạo nhóm vào 13 tháng 8, 2022</span>
             </div>
+          </div>
+        </div>
+
+        <div className="memberVacationn">
+          <span>Thành viên </span>
+          <hr />
+          <div className="avaUsers">
+            <div className="seeAva">
+              {posts.map((post, index) => {
+                const { profilePic } = post;
+                return <img key={index} src={profilePic} alt="1" />;
+              })}
+            </div>
+
+            <div className="morePeople">
+              <MoreHorizOutlinedIcon style={{ fontSize: "15px" }} />
+            </div>
+          </div>
+          <div className="seeAll" onClick={openUserVacation}>
+            Xem tất cả
           </div>
         </div>
       </div>

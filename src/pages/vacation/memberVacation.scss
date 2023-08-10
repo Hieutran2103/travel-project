@@ -1,0 +1,53 @@
+@import "../../style.scss";
+
+.memberVacation {
+  @include themify($themes) {
+    height: 100%;
+    width: 100%;
+    position: fixed;
+    top: 0;
+    left: 0;
+    display: grid;
+    place-items: center;
+    opacity: 0;
+    visibility: hidden;
+    z-index: 0;
+  }
+}
+.show-memberVacation {
+  @include themify($themes) {
+    height: 100%;
+    width: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    opacity: 1 !important;
+    visibility: visible !important;
+    z-index: 1000 !important;
+    display: grid;
+    place-items: center;
+    opacity: 1;
+    visibility: hidden;
+    transition: 0.5s;
+
+    .containMember {
+      -webkit-box-shadow: 0px 0px 25px -10px rgba(0, 0, 0, 0.38);
+      -moz-box-shadow: 0px 0px 25px -10px rgba(0, 0, 0, 0.38);
+      box-shadow: 0px 0px 25px -10px rgba(0, 0, 0, 0.38);
+      position: relative;
+      border-radius: 8px;
+      width: 99vh;
+      height: 510px;
+      background-color: #efefef;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 20px;
+      row-gap: 0;
+      padding: 30px 25px;
+    }
+  }
+}

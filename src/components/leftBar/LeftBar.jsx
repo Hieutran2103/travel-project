@@ -40,7 +40,9 @@ const LeftBar = () => {
         <div className="container">
           <div className="menu">
             <div className="logo">
-              <img src={logoNewfeed} alt="" />
+              <Link style={{ textDecoration: "none", color: "inherit" }} to="/">
+                <img src={logoNewfeed} alt="" />
+              </Link>
             </div>
 
             <div className="items">
@@ -48,8 +50,9 @@ const LeftBar = () => {
                 {" "}
                 <HomeOutlinedIcon style={{ height: "30px", width: "30px" }} />
               </div>
-
-              <span>{t("leftBar.home")}</span>
+              <Link style={{ textDecoration: "none", color: "inherit" }} to="/">
+                <span>{t("leftBar.home")}</span>
+              </Link>
             </div>
             <div className="items" onClick={openSearch}>
               <div className="icon">

@@ -5,12 +5,7 @@ const ListAdd = ({ results, selectUser }) => {
     <div className="listAdd">
       {results.map((result, id) => {
         return (
-          <div
-            className="userAdd"
-            key={id}
-            name="ad"
-            onClick={() => selectUser(result)}
-          >
+          <div className="userAdd" key={id} onClick={() => selectUser(result)}>
             <img src={result.profilePic} alt="" />
             <div className="detailAdd">
               <span className="nameAdd">{result.name}</span>

@@ -18,6 +18,7 @@ import SettingPass from "./pages/setting/settingPass";
 import CreateVacation from "./pages/createVacation/CreateVacation";
 import Profile from "./pages/profile/Profile";
 import PostList from "./components/postList/PostList";
+import ErrorPage from "./pages/Error/Error-Page";
 
 function App() {
   const { currentUser } = useGlobalContextAuth();
@@ -111,6 +112,12 @@ function App() {
       path: "/createVacation",
       element: <CreateVacation />,
     },
+    {
+      path: "/*",
+      element: <ErrorPage />,
+    },
+    
+    
   ]);
   return <RouterProvider router={router} />;
 }

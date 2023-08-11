@@ -1,0 +1,85 @@
+@import "../../style.scss";
+
+::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+  }
+  ::-webkit-scrollbar-thumb {
+    border-radius: 20px;
+    background: #888;
+  }
+  .listNotifi::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+  }
+  .listNotifi::-webkit-scrollbar-thumb {
+    border-radius: 20px;
+    background: #888;
+  }
+
+  .listNotifi {
+    @include themify($themes) {
+      display: flex;
+      flex-direction: column;
+      justify-content: baseline;
+      gap: 5px;
+      overflow-y: scroll;
+      background: themed("bg");
+      .title-all{
+        display: flex;
+        gap: 50px;
+      .title-1 {
+        color: themed("textColorActive");
+        margin-left: 30px;
+      }
+      .title-2{
+        color: themed("textColorActive");
+      }
+    }
+      .listUser {
+        margin-top: 15px;
+        .user:hover {
+          cursor: pointer;
+          transition: 0.5s;
+          background: themed("bgnewfeed");
+        }
+        .user {
+          color: themed("textColorActive");
+          padding: 10px;
+          border-radius: 10px;
+          margin-top: 20px;
+          display: flex;
+          gap: 20px;
+          img {
+            width: 40px;
+            height: 40px;
+            object-fit: cover;
+            border-radius: 50%;
+          }
+          .iconec{
+            position:relative;
+            margin-top:30px;
+            left:-25px;
+            color:  aliceblue;
+            background-color: rgb(238, 0, 255);
+            border-radius: 10px;
+            max-height: 15px;
+            max-width: 15px;
+          }
+
+          .detail {
+            display: flex;
+            flex-direction: column;
+            gap: 2px;
+            .name {
+              font-weight: 500;
+            }
+            .follower {
+              font-size: 12px;
+            }
+          }
+        }
+      }
+    }
+  }
+  

@@ -1,0 +1,105 @@
+.all-of-noInternet{
+    background: radial-gradient(circle at 7.4% 45.1%, rgb(236, 206, 251) 0%, rgb(205, 237, 246) 45.1%, rgb(227, 251, 252) 78.4%, rgb(230, 247, 235) 90%);
+    margin-top: 0;
+    height: 100vh;
+    display:flex;
+    flex-direction: row;
+
+    img.logoto{
+        width: 180px;
+        height: 180px;
+        position: absolute;
+        top: -20px;
+    }
+    
+
+
+
+    .second-content{
+        display: flex;
+        align-items: center;
+        justify-items: center;
+        flex-direction: column;
+        height: 100vh;
+        width: 75vh;
+        gap:0.1rem;
+        position: absolute;
+        left: 520px;
+        margin-left: 10px;
+
+        .symbol{
+            display: flex;
+            margin-top: 90px;
+            gap:30px;
+            .icon-internet1{
+                color: rgb(10, 180, 1);
+                
+            }
+            .icon-internet2{
+                color: rgb(221, 229, 0);
+            }
+            .icon-internet3{
+                color: rgb(250, 6, 6);
+
+            }
+        }
+    
+
+    h1.error-text1{
+        text-align: center;
+        padding: 3px;
+        font-family: Cursive;
+        font-size: 60px;
+        color: rgb(111, 0, 117);
+    }
+    h1.error-text{
+        text-align: center;
+        padding: 3px;
+        font-family: Cursive;
+        font-size: 40px;
+        color: rgb(33, 2, 35);
+    }
+
+   
+
+    .btn-first{
+        text-align:center;
+        
+        border:none;
+        width: 13rem;
+        font-size: 30px;
+        font-family: "Catamaran", sans-serif;
+       
+        
+       align-self: center;
+       background: linear-gradient(106.7deg, rgb(151, 150, 240) 12.1%, rgb(255, 206, 236) 63.2%);
+       border-radius: 70px;
+        cursor: pointer;
+        .linkto-home{
+            color: rgb(50, 0, 56);
+            text-decoration: none;
+        }
+       
+
+    }
+    .btn-first:hover{
+        transition: 2s;
+        
+        background: linear-gradient(76.5deg, rgb(129, 252, 255) 0.4%, rgb(255, 175, 207) 49.8%, rgb(255, 208, 153) 98.6%);
+        
+        .linkto-home{
+            color: purple;
+            text-decoration: none;
+        }
+    }
+    }
+
+
+
+
+
+
+
+
+
+}

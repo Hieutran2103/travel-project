@@ -104,8 +104,12 @@ const LeftBar = () => {
             </div>
             <div className="profile">
               <img src={currentUser.profilePic} alt="" />
-
-              <span>{t("leftBar.profile")}</span>
+              <Link
+                style={{ textDecoration: "none", color: "inherit" }}
+                to={`/profile/${currentUser.id}`}
+              >
+                <span>{t("leftBar.profile")}</span>
+              </Link>
             </div>
 
             <div className="logout ">

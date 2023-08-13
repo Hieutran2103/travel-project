@@ -11,6 +11,8 @@ function ProfileBar({ setSelectedComponent }) {
     setSelectedButton(icon);
     if (icon === "Post") {
       setSelectedComponent("PostList");
+    } else if (icon === "Album") {
+      setSelectedComponent("AlbumList");
     } else if (icon === "Vacation") {
       setSelectedComponent("VacationList");
     }

@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import ProfileInfo from "../../components/profileInfo/ProfileInfo";
 import ProfileBar from "../../components/profileBar/profileBar";
+import AlbumList from "../../components/albumList/AlbumList";
 import PostList from "../../components/postList/PostList";
 import VacationList from "../../components/vacationList/VacationList";
 import "./profile.scss";
@@ -17,6 +18,7 @@ function Profile() {
         <PostList setNumberOfPosts={setNumberOfPosts} />
       ) : null}
       {selectedComponent === "VacationList" ? <VacationList /> : null}
+      {selectedComponent === "AlbumList" ? <AlbumList /> : null}
     </div>
   );
 }

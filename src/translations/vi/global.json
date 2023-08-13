@@ -20,7 +20,8 @@
   },
   "rightBar": {
     "suggest": "Gợi ý cho bạn",
-    "follow": "Theo dõi",
-    "follower": "Người theo dõi"
+    "visit": "Xem",
+    "follower": "Người theo dõi",
+    "by": "Bởi"
   }
 }

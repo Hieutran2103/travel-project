@@ -40,7 +40,10 @@ const CreateVacation = () => {
   };
   const handleImageChange = (e) => {
     const file = e.target.files[0];
-    setInfomation({ ...information, [e.target.name]: file });
+    setInfomation({
+      ...information,
+      [e.target.name]: URL.createObjectURL(file),
+    });
     setImage(file);
   };
   const handleOption = (e) => {

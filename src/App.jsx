@@ -17,7 +17,6 @@ import Setting from "./pages/setting/Setting";
 import SettingPass from "./pages/setting/settingPass";
 import CreateVacation from "./pages/createVacation/CreateVacation";
 import Profile from "./pages/profile/Profile";
-import PostList from "./components/postList/PostList";
 import ErrorPage from "./pages/Error/Error-Page";
 
 function App() {
@@ -116,8 +115,6 @@ function App() {
       path: "/*",
       element: <ErrorPage />,
     },
-    
-    
   ]);
   return <RouterProvider router={router} />;
 }

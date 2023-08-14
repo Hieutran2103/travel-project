@@ -27,47 +27,47 @@ const RightBar = () => {
           <div className="others">
             <div className="other">
               <img
-                src="https://scontent.fsgn2-8.fna.fbcdn.net/v/t1.15752-9/333777571_873881007235574_6229213634839464353_n.jpg?_nc_cat=102&ccb=1-7&_nc_sid=ae9488&_nc_ohc=-vCR427BOdkAX-p-jA9&_nc_ht=scontent.fsgn2-8.fna&oh=03_AdSp0tPk6yip7E_PS95KmB1gWy1cawYuipIVldtj6EE9vA&oe=64DD9BF7"
+                src="https://images.adsttc.com/media/images/5d44/14fa/284d/d1fd/3a00/003d/large_jpg/eiffel-tower-in-paris-151-medium.jpg?1564742900"
                 alt=""
               />
               <div className="info">
-                <div className="name">Dương Văn Cải</div>
-                <div className="text">500 {t("rightBar.follower")}</div>
+                <div className="name">Paris</div>
+                <div className="text">{t("rightBar.by")} Hien</div>
               </div>
-              <div className="follow"> {t("rightBar.follow")}</div>
+              <div className="follow"> {t("rightBar.visit")}</div>
             </div>
             <div className="other">
               <img
-                src="https://scontent.fsgn2-8.fna.fbcdn.net/v/t1.15752-9/333777571_873881007235574_6229213634839464353_n.jpg?_nc_cat=102&ccb=1-7&_nc_sid=ae9488&_nc_ohc=-vCR427BOdkAX-p-jA9&_nc_ht=scontent.fsgn2-8.fna&oh=03_AdSp0tPk6yip7E_PS95KmB1gWy1cawYuipIVldtj6EE9vA&oe=64DD9BF7"
+                src="https://assets.editorial.aetnd.com/uploads/2019/03/topic-london-gettyimages-760251843-feature.jpg"
                 alt=""
               />
               <div className="info">
-                <div className="name">Dương Văn Cải</div>
-                <div className="text">500 {t("rightBar.follower")}</div>
+                <div className="name">London</div>
+                <div className="text">{t("rightBar.by")} Hien</div>
               </div>
-              <div className="follow"> {t("rightBar.follow")}</div>
+              <div className="follow"> {t("rightBar.visit")}</div>
             </div>
             <div className="other">
               <img
-                src="https://scontent.fsgn2-8.fna.fbcdn.net/v/t1.15752-9/333777571_873881007235574_6229213634839464353_n.jpg?_nc_cat=102&ccb=1-7&_nc_sid=ae9488&_nc_ohc=-vCR427BOdkAX-p-jA9&_nc_ht=scontent.fsgn2-8.fna&oh=03_AdSp0tPk6yip7E_PS95KmB1gWy1cawYuipIVldtj6EE9vA&oe=64DD9BF7"
+                src="https://images.ctfassets.net/szez98lehkfm/FV7NgZtMbgnjxHFdzIFYl/0e3948c0fc08107ebb0c13f2475e4856/MyIC_Article_104204?fm=webp"
                 alt=""
               />
               <div className="info">
-                <div className="name">Dương Văn Cải</div>
-                <div className="text">500 {t("rightBar.follower")}</div>
+                <div className="name">Sydney</div>
+                <div className="text">{t("rightBar.by")} Hien</div>
               </div>
-              <div className="follow"> {t("rightBar.follow")}</div>
+              <div className="follow"> {t("rightBar.visit")}</div>
             </div>
             <div className="other">
               <img
-                src="https://scontent.fsgn2-8.fna.fbcdn.net/v/t1.15752-9/333777571_873881007235574_6229213634839464353_n.jpg?_nc_cat=102&ccb=1-7&_nc_sid=ae9488&_nc_ohc=-vCR427BOdkAX-p-jA9&_nc_ht=scontent.fsgn2-8.fna&oh=03_AdSp0tPk6yip7E_PS95KmB1gWy1cawYuipIVldtj6EE9vA&oe=64DD9BF7"
+                src="https://ik.imagekit.io/tvlk/blog/2022/11/dia-diem-du-lich-bangkok-1.jpg?tr=dpr-2,w-675"
                 alt=""
               />
               <div className="info">
-                <div className="name">Dương Văn Cải</div>
-                <div className="text">500 {t("rightBar.follower")}</div>
+                <div className="name">Bangkok</div>
+                <div className="text">{t("rightBar.by")} Hien</div>
               </div>
-              <div className="follow"> {t("rightBar.follow")}</div>
+              <div className="follow"> {t("rightBar.visit")}</div>
             </div>
           </div>
 

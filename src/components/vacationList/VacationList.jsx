@@ -91,7 +91,7 @@ const itemData = [
 
 function VacationList() {
   return (
-    <div>
+    <div className="vacationContainer">
       {itemData.map((item) => (
         <div className="vacationList">
           <div className="container">

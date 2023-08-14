@@ -3,16 +3,15 @@
 .profileInfo {
   @include themify($themes) {
     display: flex;
-    margin: 0 100px 40px 100px;
+    margin: 0px 100px;
+    margin-bottom: 30px;
     width: 1000px;
-    -webkit-box-shadow: 0px 0px 25px -10px rgba(0, 0, 0, 0.38);
-    -moz-box-shadow: 0px 0px 25px -10px rgba(0, 0, 0, 0.38);
     box-shadow: 0px 0px 25px -10px rgba(0, 0, 0, 0.38);
     border-radius: 20px;
     color: themed("textColorActive");
     background: themed("bg");
     padding-top: 50px;
-    padding-bottom: 20px;
+    padding-bottom: 40px;
     .leftProfile {
       display: flex;
       align-items: center;
@@ -83,6 +82,7 @@
           min-width: 500px;
           max-height: 400px;
           overflow: auto;
+          color: black;
           .modalTitle {
             display: flex;
             justify-content: center;

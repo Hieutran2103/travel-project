@@ -19,8 +19,9 @@
     "share": "Share"
   },
   "rightBar": {
-    "suggest": "suggested for you",
-    "follow": "Follow",
-    "follower": "followers"
+    "suggest": "Suggested for you",
+    "visit": "Visit",
+    "follower": "followers",
+    "by": "By"
   }
 }

@@ -4,5 +4,8 @@
   @include themify($themes) {
     margin-top: 0;
     background: themed("bgnewfeed");
+    padding-right: 100px;
+    padding-left: 100px;
+    padding-top: 40px;
   }
 }

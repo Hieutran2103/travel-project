@@ -8,15 +8,18 @@
     margin: 0px 100px;
     font-size: 20px;
     width: 1000px;
+
     .vacationList {
-      border: 1px solid rgb(186, 184, 184);
-      border-radius: 20px;
       margin-bottom: 10px;
       display: flex;
       justify-content: center;
       .container {
+        border: 1px solid rgb(186, 184, 184);
+        border-radius: 20px;
         display: flex;
         margin: 10px;
+        width: 950px;
+        padding: 10px;
         .imgVacation {
           height: 275px;
           width: 400px;

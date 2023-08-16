@@ -14,8 +14,10 @@ const CreateVacation = () => {
   const [something, setSomething] = useState("");
   const [intro, setIntro] = useState("");
   const arrayBegin = [];
+  const UserID = [];
 
   let userAdded = useRef([]);
+  let userIDD = useRef([]);
 
   const [information, setInfomation] = useState({
     name: "",
@@ -23,7 +25,7 @@ const CreateVacation = () => {
     intro: "",
     option: "Công khai",
     image: "",
-    userAdd: userAdded,
+    userAdd: userIDD,
   });
   const handleName = (e) => {
     setName(e.target.value);
@@ -56,7 +58,10 @@ const CreateVacation = () => {
 
   const selectUser = (e) => {
     arrayBegin.push(e);
+    UserID.push(e.userId);
     let uniqueSet = [...new Set(arrayBegin)];
+    let userID = [...new Set(UserID)];
+    userIDD.current = userID;
     userAdded.current = uniqueSet;
   };
 
@@ -73,7 +78,7 @@ const CreateVacation = () => {
         vacation_name: taskTitle.name,
         vacation_description: taskTitle.something,
         audience: taskTitle.option === "Công khai" ? 0 : 1,
-        mentions: [],
+        mentions: taskTitle.userAdd.current,
         vacation_avatar: taskTitle.image,
         vacation_intro: taskTitle.intro,
       }),

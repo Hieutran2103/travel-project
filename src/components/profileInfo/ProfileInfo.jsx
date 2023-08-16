@@ -2,8 +2,6 @@ import React, { useState } from "react";
 import "./profileInfo.scss";
 import CloseIcon from "@mui/icons-material/Close";
 
-const users = [{}];
-
 function ProfileInfo({ numberOfPosts }) {
   const [followerModal, setFollowerModal] = useState(false);
 

@@ -18,6 +18,7 @@ import SettingPass from "./pages/setting/settingPass";
 import CreateVacation from "./pages/createVacation/CreateVacation";
 import Profile from "./pages/profile/Profile";
 import ErrorPage from "./pages/Error/Error-Page";
+import { ToastContainer } from "react-toastify";
 
 function App() {
   const { currentUser } = useGlobalContextAuth();

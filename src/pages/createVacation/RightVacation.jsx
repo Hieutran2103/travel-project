@@ -30,7 +30,6 @@ const RightVacation = ({ image, isPublic, name, something, intro }) => {
             </div>
           </div>
         </div>
-
         <div className="bottoma">
           <div className="lefta">
             <div className="containerz">

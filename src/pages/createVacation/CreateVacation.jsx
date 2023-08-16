@@ -2,6 +2,9 @@ import { useRef, useState } from "react";
 import LeftVacation from "./LeftVacation";
 import RightVacation from "./RightVacation";
 import "./createVacation.scss";
+import { ToastContainer, toast } from "react-toastify";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+import customFetch from "../../utils/url";
 
 const CreateVacation = () => {
   const inputRef = useRef(null);
@@ -12,7 +15,7 @@ const CreateVacation = () => {
   const [intro, setIntro] = useState("");
   const arrayBegin = [];
 
-  const userAdded = useRef([]);
+  let userAdded = useRef([]);
 
   const [information, setInfomation] = useState({
     name: "",
@@ -63,10 +66,40 @@ const CreateVacation = () => {
     setInfomation({ ...information, userAdd: newUser });
   };
 
+  const queryClient = useQueryClient();
+  const { mutate: createTask } = useMutation({
+    mutationFn: (taskTitle) =>
+      customFetch.post(`/vacations`, {
+        vacation_name: taskTitle.name,
+        vacation_description: taskTitle.something,
+        audience: taskTitle.option === "Công khai" ? 0 : 1,
+        mentions: [],
+        vacation_avatar: taskTitle.image,
+        vacation_intro: taskTitle.intro,
+      }),
+    onSuccess: (data) => {
+      queryClient.invalidateQueries({ queryKey: ["createVacation"] });
+      console.log(data);
+    },
+  });
+
   const handleSubmit = (e) => {
     e.preventDefault();
-    setInfomation({ ...information, userAdd: userAdded.current });
+    // setInfomation({ ...information, userAdd: userAdded.current });
+    // if (!e.target.elements.image.value) {
+    //   return toast.success("Please provide image");
+    // }
+    // if (!e.target.elements.name.value) {
+    //   return toast.error("Please provide name");
+    // }
+    // if (!e.target.elements.something.value) {
+    //   return toast.error("Please provide title");
+    // }
+    // if (!e.target.elements.intro.value) {
+    //   return toast.error("Please provide intro");
+    // }
     console.log(information);
+    createTask(information);
   };
 
   return (

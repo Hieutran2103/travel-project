@@ -82,7 +82,7 @@ const SearchAdd = ({ setResults }) => {
     <div className="searchAdd">
       <input
         type="text"
-        placeholder="Mời bạn bè..."
+        placeholder="Mời bạn bè (Không bắt buộc)"
         value={input}
         onChange={(e) => handleAddUser(e.target.value)}
       />

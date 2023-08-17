@@ -7,6 +7,7 @@ import { useTranslation } from "react-i18next";
 import { Link } from "react-router-dom";
 import customFetch from "../../utils/url";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { toast } from "react-toastify";
 const CreatePost = () => {
   const { currentUser } = useGlobalContextAuth();
   const [t, i18] = useTranslation("global");
@@ -18,10 +19,14 @@ const CreatePost = () => {
     mutationFn: (posts) => customFetch.post("/posts", posts),
     onSuccess: (data) => {
       queryClient.invalidateQueries({ queryKey: ["postsNF"] });
+      setDesc("");
+      setFile("");
+      toast.success("Successfully created post");
       console.log(data);
     },
     onError: (error) => {
       console.log(error);
+      toast.error("error");
     },
   });
 
@@ -37,6 +42,7 @@ const CreatePost = () => {
       console.log(error);
     }
   };
+
   const handleShare = async (e) => {
     e.preventDefault();
     let imgUrl = "";
@@ -57,6 +63,9 @@ const CreatePost = () => {
   const handleImg = (e) => {
     setFile(e.target.files);
   };
+  const handleDec = (e) => {
+    setDesc(e.target.value);
+  };
 
   return (
     <div className="createPost">
@@ -67,7 +76,8 @@ const CreatePost = () => {
             <input
               type="text"
               placeholder={`${t("newfeed.inputPost")} ${currentUser.name}?`}
-              onChange={(e) => setDesc(e.target.value)}
+              onChange={handleDec}
+              value={desc}
             />
           </div>
 

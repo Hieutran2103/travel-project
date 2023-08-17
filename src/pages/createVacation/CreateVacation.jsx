@@ -2,10 +2,11 @@ import { useRef, useState } from "react";
 import LeftVacation from "./LeftVacation";
 import RightVacation from "./RightVacation";
 import "./createVacation.scss";
-import { ToastContainer, toast } from "react-toastify";
+
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import customFetch from "../../utils/url";
-
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 const CreateVacation = () => {
   const inputRef = useRef(null);
   const [isPublic, setIsPublic] = useState("Công khai");
@@ -84,31 +85,47 @@ const CreateVacation = () => {
       }),
     onSuccess: (data) => {
       queryClient.invalidateQueries({ queryKey: ["createVacation"] });
+      toast.success("Successfully Created New Vacation");
       console.log(data);
+    },
+    onError: (error) => {
+      toast.error("Error");
     },
   });
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    // setInfomation({ ...information, userAdd: userAdded.current });
-    // if (!e.target.elements.image.value) {
-    //   return toast.success("Please provide image");
-    // }
-    // if (!e.target.elements.name.value) {
-    //   return toast.error("Please provide name");
-    // }
-    // if (!e.target.elements.something.value) {
-    //   return toast.error("Please provide title");
-    // }
-    // if (!e.target.elements.intro.value) {
-    //   return toast.error("Please provide intro");
-    // }
+
+    if (!e.target.elements.image.value) {
+      return toast.error("Please provide image");
+    }
+    if (!e.target.elements.name.value) {
+      return toast.error("Please provide name");
+    }
+    if (!e.target.elements.something.value) {
+      return toast.error("Please provide title");
+    }
+    if (!e.target.elements.intro.value) {
+      return toast.error("Please provide intro");
+    }
     console.log(information);
     createTask(information);
   };
 
   return (
     <div className="createVacation">
+      <ToastContainer
+        position="top-center"
+        autoClose={5000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="light"
+      />
       <LeftVacation
         handleImageClick={handleImageClick}
         handleImageChange={handleImageChange}

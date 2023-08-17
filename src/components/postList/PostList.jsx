@@ -181,8 +181,11 @@ function PostList({ setNumberOfPosts }) {
                     style={{
                       display: "flex",
                       alignItems: "center",
-                      borderBottom: "1px solid grey",
+                      borderBottom: "1px solid rgb(239,239,239)",
                       marginBottom: "10px",
+                      position: "sticky",
+                      top: 0,
+                      backgroundColor: "white",
                     }}
                   >
                     <img
@@ -243,287 +246,6 @@ function PostList({ setNumberOfPosts }) {
                   </div>
                   <div
                     style={{
-                      display: "flex",
-                      alignItems: "center",
-                      marginBottom: "10px",
-                    }}
-                  >
-                    <img
-                      src="https://i.ebayimg.com/images/g/ksYAAOSwD7ljaYRn/s-l1600.jpg"
-                      alt="avatar"
-                      style={{
-                        width: "50px",
-                        height: "50px",
-                        borderRadius: "50%",
-                        marginBottom: "10px",
-                        marginLeft: "10px",
-                        marginTop: "10px",
-                      }}
-                    />
-                    <div
-                      style={{
-                        marginLeft: "10px",
-                        fontWeight: 600,
-                      }}
-                    >
-                      chinhdo
-                    </div>
-                    <div
-                      style={{
-                        marginLeft: "10px",
-                      }}
-                    >
-                      anh dep zai qua
-                    </div>
-                  </div>
-                  <div
-                    style={{
-                      display: "flex",
-                      alignItems: "center",
-                      marginBottom: "10px",
-                    }}
-                  >
-                    <img
-                      src="https://i.ebayimg.com/images/g/ksYAAOSwD7ljaYRn/s-l1600.jpg"
-                      alt="avatar"
-                      style={{
-                        width: "50px",
-                        height: "50px",
-                        borderRadius: "50%",
-                        marginBottom: "10px",
-                        marginLeft: "10px",
-                        marginTop: "10px",
-                      }}
-                    />
-                    <div
-                      style={{
-                        marginLeft: "10px",
-                        fontWeight: 600,
-                      }}
-                    >
-                      chinhdo
-                    </div>
-                    <div
-                      style={{
-                        marginLeft: "10px",
-                      }}
-                    >
-                      anh dep zai qua
-                    </div>
-                  </div>
-                  <div
-                    style={{
-                      display: "flex",
-                      alignItems: "center",
-                      marginBottom: "10px",
-                    }}
-                  >
-                    <img
-                      src="https://i.ebayimg.com/images/g/ksYAAOSwD7ljaYRn/s-l1600.jpg"
-                      alt="avatar"
-                      style={{
-                        width: "50px",
-                        height: "50px",
-                        borderRadius: "50%",
-                        marginBottom: "10px",
-                        marginLeft: "10px",
-                        marginTop: "10px",
-                      }}
-                    />
-                    <div
-                      style={{
-                        marginLeft: "10px",
-                        fontWeight: 600,
-                      }}
-                    >
-                      chinhdo
-                    </div>
-                    <div
-                      style={{
-                        marginLeft: "10px",
-                      }}
-                    >
-                      anh dep zai qua
-                    </div>
-                  </div>
-                  <div
-                    style={{
-                      display: "flex",
-                      alignItems: "center",
-                      marginBottom: "10px",
-                    }}
-                  >
-                    <img
-                      src="https://i.ebayimg.com/images/g/ksYAAOSwD7ljaYRn/s-l1600.jpg"
-                      alt="avatar"
-                      style={{
-                        width: "50px",
-                        height: "50px",
-                        borderRadius: "50%",
-                        marginBottom: "10px",
-                        marginLeft: "10px",
-                        marginTop: "10px",
-                      }}
-                    />
-                    <div
-                      style={{
-                        marginLeft: "10px",
-                        fontWeight: 600,
-                      }}
-                    >
-                      chinhdo
-                    </div>
-                    <div
-                      style={{
-                        marginLeft: "10px",
-                      }}
-                    >
-                      anh dep zai qua
-                    </div>
-                  </div>
-                  <div
-                    style={{
-                      display: "flex",
-                      alignItems: "center",
-                      marginBottom: "10px",
-                    }}
-                  >
-                    <img
-                      src="https://i.ebayimg.com/images/g/ksYAAOSwD7ljaYRn/s-l1600.jpg"
-                      alt="avatar"
-                      style={{
-                        width: "50px",
-                        height: "50px",
-                        borderRadius: "50%",
-                        marginBottom: "10px",
-                        marginLeft: "10px",
-                        marginTop: "10px",
-                      }}
-                    />
-                    <div
-                      style={{
-                        marginLeft: "10px",
-                        fontWeight: 600,
-                      }}
-                    >
-                      chinhdo
-                    </div>
-                    <div
-                      style={{
-                        marginLeft: "10px",
-                      }}
-                    >
-                      anh dep zai qua
-                    </div>
-                  </div>
-                  <div
-                    style={{
-                      display: "flex",
-                      alignItems: "center",
-                      marginBottom: "10px",
-                    }}
-                  >
-                    <img
-                      src="https://i.ebayimg.com/images/g/ksYAAOSwD7ljaYRn/s-l1600.jpg"
-                      alt="avatar"
-                      style={{
-                        width: "50px",
-                        height: "50px",
-                        borderRadius: "50%",
-                        marginBottom: "10px",
-                        marginLeft: "10px",
-                        marginTop: "10px",
-                      }}
-                    />
-                    <div
-                      style={{
-                        marginLeft: "10px",
-                        fontWeight: 600,
-                      }}
-                    >
-                      chinhdo
-                    </div>
-                    <div
-                      style={{
-                        marginLeft: "10px",
-                      }}
-                    >
-                      anh dep zai qua
-                    </div>
-                  </div>
-                  <div
-                    style={{
-                      display: "flex",
-                      alignItems: "center",
-                      marginBottom: "10px",
-                    }}
-                  >
-                    <img
-                      src="https://i.ebayimg.com/images/g/ksYAAOSwD7ljaYRn/s-l1600.jpg"
-                      alt="avatar"
-                      style={{
-                        width: "50px",
-                        height: "50px",
-                        borderRadius: "50%",
-                        marginBottom: "10px",
-                        marginLeft: "10px",
-                        marginTop: "10px",
-                      }}
-                    />
-                    <div
-                      style={{
-                        marginLeft: "10px",
-                        fontWeight: 600,
-                      }}
-                    >
-                      chinhdo
-                    </div>
-                    <div
-                      style={{
-                        marginLeft: "10px",
-                      }}
-                    >
-                      anh dep zai qua
-                    </div>
-                  </div>
-                  <div
-                    style={{
-                      display: "flex",
-                      alignItems: "center",
-                      marginBottom: "10px",
-                    }}
-                  >
-                    <img
-                      src="https://i.ebayimg.com/images/g/ksYAAOSwD7ljaYRn/s-l1600.jpg"
-                      alt="avatar"
-                      style={{
-                        width: "50px",
-                        height: "50px",
-                        borderRadius: "50%",
-                        marginBottom: "10px",
-                        marginLeft: "10px",
-                        marginTop: "10px",
-                      }}
-                    />
-                    <div
-                      style={{
-                        marginLeft: "10px",
-                        fontWeight: 600,
-                      }}
-                    >
-                      chinhdo
-                    </div>
-                    <div
-                      style={{
-                        marginLeft: "10px",
-                      }}
-                    >
-                      anh dep zai qua
-                    </div>
-                  </div>
-
-                  <div
-                    style={{
                       position: "sticky",
                       bottom: 0,
                       backgroundColor: "white",
@@ -532,7 +254,7 @@ function PostList({ setNumberOfPosts }) {
                     <div
                       style={{
                         display: "flex",
-                        borderTop: "1px solid grey",
+                        borderTop: "1px solid rgb(239,239,239)",
                         paddingTop: "10px",
                       }}
                     >
@@ -579,12 +301,14 @@ function PostList({ setNumberOfPosts }) {
                           width: "90%",
                           display: "flex",
                           alignItems: "center",
+                          height: "20px",
                         }}
                       />
                       <SendOutlinedIcon
                         sx={{
                           display: "flex",
                           alignItems: "center",
+                          marginRight: "10px",
                         }}
                       />
                     </div>

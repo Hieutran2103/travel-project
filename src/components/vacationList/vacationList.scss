@@ -4,11 +4,10 @@
   @include themify($themes) {
     color: themed("textColorActive");
     background: themed("bg");
-    padding-top: 20px;
+    padding-top: 10px;
     margin: 0px 100px;
     font-size: 20px;
     width: 1000px;
-
     .vacationList {
       margin-bottom: 10px;
       display: flex;

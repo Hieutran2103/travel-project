@@ -47,10 +47,10 @@ function CreateAlbum() {
       imgUrl = await UpLoadImg();
     }
     createTask({
-      album_name: name,
-      album_description: desc,
+      album_name: input.name,
+      album_description: input.description,
       audience: 0,
-      medias: [],
+      medias: imgUrl.result,
     });
   };
 
@@ -80,11 +80,11 @@ function CreateAlbum() {
       <div>
         <div>
           Name
-          <input type="text" onChange={handleChange} />
+          <input type="text" name="name" onChange={handleChange} />
         </div>
         <div>
           Desc
-          <input type="text" onChange={handleChange} />
+          <input type="text" name="description" onChange={handleChange} />
         </div>
         <input type="file" id="file" multiple onChange={handleImg} />
       </div>

@@ -205,7 +205,7 @@ const Vacation = () => {
               <span>Tìm hiểu thêm</span>
             </div>
           </div>
-          <div className="imageVacation">
+          {/* <div className="imageVacation">
             <div className="title">Ảnh được chia sẻ</div>
             <div className="post">
               {images.map((image) => {
@@ -219,7 +219,7 @@ const Vacation = () => {
             <div className="more" onClick={openImageVacation}>
               <span>Xem tất cả</span>
             </div>
-          </div>
+          </div> */}
         </div>
       </div>
     </div>

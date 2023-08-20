@@ -34,7 +34,7 @@ const CreatePost = () => {
     try {
       const formData = new FormData();
       for (let i = 0; i < file.length; i++) {
-        formData.append("image", file[0]);
+        formData.append("image", file[i]);
       }
       const res = await customFetch.post("/medias/upload-image", formData);
       return res.data;
@@ -83,7 +83,11 @@ const CreatePost = () => {
 
           <div className="right">
             {file && (
-              <img src={URL.createObjectURL(file[0])} className="file" alt="" />
+              <img
+                src={file ? URL.createObjectURL(file[0]) : null}
+                className="file"
+                alt=""
+              />
             )}
           </div>
         </div>

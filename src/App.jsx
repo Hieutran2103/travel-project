@@ -9,7 +9,6 @@ import Register from "./pages/register/Register";
 import LeftBar from "./components/leftBar/LeftBar";
 import RightBar from "./components/rightBar/RightBar";
 import Home from "./pages/home/Home";
-import "./style.scss";
 import { useGlobalContextDarkMode } from "./context/darkModeContext";
 import { useGlobalContextAuth } from "./context/AuthContext";
 import Vacation from "./pages/vacation/Vacation";
@@ -22,6 +21,12 @@ import ResetPass from "./pages/reset_Password/resetPass";
 import ForgetSend from "./pages/forget_Password/forget.send";
 import VerifyForgotPassword from "./pages/VerifyForgotPassowrd/VerifyForgotPassword";
 import CreateAlbum from "./components/createAlbum/CreateAlbum";
+import Album from "./pages/createAlbum/Album";
+import PostList from "./components/postList/PostList";
+import VacationList from "./components/vacationList/VacationList";
+import AlbumList from "./components/albumList/AlbumList";
+import AlbumDetail from "./components/albumDetail/AlbumDetail";
+import "./style.scss";
 
 function App() {
   const { currentUser } = useGlobalContextAuth();
@@ -100,6 +105,19 @@ function App() {
         {
           path: "/profile/:id",
           element: <Profile />,
+          children: [
+            { path: "", element: <PostList /> },
+            { path: "vacations", element: <VacationList /> },
+            { path: "albums", element: <AlbumList /> },
+            {
+              path: "albums/:id",
+              element: <AlbumDetail />,
+            },
+          ],
+        },
+        {
+          path: "/profile/createAlbum",
+          element: <Album />,
         },
       ],
     },
@@ -130,10 +148,6 @@ function App() {
     {
       path: "/*",
       element: <ErrorPage />,
-    },
-    {
-      path: "/profile/createAlbum",
-      element: <CreateAlbum />,
     },
   ]);
   return <RouterProvider router={router} />;

@@ -1,27 +1,65 @@
 import React from "react";
+import { Link, useParams } from "react-router-dom";
 import ImageList from "@mui/material/ImageList";
 import ImageListItem from "@mui/material/ImageListItem";
 import ImageListItemBar from "@mui/material/ImageListItemBar";
 import AddIcon from "@mui/icons-material/Add";
-import "./AlbumList.scss";
-import { Link } from "react-router-dom";
-
-const itemData = [
-  {
-    img: "https://images.unsplash.com/photo-1551963831-b3b1ca40c98e",
-    title: "Breakfast",
-    num: 10,
-  },
-];
+import customFetch from "../../utils/url";
+import "./albumList.scss";
+import { useQuery } from "@tanstack/react-query";
 
 function AlbumList() {
+  const { id } = useParams();
+
   const createAlbumItem = {
     title: "Create Album",
     num: 0,
     isCreateAlbum: true,
   };
 
-  const modifiedItemData = [createAlbumItem, ...itemData];
+  let userID = "";
+  const userJSON = localStorage.getItem("user");
+  if (userJSON) {
+    userID = JSON.parse(userJSON);
+  }
+
+  const apiUrlAlbum = `albums/user/${userID.id}?limit=100&page=1`;
+
+  const fetchAlbumInfo = async () => {
+    try {
+      const response = await customFetch.get(apiUrlAlbum);
+      return response.data;
+    } catch (error) {
+      throw new Error("Error fetching album data");
+    }
+  };
+
+  const {
+    data: albumData,
+    isLoading: isAlbumLoading,
+    isError: isAlbumError,
+  } = useQuery(["albumData", apiUrlAlbum], fetchAlbumInfo);
+
+  if (isAlbumLoading) {
+    return (
+      <div className="lds-ring">
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+      </div>
+    );
+  }
+
+  if (isAlbumError) {
+    return <div>Error: {error.message}</div>;
+  }
+
+  const albums = albumData.data.result;
+
+  const modifiedItemData = [createAlbumItem, ...(albums || [])];
+
+  console.log(albums);
 
   return (
     <div className="albumList">
@@ -31,7 +69,7 @@ function AlbumList() {
             className={`imageList ${
               item.isCreateAlbum ? "createAlbumItem" : ""
             }`}
-            key={item.img}
+            key={item._id || "createAlbum"}
           >
             {item.isCreateAlbum ? (
               <Link
@@ -60,11 +98,17 @@ function AlbumList() {
                 </div>
               </Link>
             ) : (
-              <>
+              <Link
+                to={`/profile/${id}/albums/${item._id}`}
+                style={{
+                  textDecoration: "none",
+                  color: "inherit",
+                }}
+              >
                 <img
                   className="imagePost"
-                  src={`${item.img}`}
-                  alt={item.title}
+                  src={item.medias[0]?.url || "default_image_url"}
+                  alt={item.album_name}
                   loading="lazy"
                 />
                 <ImageListItemBar
@@ -76,13 +120,13 @@ function AlbumList() {
                         margin: "100px 0px",
                       }}
                     >
-                      {item.title}
+                      {item.album_name}
                     </span>
                   }
-                  subtitle={<span>{item.num} Items</span>}
+                  subtitle={<span>{item.album_description}</span>}
                   position="below"
                 />
-              </>
+              </Link>
             )}
           </ImageListItem>
         ))}

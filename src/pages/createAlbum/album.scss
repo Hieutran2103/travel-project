@@ -1,0 +1,10 @@
+@import "../../style.scss";
+
+.album {
+  @include themify($themes) {
+    margin-top: 0px;
+    background: themed("bgnewfeed");
+    padding-right: 100px;
+    padding-left: 100px;
+  }
+}

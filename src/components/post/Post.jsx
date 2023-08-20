@@ -14,7 +14,7 @@ import ChevronRightOutlinedIcon from "@mui/icons-material/ChevronRightOutlined";
 import { useGlobalSearch } from "../../context/Search&Notification";
 
 const Post = ({ post, index, setCurrentpost, currentpost }) => {
-  const { image, profilePic, desc, name, userId } = post;
+  const { medias, content, userId, user } = post;
   // const currentPost = index;
 
   const { editPost, openEdit } = useGlobalSearch();
@@ -28,11 +28,11 @@ const Post = ({ post, index, setCurrentpost, currentpost }) => {
   const [currentPerson, setCurrentPerson] = useState(0);
 
   const checkNumber = (number) => {
-    if (number > image.length - 1) {
+    if (number > medias.length - 1) {
       return (number = 0);
     }
     if (number < 0) {
-      return (number = image.length - 1);
+      return (number = medias.length - 1);
     }
     return number;
   };
@@ -53,13 +53,20 @@ const Post = ({ post, index, setCurrentpost, currentpost }) => {
       <div className="container">
         <div className="user">
           <div className="userInfo">
-            <img src={profilePic} alt="" />
+            <img
+              src={
+                !user.avatar
+                  ? "https://antimatter.vn/wp-content/uploads/2022/11/anh-avatar-trang-fb-mac-dinh.jpg"
+                  : user.avatar
+              }
+              alt=""
+            />
             <div className="details">
               <Link
                 to={`/profile/${userId}`}
                 style={{ textDecoration: "none", color: "inherit" }}
               >
-                <span className="name">{name}</span>
+                <span className="name"> {user.name}</span>
               </Link>
               <span className="date">1 min ago</span>
             </div>
@@ -70,9 +77,9 @@ const Post = ({ post, index, setCurrentpost, currentpost }) => {
           {editPost ? <EditPost currentpost={currentpost} post={post} /> : null}
         </div>
         <div className="content">
-          <p>{desc}</p>
+          <p>{content}</p>
           <div className="slider-container">
-            {image.map((z, indexx) => {
+            {medias.map((z, indexx) => {
               return (
                 <div
                   className="slide"
@@ -85,7 +92,7 @@ const Post = ({ post, index, setCurrentpost, currentpost }) => {
                 </div>
               );
             })}
-            {image.length > 1 ? (
+            {medias.length > 1 ? (
               <>
                 <button type="button" className="prev" onClick={prevSlide}>
                   {" "}

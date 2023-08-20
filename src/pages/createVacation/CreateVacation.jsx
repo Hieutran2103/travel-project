@@ -152,9 +152,8 @@ const CreateVacation = () => {
         name={name}
         something={something}
         intro={intro}
-        name={name}
-        something={something}
-        intro={intro}
+       
+       
       />
     </div>
   );

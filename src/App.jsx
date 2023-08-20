@@ -18,8 +18,14 @@ import SettingPass from "./pages/setting/settingPass";
 import CreateVacation from "./pages/createVacation/CreateVacation";
 import Profile from "./pages/profile/Profile";
 import ErrorPage from "./pages/Error/Error-Page";
+import ResetPass from "./pages/reset_Password/resetPass";
+import ForgetSend from "./pages/forget_Password/forget.send";
+import VerifyForgotPassword from "./pages/VerifyForgotPassowrd/VerifyForgotPassword";
 
 function App() {
+  
+  
+
   const { currentUser } = useGlobalContextAuth();
   const { darkMode } = useGlobalContextDarkMode();
 
@@ -102,6 +108,18 @@ function App() {
     {
       path: "/login",
       element: <Login />,
+    },
+    {
+      path:"/user-forgot-password",
+      element:<ForgetSend/>,
+    },
+    {
+      path:"/reset-password",
+      element:<ResetPass/>,
+    },
+    {
+      path:"/forgot-password",
+      element:<VerifyForgotPassword/>
     },
     {
       path: "/register",

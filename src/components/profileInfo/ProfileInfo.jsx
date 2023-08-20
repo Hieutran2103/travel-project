@@ -1,6 +1,9 @@
 import React, { useState } from "react";
 import "./profileInfo.scss";
 import CloseIcon from "@mui/icons-material/Close";
+import {Link} from "react-router-dom";
+
+
 
 function ProfileInfo({ numberOfPosts }) {
   const [followerModal, setFollowerModal] = useState(false);
@@ -27,7 +30,7 @@ function ProfileInfo({ numberOfPosts }) {
       <div className="rightProfile">
         <div className="info">
           <div className="userName">hientruongvkl</div>
-          <button className="editButton">Edit Profile</button>
+          <button className="editButton"><Link to="/setting/account">Edit Profile</Link></button>
           <button className="editButton">View Archive</button>
         </div>
         <div className="info">

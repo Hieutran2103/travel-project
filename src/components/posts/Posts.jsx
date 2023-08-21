@@ -7,11 +7,11 @@ import { useGlobalPage } from "../../context/Page";
 import { useQuery } from "@tanstack/react-query";
 
 import customFetch from "../../utils/url";
+import Button from "../buttonNextPage/Button";
 
 const Posts = () => {
-  const { currentUser } = useGlobalContextAuth();
+  // const { currentUser } = useGlobalContextAuth();
   const [currentpost, setCurrentpost] = useState(0);
-  // console.log(currentpost);
 
   const { page, limit } = useGlobalPage();
   const { data, isLoading } = useQuery({
@@ -23,21 +23,28 @@ const Posts = () => {
   }
   const reponse = data.data.result.posts;
 
+  if (isLoading) {
+    return;
+  }
+
   return (
-    <div className="posts">
-      {reponse &&
-        reponse.map((post, index) => {
-          return (
-            <Post
-              key={index}
-              post={post}
-              index={index}
-              setCurrentpost={setCurrentpost}
-              currentpost={currentpost}
-            />
-          );
-        })}
-    </div>
+    <>
+      <div className="posts">
+        {reponse &&
+          reponse.map((post, index) => {
+            return (
+              <Post
+                key={index}
+                post={post}
+                index={index}
+                setCurrentpost={setCurrentpost}
+                currentpost={currentpost}
+              />
+            );
+          })}
+      </div>
+      {reponse.length === 10 ? <Button /> : ""}
+    </>
   );
 };
 

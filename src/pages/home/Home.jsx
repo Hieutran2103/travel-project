@@ -3,6 +3,7 @@ import CreatePost from "../../components/createPost/createPost";
 import Posts from "../../components/posts/Posts";
 import "./home.scss";
 import "react-toastify/dist/ReactToastify.css";
+import Button from "../../components/buttonNextPage/Button";
 
 const Home = () => {
   return (

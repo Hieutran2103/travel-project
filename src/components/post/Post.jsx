@@ -12,9 +12,10 @@ import EditPost from "../editPost/EditPost";
 import ChevronLeftOutlinedIcon from "@mui/icons-material/ChevronLeftOutlined";
 import ChevronRightOutlinedIcon from "@mui/icons-material/ChevronRightOutlined";
 import { useGlobalSearch } from "../../context/Search&Notification";
+import moment from "moment";
 
 const Post = ({ post, index, setCurrentpost, currentpost }) => {
-  const { medias, content, userId, user } = post;
+  const { medias, content, userId, user, created_at, _id } = post;
   // const currentPost = index;
 
   const { editPost, openEdit } = useGlobalSearch();
@@ -48,6 +49,7 @@ const Post = ({ post, index, setCurrentpost, currentpost }) => {
       return checkNumber(rerult);
     });
   };
+
   return (
     <div className="post">
       <div className="container">
@@ -68,7 +70,7 @@ const Post = ({ post, index, setCurrentpost, currentpost }) => {
               >
                 <span className="name"> {user.name}</span>
               </Link>
-              <span className="date">1 min ago</span>
+              <span className="date">{moment(created_at).fromNow()}</span>
             </div>
           </div>
           <div className="edit" onClick={openEdit}>
@@ -121,7 +123,7 @@ const Post = ({ post, index, setCurrentpost, currentpost }) => {
             <TextsmsOutlinedIcon /> 10 {t("newfeed.comment")}
           </div>
         </div>
-        {commentOpen && <Comments />}
+        {commentOpen && <Comments postID={_id} />}
       </div>
     </div>
   );

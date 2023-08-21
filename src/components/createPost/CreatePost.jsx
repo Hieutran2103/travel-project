@@ -8,17 +8,20 @@ import { Link } from "react-router-dom";
 import customFetch from "../../utils/url";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { toast } from "react-toastify";
+import { useGlobalPage } from "../../context/Page";
 const CreatePost = () => {
   const { currentUser } = useGlobalContextAuth();
   const [t, i18] = useTranslation("global");
   const [file, setFile] = useState(null);
   const [desc, setDesc] = useState("");
+  const { setPage } = useGlobalPage();
 
   const queryClient = useQueryClient();
   const { mutate: createTask } = useMutation({
     mutationFn: (posts) => customFetch.post("/posts", posts),
     onSuccess: (data) => {
       queryClient.invalidateQueries({ queryKey: ["postsNF"] });
+      setPage(1);
       setDesc("");
       setFile("");
       toast.success("Successfully created post");
@@ -68,7 +71,7 @@ const CreatePost = () => {
   };
 
   return (
-    <div className="createPost">
+    <div className="createPost" id="createPosts">
       <div className="container">
         <div className="top">
           <div className="left">

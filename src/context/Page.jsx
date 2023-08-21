@@ -4,24 +4,26 @@ const PageContext = createContext();
 
 const PageProvider = ({ children }) => {
   const [page, setPage] = useState(1);
-  const [limit, setLimit] = useState(5);
-
+  const [limit, setLimit] = useState(10);
+  const [pageComment, setPageComment] = useState(1);
+  const [limitComment, setLimitComment] = useState(5);
   const handleNextPage = () => {
-    setPage((oldPage) => {
-      const newPage = oldPage + 1;
-      return setPage(newPage);
-    });
+    setPage(page + 1);
   };
-  const handleIncreaseLimit = () => {
-    setLimit((oldLimit) => {
-      const newLimit = oldLimit + 10;
-      return setPage(newLimit);
-    });
+  const handleNextPageComment = () => {
+    setPageComment(pageComment + 1);
   };
-
   return (
     <PageContext.Provider
-      value={{ page, limit, handleNextPage, handleIncreaseLimit }}
+      value={{
+        page,
+        limit,
+        pageComment,
+        limitComment,
+        handleNextPageComment,
+        setPage,
+        handleNextPage,
+      }}
     >
       {children}
     </PageContext.Provider>

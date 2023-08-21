@@ -5,17 +5,15 @@ import { toast } from "react-toastify";
 import { ToastContainer } from "react-toastify";
 import "./createAlbum.scss";
 import { ImageList, ImageListItem } from "@mui/material";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 function CreateAlbum() {
-  // const [input, setInputs] = useState({});
   const [file, setFile] = useState(null);
   const [desc, setDesc] = useState("");
   const [name, setName] = useState("");
   const [imageNames, setImageNames] = useState([]);
-
   const queryClient = useQueryClient();
-
+  const navigate = useNavigate();
   let userID = "";
   const userJSON = localStorage.getItem("user");
   if (userJSON) {
@@ -30,6 +28,9 @@ function CreateAlbum() {
       setDesc("");
       setFile("");
       toast.success("Successfully created album");
+      setTimeout(() => {
+        navigate(`/profile/${userID.id}/albums`);
+      }, 3000);
       console.log(data);
     },
     onError: (error) => {
@@ -42,7 +43,7 @@ function CreateAlbum() {
     try {
       const formData = new FormData();
       for (let i = 0; i < file.length; i++) {
-        formData.append("image", file[0]);
+        formData.append("image", file[i]);
       }
       const res = await customFetch.post("/medias/upload-image", formData);
       return res.data;
@@ -88,7 +89,7 @@ function CreateAlbum() {
     <div className="createAlbum">
       <ToastContainer
         position="top-center"
-        autoClose={3000}
+        autoClose={2000}
         hideProgressBar={false}
         newestOnTop={false}
         closeOnClick

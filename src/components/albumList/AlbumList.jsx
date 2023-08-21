@@ -5,8 +5,8 @@ import ImageListItem from "@mui/material/ImageListItem";
 import ImageListItemBar from "@mui/material/ImageListItemBar";
 import AddIcon from "@mui/icons-material/Add";
 import customFetch from "../../utils/url";
-import "./albumList.scss";
 import { useQuery } from "@tanstack/react-query";
+import "./albumList.scss";
 
 function AlbumList() {
   const { id } = useParams();
@@ -58,8 +58,6 @@ function AlbumList() {
   const albums = albumData.data.result;
 
   const modifiedItemData = [createAlbumItem, ...(albums || [])];
-
-  console.log(albums);
 
   return (
     <div className="albumList">

@@ -26,6 +26,10 @@
           cursor: pointer;
           position: relative;
         }
+        .icon:hover {
+          color: #e84be5;
+          transition: 0.2s;
+        }
       }
     }
   }

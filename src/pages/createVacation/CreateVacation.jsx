@@ -86,6 +86,7 @@ const CreateVacation = () => {
     onSuccess: (data) => {
       queryClient.invalidateQueries({ queryKey: ["createVacation"] });
       toast.success("Successfully Created New Vacation");
+
       console.log(data);
     },
     onError: (error) => {
@@ -108,7 +109,7 @@ const CreateVacation = () => {
     if (!e.target.elements.intro.value) {
       return toast.error("Please provide intro");
     }
-    console.log(information);
+
     createTask(information);
   };
 
@@ -152,8 +153,6 @@ const CreateVacation = () => {
         name={name}
         something={something}
         intro={intro}
-       
-       
       />
     </div>
   );

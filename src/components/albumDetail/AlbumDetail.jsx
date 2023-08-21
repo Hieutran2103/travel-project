@@ -235,8 +235,6 @@ function AlbumDetail() {
                 width: "100%",
                 height: "100%",
                 objectFit: "cover",
-                marginLeft: "5px",
-                marginRight: "5px",
               }}
               onClick={() => openModal(item)}
             />

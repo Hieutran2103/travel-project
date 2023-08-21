@@ -1,81 +1,63 @@
 import React from "react";
+import { Link, useParams } from "react-router-dom";
 import ImageList from "@mui/material/ImageList";
 import ImageListItem from "@mui/material/ImageListItem";
 import ImageListItemBar from "@mui/material/ImageListItemBar";
 import AddIcon from "@mui/icons-material/Add";
-import "./AlbumList.scss";
-
-const itemData = [
-  {
-    img: "https://images.unsplash.com/photo-1551963831-b3b1ca40c98e",
-    title: "Breakfast",
-    num: 10,
-  },
-  {
-    img: "https://images.unsplash.com/photo-1551782450-a2132b4ba21d",
-    title: "Burger",
-    num: 10,
-  },
-  {
-    img: "https://images.unsplash.com/photo-1522770179533-24471fcdba45",
-    title: "Camera",
-    num: 10,
-  },
-  {
-    img: "https://images.unsplash.com/photo-1444418776041-9c7e33cc5a9c",
-    title: "Coffee",
-    num: 10,
-  },
-  {
-    img: "https://images.unsplash.com/photo-1533827432537-70133748f5c8",
-    title: "Hats",
-    num: 10,
-  },
-  {
-    img: "https://images.unsplash.com/photo-1558642452-9d2a7deb7f62",
-    title: "Honey",
-    num: 10,
-  },
-  {
-    img: "https://images.unsplash.com/photo-1516802273409-68526ee1bdd6",
-    title: "Basketball",
-    num: 10,
-  },
-  {
-    img: "https://images.unsplash.com/photo-1518756131217-31eb79b20e8f",
-    title: "Fern",
-    num: 10,
-  },
-  {
-    img: "https://images.unsplash.com/photo-1597645587822-e99fa5d45d25",
-    title: "Mushrooms",
-    num: 10,
-  },
-  {
-    img: "https://images.unsplash.com/photo-1567306301408-9b74779a11af",
-    title: "Tomato basil",
-    num: 10,
-  },
-  {
-    img: "https://images.unsplash.com/photo-1471357674240-e1a485acb3e1",
-    title: "Sea star",
-    num: 10,
-  },
-  {
-    img: "https://images.unsplash.com/photo-1589118949245-7d38baf380d6",
-    title: "Bike",
-    num: 10,
-  },
-];
+import customFetch from "../../utils/url";
+import { useQuery } from "@tanstack/react-query";
+import "./albumList.scss";
 
 function AlbumList() {
+  const { id } = useParams();
+
   const createAlbumItem = {
     title: "Create Album",
     num: 0,
     isCreateAlbum: true,
   };
 
-  const modifiedItemData = [createAlbumItem, ...itemData];
+  let userID = "";
+  const userJSON = localStorage.getItem("user");
+  if (userJSON) {
+    userID = JSON.parse(userJSON);
+  }
+
+  const apiUrlAlbum = `albums/user/${userID.id}?limit=100&page=1`;
+
+  const fetchAlbumInfo = async () => {
+    try {
+      const response = await customFetch.get(apiUrlAlbum);
+      return response.data;
+    } catch (error) {
+      throw new Error("Error fetching album data");
+    }
+  };
+
+  const {
+    data: albumData,
+    isLoading: isAlbumLoading,
+    isError: isAlbumError,
+  } = useQuery(["albumData", apiUrlAlbum], fetchAlbumInfo);
+
+  if (isAlbumLoading) {
+    return (
+      <div className="lds-ring">
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+      </div>
+    );
+  }
+
+  if (isAlbumError) {
+    return <div>Error: {error.message}</div>;
+  }
+
+  const albums = albumData.data.result;
+
+  const modifiedItemData = [createAlbumItem, ...(albums || [])];
 
   return (
     <div className="albumList">
@@ -85,32 +67,46 @@ function AlbumList() {
             className={`imageList ${
               item.isCreateAlbum ? "createAlbumItem" : ""
             }`}
-            key={item.img}
+            key={item._id || "createAlbum"}
           >
             {item.isCreateAlbum ? (
-              <div>
-                <div className="createAlbumContent">
-                  <AddIcon
+              <Link
+                to="/profile/createAlbum"
+                style={{
+                  textDecoration: "none",
+                  color: "inherit",
+                }}
+              >
+                <div style={{ position: "relative" }}>
+                  <div className="createAlbumContent">
+                    <AddIcon
+                      style={{
+                        fontSize: 50,
+                      }}
+                    />
+                  </div>
+                  <span
                     style={{
-                      fontSize: 50,
+                      fontSize: "20px",
+                      marginTop: "10px",
                     }}
-                  />
+                  >
+                    {item.title}
+                  </span>
                 </div>
-                <span
-                  style={{
-                    fontSize: "20x",
-                    marginTop: "10px",
-                  }}
-                >
-                  {item.title}
-                </span>
-              </div>
+              </Link>
             ) : (
-              <>
+              <Link
+                to={`/profile/${id}/albums/${item._id}`}
+                style={{
+                  textDecoration: "none",
+                  color: "inherit",
+                }}
+              >
                 <img
                   className="imagePost"
-                  src={`${item.img}`}
-                  alt={item.title}
+                  src={item.medias[0]?.url || "default_image_url"}
+                  alt={item.album_name}
                   loading="lazy"
                 />
                 <ImageListItemBar
@@ -122,13 +118,13 @@ function AlbumList() {
                         margin: "100px 0px",
                       }}
                     >
-                      {item.title}
+                      {item.album_name}
                     </span>
                   }
-                  subtitle={<span>{item.num} Items</span>}
+                  subtitle={<span>{item.album_description}</span>}
                   position="below"
                 />
-              </>
+              </Link>
             )}
           </ImageListItem>
         ))}

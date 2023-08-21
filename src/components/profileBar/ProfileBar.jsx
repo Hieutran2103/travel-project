@@ -1,47 +1,35 @@
-import React, { useState } from "react";
+import React from "react";
 import "./profileBar.scss";
 import CollectionsOutlinedIcon from "@mui/icons-material/CollectionsOutlined";
 import VillaOutlinedIcon from "@mui/icons-material/VillaOutlined";
 import PhotoAlbumOutlinedIcon from "@mui/icons-material/PhotoAlbumOutlined";
+import { Link, useParams } from "react-router-dom";
 
-function ProfileBar({ setSelectedComponent }) {
-  const [selectedButton, setSelectedButton] = useState("Post");
-
-  const handleClick = (icon) => {
-    setSelectedButton(icon);
-    if (icon === "Post") {
-      setSelectedComponent("PostList");
-    } else if (icon === "Album") {
-      setSelectedComponent("AlbumList");
-    } else if (icon === "Vacation") {
-      setSelectedComponent("VacationList");
-    }
-  };
+function ProfileBar() {
+  const { id } = useParams();
+  const profileId = id.split("/")[0];
 
   return (
     <div className="profileBar">
       <div className="profileButton">
-        <div
-          className={`icon ${selectedButton === "Post" ? "active" : ""}`}
-          onClick={() => handleClick("Post")}
-        >
-          <CollectionsOutlinedIcon />
-          <span>Post</span>
-        </div>
-        <div
-          className={`icon ${selectedButton === "Album" ? "active" : ""}`}
-          onClick={() => handleClick("Album")}
-        >
-          <PhotoAlbumOutlinedIcon />
-          <span>Album</span>
-        </div>
-        <div
-          className={`icon ${selectedButton === "Vacation" ? "active" : ""}`}
-          onClick={() => handleClick("Vacation")}
-        >
-          <VillaOutlinedIcon />
-          <span>Vacation</span>
-        </div>
+        <Link to={`/profile/${profileId}`} className="link">
+          <div className="icon">
+            <CollectionsOutlinedIcon />
+            <span>Post</span>
+          </div>
+        </Link>
+        <Link to={`/profile/${profileId}/albums`} className="link">
+          <div className="icon">
+            <PhotoAlbumOutlinedIcon />
+            <span>Album</span>
+          </div>
+        </Link>
+        <Link to={`/profile/${profileId}/vacations`} className="link">
+          <div className="icon">
+            <VillaOutlinedIcon />
+            <span>Vacation</span>
+          </div>
+        </Link>
       </div>
     </div>
   );

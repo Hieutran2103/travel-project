@@ -1,6 +1,6 @@
 @import "../../style.scss";
 
-.albumList {
+.albumDetail {
   @include themify($themes) {
     color: themed("textColorActive");
     background: themed("bg");
@@ -8,36 +8,10 @@
     font-size: 20px;
     width: 1000px;
     overflow: hidden;
+    cursor: pointer;
     border-radius: 20px;
     min-height: 550px;
     box-shadow: 0px 0px 25px -10px rgba(0, 0, 0, 0.38);
-    .imageList {
-      cursor: pointer;
-      border-radius: 10px;
-      margin-left: 10px;
-      margin-right: 10px;
-      .createAlbumContent {
-        background-color: grey;
-        width: 230px;
-        height: 230px;
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-        border-radius: 20px;
-        margin-bottom: 6px;
-      }
-      .imagePost {
-        width: 230px;
-        height: 230px;
-        border-radius: 20px;
-        object-fit: cover;
-      }
-    }
-
-    .titleBar {
-      font-size: 20px;
-    }
   }
 }
 .lds-ring {

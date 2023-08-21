@@ -13,6 +13,9 @@ const PageProvider = ({ children }) => {
   const handleNextPageComment = () => {
     setPageComment(pageComment + 1);
   };
+  const handleNextLimit = () => {
+    setLimit(limit + 5);
+  };
   return (
     <PageContext.Provider
       value={{
@@ -23,6 +26,7 @@ const PageProvider = ({ children }) => {
         handleNextPageComment,
         setPage,
         handleNextPage,
+        handleNextLimit,
       }}
     >
       {children}

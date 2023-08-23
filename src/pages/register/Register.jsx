@@ -24,7 +24,7 @@ export default function RegisterForm() {
     mutationFn: (data) => customFetch.post("/users/register", data),
     onSuccess: (data) => {
       // console.log(data);
-      alert(data.data.message)
+      alert(`${data.data.message}. Please check your email for verification and to access all features of Travel.`)
       setAuthenticate(true)
       setCurrentUser(localStorage.setItem('user', JSON.stringify(data.data.data.user)))
       localStorage.setItem('access_token', data.data.data.access_token)

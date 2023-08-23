@@ -24,8 +24,9 @@ import { useRef } from "react";
 import { useGlobalPage } from "../../context/Page";
 const Post = ({ post, index }) => {
   const { medias, content, userId, user, created_at, _id } = post;
-  // const currentPost = index;
 
+  // const currentPost = index;
+  const { setImagePost } = useGlobalPage();
   const { openEditSpecific } = useGlobalSearch();
   const [t, i18] = useTranslation("global");
   //State Comments
@@ -33,8 +34,18 @@ const Post = ({ post, index }) => {
   //VIdu
   const [liked, setLiked] = useState(false);
   const [currentPerson, setCurrentPerson] = useState(0);
+
+  // const commentCount = useQuery({
+  //   queryKey: ["commentsCount", comment],
+  //   queryFn: () => customFetch.get(`/comments/count/${post._id}`),
+  // });
+  // if (!commentCount) {
+  //   return null;
+  // }
+  // const countComment = commentCount.data?.data?.total;
+
   const queryClient = useQueryClient();
-  const { setImagePost } = useGlobalPage();
+
   const { mutate: deletePost } = useMutation({
     mutationFn: (posts) => customFetch.delete(`/posts/${posts}`),
     onSuccess: (data) => {
@@ -57,26 +68,31 @@ const Post = ({ post, index }) => {
     }
     return number;
   };
+
   const prevSlide = () => {
     setCurrentPerson((oldPerson) => {
       const rerult = oldPerson - 1;
       return checkNumber(rerult);
     });
   };
+
   const nextSlide = () => {
     setCurrentPerson((oldPerson) => {
       const rerult = oldPerson + 1;
       return checkNumber(rerult);
     });
   };
+
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
   };
+
   const handleClose = () => {
     setAnchorEl(null);
   };
+
   const handleDeletePost = () => {
     deletePost(_id);
     setAnchorEl(null);
@@ -84,9 +100,6 @@ const Post = ({ post, index }) => {
 
   const handleCloseOpenEdit = async () => {
     setImagePost(await customFetch.get(`/posts/${_id}`));
-    // setImagePost(res.data.data.medias);
-    // console.log(res.data.data.medias);
-
     setAnchorEl(null);
     openEditSpecific();
   };
@@ -193,7 +206,9 @@ const Post = ({ post, index }) => {
             12 {t("newfeed.like")}
           </div>
           <div className="item" onClick={() => setCommentOpen(!commentOpen)}>
-            <TextsmsOutlinedIcon /> {t("newfeed.comment")}
+            <TextsmsOutlinedIcon />
+
+            {t("newfeed.comment")}
           </div>
         </div>
         {commentOpen && <Comments postID={_id} user={user} />}

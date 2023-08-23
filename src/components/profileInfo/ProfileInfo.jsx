@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import CloseIcon from "@mui/icons-material/Close";
 import { Link } from "react-router-dom";
-
+import { useGlobalPage } from "../../context/Page";
 import { useQuery } from "@tanstack/react-query";
 import customFetch from "../../utils/url";
 import "./profileInfo.scss";
@@ -11,6 +11,8 @@ function ProfileInfo({ numberOfPosts }) {
   const [followingModal, setFollowingModal] = useState(false);
   const [followerCount, setFollowerCount] = useState(0);
   const [followingCount, setFollowingCount] = useState(0);
+  const [hasMore, setHasMore] = useState(true);
+  const { page, limit, handleNextLimit } = useGlobalPage();
 
   const toggleModalFollower = () => {
     setFollowerModal(!followerModal);
@@ -38,9 +40,9 @@ function ProfileInfo({ numberOfPosts }) {
     userID = JSON.parse(userJSON);
   }
 
-  const apiUrlFollower = `users/follower/${userID.id}?limit=5&page=1`;
+  const apiUrlFollower = `users/follower/${userID.id}?limit=${limit}&page=${page}`;
 
-  const apiUrlFollowing = `users/following/${userID.id}?limit=5&page=1`;
+  const apiUrlFollowing = `users/following/${userID.id}limit=${limit}&page=${page}`;
 
   const fetchFollowerInfo = async () => {
     try {
@@ -74,8 +76,14 @@ function ProfileInfo({ numberOfPosts }) {
 
   useEffect(() => {
     if (followerData) {
-      const followerInfo = followerData.data[0]?.follower_info;
-      setFollowerCount(followerInfo?.length || 0);
+      const followerCounts = followerData.data.map(
+        (follower) => follower.follower_info.length
+      );
+      const totalFollowerCount = followerCounts.reduce(
+        (total, count) => total + count,
+        0
+      );
+      setFollowerCount(totalFollowerCount);
     }
 
     if (followingData) {
@@ -99,8 +107,27 @@ function ProfileInfo({ numberOfPosts }) {
     return <div>Error</div>;
   }
 
-  const followerInfo = followerData.data[0]?.follower_info;
-  const followingInfo = followingData.data[0]?.following_info;
+  const followerInfo = followerData.data.map(
+    (follower) => follower.follower_info
+  );
+  const followingInfo = followingData.data.map(
+    (following) => following.following_info
+  );
+
+  const moreData = () => {
+    if (reponse.length < 50) {
+      setTimeout(() => {
+        handleNextLimit();
+      }, 2000);
+    } else {
+      setHasMore(false);
+    }
+  };
+
+  const { data, isLoading } = useQuery({
+    queryKey: ["followersNF", limit],
+    queryFn: () => customFetch.get(apiUrlFollower),
+  });
 
   return (
     <div className="profileInfo">
@@ -115,7 +142,15 @@ function ProfileInfo({ numberOfPosts }) {
         <div className="info">
           <div className="userName">hientruongvkl</div>
           <button className="editButton">
-            <Link to="/setting/account">Edit Profile</Link>
+            <Link
+              to="/setting/account"
+              style={{
+                textDecoration: "none",
+                color: "black",
+              }}
+            >
+              Edit Profile
+            </Link>
           </button>
           <button className="editButton">View Archive</button>
         </div>
@@ -129,26 +164,29 @@ function ProfileInfo({ numberOfPosts }) {
               <div onClick={toggleModalFollower} className="overlay"></div>
               <div className="modal-content">
                 <div className="modalTitle">Followers</div>
-                {followerInfo &&
-                  followerInfo.map((follower) => (
-                    <div className="followerUser" key={follower._id}>
-                      <div className="modalContainer">
-                        <img
-                          className="avaU"
-                          src={
-                            follower.avatar ||
-                            "https://t4.ftcdn.net/jpg/03/59/58/91/360_F_359589186_JDLl8dIWoBNf1iqEkHxhUeeOulx0wOC5.jpg"
-                          }
-                          alt="Follower Avatar"
-                        />
-                        <div>
-                          <div className="nameU">{follower.name}</div>
-                          <div className="emailU">{follower.email}</div>
+                {followerInfo.map((followersArray, index) => (
+                  <div className="modalContent" key={index}>
+                    {followersArray.map((follower) => (
+                      <div className="followerUser" key={follower._id}>
+                        <div className="modalContainer">
+                          <img
+                            className="avaU"
+                            src={
+                              follower.avatar ||
+                              "https://t4.ftcdn.net/jpg/03/59/58/91/360_F_359589186_JDLl8dIWoBNf1iqEkHxhUeeOulx0wOC5.jpg"
+                            }
+                            alt="Follower Avatar"
+                          />
+                          <div>
+                            <div className="nameU">{follower.name}</div>
+                            <div className="emailU">{follower.email}</div>
+                          </div>
                         </div>
+                        <button className="followButton">Follow</button>
                       </div>
-                      <button className="followButton">Follow</button>
-                    </div>
-                  ))}
+                    ))}
+                  </div>
+                ))}
                 <div className="close-modal" onClick={toggleModalFollower}>
                   <CloseIcon />
                 </div>
@@ -163,26 +201,29 @@ function ProfileInfo({ numberOfPosts }) {
               <div onClick={toggleModalFollowing} className="overlay"></div>
               <div className="modal-content">
                 <div className="modalTitle">Followings</div>
-                {followingInfo &&
-                  followingInfo.map((following) => (
-                    <div className="followingUser" key={following._id}>
-                      <div className="modalContainer">
-                        <img
-                          className="avaU"
-                          src={
-                            following.avatar ||
-                            "https://static2-images.vnncdn.net/files/publish/2022/12/8/meo-1-1416.jpg"
-                          }
-                          alt="Following Avatar"
-                        />
-                        <div>
-                          <div className="nameU">{following.name}</div>
-                          <div className="emailU">{following.email}</div>
+                {followingInfo.map((followingsArray, index) => (
+                  <div className="modalContent" key={index}>
+                    {followingsArray.map((following) => (
+                      <div className="followingUser" key={following._id}>
+                        <div className="modalContainer">
+                          <img
+                            className="avaU"
+                            src={
+                              following.avatar ||
+                              "https://static2-images.vnncdn.net/files/publish/2022/12/8/meo-1-1416.jpg"
+                            }
+                            alt="Following Avatar"
+                          />
+                          <div>
+                            <div className="nameU">{following.name}</div>
+                            <div className="emailU">{following.email}</div>
+                          </div>
                         </div>
+                        <button className="followButton">Follow</button>
                       </div>
-                      <button className="followButton">Follow</button>
-                    </div>
-                  ))}
+                    ))}
+                  </div>
+                ))}
                 <div className="close-modal" onClick={toggleModalFollowing}>
                   <CloseIcon />
                 </div>

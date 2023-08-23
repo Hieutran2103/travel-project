@@ -5,7 +5,7 @@ import "./index.css";
 import DarkMode from "./context/darkModeContext.jsx";
 import Auth from "./context/AuthContext.jsx";
 import Search from "./context/Search&Notification.jsx";
-// import PageProvider from "./context/Page.jsx";
+import PageProvider from "./context/Page.jsx";
 import global_en from "./translations/en/global.json";
 import global_vi from "./translations/vi/global.json";
 import i18next from "i18next";

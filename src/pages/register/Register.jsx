@@ -24,15 +24,13 @@ export default function RegisterForm() {
     mutationFn: (data) => customFetch.post("/users/register", data),
     onSuccess: (data) => {
       // console.log(data);
-      alert(`${data.data.message}. Please check your email for verification and to access all features of Travel.`)
+      alert(data.data.message)
       setAuthenticate(true)
       setCurrentUser(localStorage.setItem('user', JSON.stringify(data.data.data.user)))
       localStorage.setItem('access_token', data.data.data.access_token)
       localStorage.setItem('refresh_token', data.data.data.refresh_token)
-      setTimeout(() => {
-        navigate("/");
-        window.location.reload();
-      }, 500);
+      navigate("/verify-email");
+        // window.location.reload()
     },
   });
 

@@ -11,6 +11,8 @@ import { useMutation, useQuery } from "@tanstack/react-query";
 import { useEffect, useState } from "react";
 import { omit } from "lodash";
 import customFetch from "../../utils/url";
+import { ToastContainer , Zoom, toast} from "react-toastify";
+import 'react-toastify/dist/ReactToastify.css';
 
 // const schemaEmail = omit(schema, ['password', 'confirm_password', 'username'])
 
@@ -47,7 +49,8 @@ const ForgetSend = () => {
   const forgotPasswordMutation = useMutation({
     mutationFn: (data) => customFetch.post("/users/forgot-password", data),
     onSuccess: (data) => {
-      alert(data.data.message)
+      alert(data.data.message);
+     
     }
   })
 
@@ -55,6 +58,15 @@ const ForgetSend = () => {
     forgotPasswordMutation.mutate(data)
     reset()
   });
+
+  const showToastSuccess = () =>{
+    toast.success('verify thanh cong!!' , {
+      position: toast.POSITION.TOP_RIGHT,
+      draggble:true,
+      className: "custom-toast",
+    })
+  }
+
   return (
     <div className="forgetForm">
       <div className="container">
@@ -107,7 +119,12 @@ const ForgetSend = () => {
                 errormessage={errors.email?.message}
                 register={{ ...register("email") }}
               />
-              <button className="btn">Send</button>
+              <ToastContainer
+              draggable={false}
+              autoClose={8000}
+              transition={Zoom}
+              />
+              <button className="btn" onclick={showToastSuccess}  >Send</button>
             </form>
 
             <div className="create-account">

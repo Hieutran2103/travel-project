@@ -40,7 +40,6 @@ const Login = () => {
       alert(data.data.message);
     },
   });
-
   const formSubmit = (data) => {
     loginMutation.mutate(data);
   };

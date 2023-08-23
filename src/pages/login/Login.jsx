@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import "./login.scss";
 import Logo from "../../assets/logonewfeed2.svg";
 import { useGlobalContextAuth } from "../../context/AuthContext";
@@ -10,6 +10,7 @@ import { useMutation } from "@tanstack/react-query";
 import { useState } from "react";
 
 const Login = () => {
+  const navigate = useNavigate();
   const { login } = useGlobalContextAuth();
   const [isShowPassword, setIsShowPassword] = useState(false);
 
@@ -23,8 +24,9 @@ const Login = () => {
     mutationFn: (data) => customFetch.post("/users/login", data),
     onSuccess: (data) => {
       console.log(data);
-      alert(data.data.message);
+      toast.success("Login success");
       localStorage.getItem("profile", JSON.stringify(data.data.user));
+      navigate("/");
     },
   });
 

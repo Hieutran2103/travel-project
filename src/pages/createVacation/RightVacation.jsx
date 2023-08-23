@@ -13,14 +13,14 @@ const RightVacation = ({ image, isPublic, name, something, intro }) => {
       <div className="containera">
         <div className="top">
           {image ? (
-            <img src={URL.createObjectURL(image)} alt="" />
+            <img src={image} alt="" />
           ) : (
             <img src="https://wallpaperaccess.com/full/38130.jpg" alt="" />
           )}
 
           <div className="in">
             {image ? (
-              <img src={URL.createObjectURL(image)} alt="" />
+              <img src={image} alt="" />
             ) : (
               <img src="https://wallpaperaccess.com/full/38130.jpg" alt="" />
             )}

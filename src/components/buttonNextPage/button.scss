@@ -1,56 +1,64 @@
-.NextPage {
+.loader {
+  width: 48px;
+  height: 48px;
+  margin: auto;
+  position: relative;
+}
+
+.loader:before {
+  content: "";
+  width: 48px;
+  height: 5px;
+  background: #f0808050;
+  position: absolute;
+  top: 60px;
+  left: 0;
+  border-radius: 50%;
+  animation: shadow324 0.5s linear infinite;
+}
+
+.loader:after {
+  content: "";
   width: 100%;
-  display: flex;
+  height: 100%;
+  background: #f08080;
+  position: absolute;
+  top: 0;
+  left: 0;
+  border-radius: 4px;
+  animation: jump7456 0.5s linear infinite;
+}
 
-  justify-content: center;
-  .buttonNextPage {
-    text-align: center;
-    --color: #eb4fed;
-    font-family: inherit;
-    display: inline-block;
-    width: 8em;
-    height: 2.6em;
-    line-height: 2.5em;
-    margin: 20px;
-    position: relative;
-    overflow: hidden;
-    border: 2px solid #eb4fed;
-    transition: color 0.5s;
-    z-index: 1;
-    font-size: 17px;
-    border-radius: 6px;
-    font-weight: 500;
-    color: #eb4fed;
-    background-color: transparent;
+@keyframes jump7456 {
+  15% {
+    border-bottom-right-radius: 3px;
   }
 
-  .buttonNextPage:before {
-    content: "";
-    position: absolute;
-    z-index: -1;
-    background: var(--color);
-    height: 150px;
-    width: 200px;
-    border-radius: 50%;
+  25% {
+    transform: translateY(9px) rotate(22.5deg);
   }
 
-  .buttonNextPage:hover {
-    color: #fff;
+  50% {
+    transform: translateY(18px) scale(1, 0.9) rotate(45deg);
+    border-bottom-right-radius: 40px;
   }
 
-  .buttonNextPage:before {
-    top: 100%;
-    left: 100%;
-    transition: all 0.7s;
+  75% {
+    transform: translateY(9px) rotate(67.5deg);
   }
 
-  .buttonNextPage:hover:before {
-    top: -30px;
-    left: -30px;
+  100% {
+    transform: translateY(0) rotate(90deg);
+  }
+}
+
+@keyframes shadow324 {
+  0%,
+  100% {
+    transform: scale(1, 1);
   }
 
-  .buttonNextPage:active:before {
-    background: #3a0ca3;
-    transition: background 0s;
+  50% {
+    transform: scale(1.2, 1);
   }
 }

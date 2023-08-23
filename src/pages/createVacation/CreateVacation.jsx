@@ -14,6 +14,7 @@ const CreateVacation = () => {
   const [name, setName] = useState("");
   const [something, setSomething] = useState("");
   const [intro, setIntro] = useState("");
+
   const arrayBegin = [];
   const UserID = [];
 
@@ -44,13 +45,18 @@ const CreateVacation = () => {
   const handleImageClick = () => {
     inputRef.current.click();
   };
-  const handleImageChange = (e) => {
+  const handleImageChange = async (e) => {
     const file = e.target.files[0];
+    console.log(file);
+    const formData = new FormData();
+    formData.append("image", file);
+    let res = await customFetch.post("/medias/upload-single-image", formData);
+    console.log(res.data);
     setInfomation({
       ...information,
-      [e.target.name]: URL.createObjectURL(file),
+      [e.target.name]: res.data.result,
     });
-    setImage(file);
+    setImage(res.data.result);
   };
   const handleOption = (e) => {
     setIsPublic(e.target.value);
@@ -86,11 +92,10 @@ const CreateVacation = () => {
     onSuccess: (data) => {
       queryClient.invalidateQueries({ queryKey: ["createVacation"] });
       toast.success("Successfully Created New Vacation");
-
       console.log(data);
     },
     onError: (error) => {
-      toast.error("Error");
+      toast.error(error.response.data.message);
     },
   });
 
@@ -109,7 +114,7 @@ const CreateVacation = () => {
     if (!e.target.elements.intro.value) {
       return toast.error("Please provide intro");
     }
-
+    console.log(information);
     createTask(information);
   };
 

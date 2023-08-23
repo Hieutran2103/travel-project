@@ -13,20 +13,40 @@ import ChevronLeftOutlinedIcon from "@mui/icons-material/ChevronLeftOutlined";
 import ChevronRightOutlinedIcon from "@mui/icons-material/ChevronRightOutlined";
 import { useGlobalSearch } from "../../context/Search&Notification";
 import moment from "moment";
-
-const Post = ({ post, index, setCurrentpost, currentpost }) => {
+import * as React from "react";
+import Button from "@mui/material/Button";
+import Menu from "@mui/material/Menu";
+import MenuItem from "@mui/material/MenuItem";
+import SpecificEdit from "../specificEdit/SpecificEdit";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import customFetch from "../../utils/url";
+import { useRef } from "react";
+import { useGlobalPage } from "../../context/Page";
+const Post = ({ post, index }) => {
   const { medias, content, userId, user, created_at, _id } = post;
   // const currentPost = index;
 
-  const { editPost, openEdit } = useGlobalSearch();
-
+  const { openEditSpecific } = useGlobalSearch();
   const [t, i18] = useTranslation("global");
   //State Comments
   const [commentOpen, setCommentOpen] = useState(false);
-
   //VIdu
   const [liked, setLiked] = useState(false);
   const [currentPerson, setCurrentPerson] = useState(0);
+  const queryClient = useQueryClient();
+  const { setImagePost } = useGlobalPage();
+  const { mutate: deletePost } = useMutation({
+    mutationFn: (posts) => customFetch.delete(`/posts/${posts}`),
+    onSuccess: (data) => {
+      queryClient.invalidateQueries({ queryKey: ["postsNF"] });
+      toast.success("Delete Successfully");
+      console.log(data);
+    },
+    onError: (error) => {
+      console.log(error);
+      toast.error("error");
+    },
+  });
 
   const checkNumber = (number) => {
     if (number > medias.length - 1) {
@@ -48,6 +68,27 @@ const Post = ({ post, index, setCurrentpost, currentpost }) => {
       const rerult = oldPerson + 1;
       return checkNumber(rerult);
     });
+  };
+  const [anchorEl, setAnchorEl] = React.useState(null);
+  const open = Boolean(anchorEl);
+  const handleClick = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
+  const handleDeletePost = () => {
+    deletePost(_id);
+    setAnchorEl(null);
+  };
+
+  const handleCloseOpenEdit = async () => {
+    setImagePost(await customFetch.get(`/posts/${_id}`));
+    // setImagePost(res.data.data.medias);
+    // console.log(res.data.data.medias);
+
+    setAnchorEl(null);
+    openEditSpecific();
   };
 
   return (
@@ -73,10 +114,42 @@ const Post = ({ post, index, setCurrentpost, currentpost }) => {
               <span className="date">{moment(created_at).fromNow()}</span>
             </div>
           </div>
-          <div className="edit" onClick={openEdit}>
-            <MoreHorizOutlinedIcon onClick={() => setCurrentpost(index)} />
+          <div>
+            <Button
+              id="demo-positioned-button"
+              aria-controls={open ? "demo-positioned-menu" : undefined}
+              aria-haspopup="true"
+              aria-expanded={open ? "true" : undefined}
+              onClick={handleClick}
+            >
+              <MoreHorizOutlinedIcon style={{ color: "#E84BE5" }} />
+            </Button>
+            <Menu
+              id="demo-positioned-menu"
+              aria-labelledby="demo-positioned-button"
+              anchorEl={anchorEl}
+              open={open}
+              onClose={handleClose}
+              anchorOrigin={{
+                vertical: "top",
+                horizontal: "left",
+              }}
+              transformOrigin={{
+                vertical: "top",
+                horizontal: "left",
+              }}
+            >
+              <MenuItem onClick={handleCloseOpenEdit}>Edit</MenuItem>
+              <MenuItem onClick={handleDeletePost}>Delete</MenuItem>
+            </Menu>
           </div>
-          {editPost ? <EditPost currentpost={currentpost} post={post} /> : null}
+          <SpecificEdit
+            user={user}
+            currentPerson={currentPerson}
+            prevSlide={prevSlide}
+            nextSlide={nextSlide}
+            setAnchorEl={setAnchorEl}
+          />
         </div>
         <div className="content">
           <p>{content}</p>
@@ -88,7 +161,7 @@ const Post = ({ post, index, setCurrentpost, currentpost }) => {
                   style={{
                     transform: `translateX(${100 * (indexx - currentPerson)}%)`,
                   }}
-                  key={1}
+                  key={indexx}
                 >
                   <img className="person-img" src={z.url} alt="" />
                 </div>
@@ -120,10 +193,10 @@ const Post = ({ post, index, setCurrentpost, currentpost }) => {
             12 {t("newfeed.like")}
           </div>
           <div className="item" onClick={() => setCommentOpen(!commentOpen)}>
-            <TextsmsOutlinedIcon /> 10 {t("newfeed.comment")}
+            <TextsmsOutlinedIcon /> {t("newfeed.comment")}
           </div>
         </div>
-        {commentOpen && <Comments postID={_id} />}
+        {commentOpen && <Comments postID={_id} user={user} />}
       </div>
     </div>
   );

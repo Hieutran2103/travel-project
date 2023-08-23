@@ -8,11 +8,13 @@ import { useGlobalPage } from "../../context/Page";
 import moment from "moment";
 import { Link } from "react-router-dom";
 import { useState } from "react";
+import { toast } from "react-toastify";
 
-const Comments = ({ postID }) => {
+const Comments = ({ postID, user }) => {
   const { currentUser } = useGlobalContextAuth();
   const { pageComment, limitComment } = useGlobalPage();
   const [descomment, setDescomment] = useState("");
+  const [hasEnteredFirstValue, setHasEnteredFirstValue] = useState(false);
 
   const queryClient = useQueryClient();
   const { mutate: createComment } = useMutation({
@@ -22,7 +24,7 @@ const Comments = ({ postID }) => {
       setDescomment("");
     },
     onError: (error) => {
-      console.log(error);
+      toast.error(error.response.data.errors.comment.msg);
     },
   });
 
@@ -46,6 +48,16 @@ const Comments = ({ postID }) => {
     });
   };
 
+  const handleInputChange = (event) => {
+    const newValue = event.target.value;
+    // Nếu chưa nhập lần đầu và giá trị nhập vào có chứa khoảng trắng, loại bỏ khoảng trắng
+    if (!hasEnteredFirstValue && newValue.includes(" ")) {
+      setDescomment(newValue.replace(/\s/g, ""));
+    } else {
+      setDescomment(newValue);
+      setHasEnteredFirstValue(true);
+    }
+  };
   return (
     <div className="comments">
       <div className="write">
@@ -54,7 +66,7 @@ const Comments = ({ postID }) => {
           type="text"
           placeholder="Write a comment..."
           value={descomment}
-          onChange={(e) => setDescomment(e.target.value)}
+          onChange={handleInputChange}
         />
         <span onClick={handleComment}>
           <SendIcon style={{ fontSize: "20px" }} />

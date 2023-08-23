@@ -49,3 +49,8 @@ export const resetPasswordSchema = yup.object({
   password: schema.fields["password"],
   confirm_password: handleConfirmPassword("password")
 })
+
+export const schemaLogin = yup.object({
+  email: schema.fields["email"],
+  password: schema.fields["password"]
+})

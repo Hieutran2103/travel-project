@@ -9,7 +9,7 @@ import DarkModeOutlinedIcon from "@mui/icons-material/DarkModeOutlined";
 import WbSunnyOutlinedIcon from "@mui/icons-material/WbSunnyOutlined";
 import { useGlobalContextDarkMode } from "../../context/darkModeContext";
 import GTranslateOutlinedIcon from "@mui/icons-material/GTranslateOutlined";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useGlobalContextAuth } from "../../context/AuthContext";
 import Search from "../search/Search";
 import { useGlobalSearch } from "../../context/Search&Notification";
@@ -19,11 +19,12 @@ import Notification from "../Notification/Notification";
 
 const LeftBar = () => {
   const { toggle, darkMode } = useGlobalContextDarkMode();
-  const { logout } = useGlobalContextAuth();
+  const { setCurrentUser } = useGlobalContextAuth();
   const { openSearch, openNotifi } = useGlobalSearch();
   const [t, i18] = useTranslation("global");
   const [isLanguageViet, setIsLanguageViet] = useState(false);
   const { currentUser } = useGlobalContextAuth();
+  const navigate = useNavigate();
 
   const handleChangeViet = () => {
     i18.changeLanguage("vi");
@@ -33,6 +34,14 @@ const LeftBar = () => {
     i18.changeLanguage("en");
     setIsLanguageViet(false);
   };
+  const logout = () => {
+    localStorage.removeItem("access_token");
+    localStorage.removeItem("refresh_token");
+    localStorage.removeItem("user");
+    setCurrentUser(null);
+    navigate("/login")
+  }
+
 
   return (
     <>
@@ -103,7 +112,15 @@ const LeftBar = () => {
               <span>{t("leftBar.language")}</span>
             </div>
             <div className="profile">
-              <img src={currentUser.profilePic} alt="" />
+              <img
+                src={
+                  !currentUser?.avatar
+                    ? "https://antimatter.vn/wp-content/uploads/2022/11/anh-avatar-trang-fb-mac-dinh.jpg"
+                    : currentUser?.avatar
+                }
+                alt=""
+              />
+      
               <Link
                 style={{ textDecoration: "none", color: "inherit" }}
                 to={`/profile/${currentUser.id}`}

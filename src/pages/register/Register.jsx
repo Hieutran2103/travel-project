@@ -7,8 +7,10 @@ import { schema } from "../../utils/rules";
 import InputForm from "../../components/input/inputForm";
 import { useMutation } from "@tanstack/react-query";
 import customFetch from "../../utils/url";
+import { useGlobalContextAuth } from "../../context/AuthContext";
 
 export default function RegisterForm() {
+  const {setCurrentUser, setAuthenticate} = useGlobalContextAuth()
   const navigate = useNavigate()
   const {
     handleSubmit,
@@ -21,10 +23,16 @@ export default function RegisterForm() {
   const registerMutation = useMutation({
     mutationFn: (data) => customFetch.post("/users/register", data),
     onSuccess: (data) => {
-      console.log(data);
+      // console.log(data);
       alert(data.data.message)
-      localStorage.setItem('profile', JSON.stringify(data.data.user))
-      navigate('/')
+      setAuthenticate(true)
+      setCurrentUser(localStorage.setItem('user', JSON.stringify(data.data.data.user)))
+      localStorage.setItem('access_token', data.data.data.access_token)
+      localStorage.setItem('refresh_token', data.data.data.refresh_token)
+      setTimeout(() => {
+        navigate("/");
+        window.location.reload();
+      }, 500);
     },
   });
 

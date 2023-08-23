@@ -29,11 +29,11 @@ import AlbumDetail from "./components/albumDetail/AlbumDetail";
 import "./style.scss";
 
 function App() {
-  const { currentUser } = useGlobalContextAuth();
+  const { currentUser, authenticate } = useGlobalContextAuth();
   const { darkMode } = useGlobalContextDarkMode();
 
   const ProtectedRouter = ({ children }) => {
-    if (!currentUser) {
+    if (!authenticate) {
       return <Navigate to="/login" />;
     }
     return children;

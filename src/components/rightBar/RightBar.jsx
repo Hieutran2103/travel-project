@@ -5,16 +5,24 @@ import MoreVertOutlinedIcon from "@mui/icons-material/MoreVertOutlined";
 const RightBar = () => {
   const { currentUser } = useGlobalContextAuth();
   const [t, i18] = useTranslation("global");
+
   return (
     <div className="rightBar">
       <div className="container">
         <div className="menu">
           <div className="myself">
-            <img src={currentUser.profilePic} alt="" />
+          <img
+              src={
+                !currentUser?.avatar
+                  ? "https://antimatter.vn/wp-content/uploads/2022/11/anh-avatar-trang-fb-mac-dinh.jpg"
+                  : currentUser?.avatar
+              }
+              alt=""
+            />
 
             <div className="info">
-              <div className="name">{currentUser.name}</div>
-              <div className="email">{currentUser.email}</div>
+              <div className="name">{currentUser?.name}</div>
+              <div className="email">{currentUser?.email}</div>
             </div>
 
             <div className="switch">

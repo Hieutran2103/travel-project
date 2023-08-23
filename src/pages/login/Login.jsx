@@ -1,41 +1,49 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import "./login.scss";
 import Logo from "../../assets/logonewfeed2.svg";
 import { useGlobalContextAuth } from "../../context/AuthContext";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useForm } from "react-hook-form";
-import { schema } from "../../utils/rules";
+import { schema, schemaEmail } from "../../utils/rules";
 import InputForm from "../../components/input/inputForm";
 import { useMutation } from "@tanstack/react-query";
+import customFetch from "../../utils/url";
+import { toast } from "react-toastify";
 
 const Login = () => {
-  const { login } = useGlobalContextAuth();
-
-  
-
-
+  const { setCurrentUser, setAuthenticate } = useGlobalContextAuth();
+  const navigate = useNavigate();
 
   const {
     handleSubmit,
     register,
     formState: { errors },
-  } = useForm({ resolver: yupResolver(schema) });
+  } = useForm({
+    resolver: yupResolver(schemaEmail),
+    defaultValues: { email: "", password: "" },
+  });
 
   const loginMutation = useMutation({
     mutationFn: (data) => customFetch.post("/users/login", data),
     onSuccess: (data) => {
-      console.log(data);
-      alert(data.data.message)
-      localStorage.getItem('profile', JSON.stringify(data.data.user))
-    
+      // console.log(data);
+      setCurrentUser(
+        localStorage.setItem("user", JSON.stringify(data.data.data.user))
+      );
+      localStorage.setItem("access_token", data.data.data.access_token);
+      localStorage.setItem("refresh_token", data.data.data.refresh_token);
+      setAuthenticate(true);
+      setTimeout(() => {
+        navigate("/");
+        window.location.reload();
+      }, 500);
+      alert(data.data.message);
     },
-  })
+  });
 
   const formSubmit = (data) => {
-    loginMutation.mutate(data)
+    loginMutation.mutate(data);
   };
- 
-
 
   return (
     <div className="loginForm">
@@ -100,10 +108,8 @@ const Login = () => {
                 register={{ ...register("password") }}
               />
 
-              <button className="btn" onClick={login}>
-                <Link to="/" className="loginToHome">
-                  Login
-                </Link>
+              <button className="btn" type="submit">
+                Login
               </button>
               <div className="or">
                 <p>OR</p>
@@ -113,7 +119,10 @@ const Login = () => {
               </button>
             </form>
             <div className="remember-password">
-              <Link to="/user-forgot-password" className="forgot-pass" > Forget pass</Link>
+              <Link to="/user-forgot-password" className="forgot-pass">
+                {" "}
+                Forget pass
+              </Link>
             </div>
             <div className="create-account">
               <p>

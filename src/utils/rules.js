@@ -1,7 +1,7 @@
 import * as yup from "yup";
 
 export const schema = yup.object({
-  username: yup
+  name: yup
     .string()
     .required("username is required")
     .min(3, "Do dai ky tu 3-100")

@@ -11,13 +11,15 @@ import InputPassword from "../../components/input/inputPassword";
 import { omit } from "lodash";
 import { useMutation } from "@tanstack/react-query";
 import customFetch from "../../utils/url";
+import { toast } from "react-toastify";
 export default function ResetPass() {
   const location = useLocation()
-  console.log(location.state)
+  // console.log(location.state)
   const {
     handleSubmit,
     register,
     formState: { errors },
+    reset
   } = useForm({ resolver: yupResolver(resetPasswordSchema), defaultValues:{
     password: " ",
     confirm_password:" "
@@ -31,12 +33,14 @@ export default function ResetPass() {
       forgot_password_token: location.state.forgot_password_token
     }),
     onSuccess: (data) => {
-        console.log(data)
+       alert(data.data.message)
     }
   })
 
   const formSubmit = (data) => {
     resetPasswordMutation.mutate(data)
+    reset()
+    
   };
   return (
     <div className="resetForm">

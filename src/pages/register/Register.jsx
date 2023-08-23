@@ -1,12 +1,15 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import "./register.scss";
 import Logo from "../../assets/logonewfeed2.svg";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useForm } from "react-hook-form";
 import { schema } from "../../utils/rules";
 import InputForm from "../../components/input/inputForm";
+import { useMutation } from "@tanstack/react-query";
+import customFetch from "../../utils/url";
 
 export default function RegisterForm() {
+  const navigate = useNavigate()
   const {
     handleSubmit,
     register,
@@ -14,8 +17,19 @@ export default function RegisterForm() {
   } = useForm({
     resolver: yupResolver(schema),
   });
+
+  const registerMutation = useMutation({
+    mutationFn: (data) => customFetch.post("/users/register", data),
+    onSuccess: (data) => {
+      console.log(data);
+      alert(data.data.message)
+      localStorage.setItem('profile', JSON.stringify(data.data.user))
+      navigate('/')
+    },
+  });
+
   const formSubmit = (data) => {
-    console.log(data);
+    registerMutation.mutate(data)
   };
   return (
     <div className="signup">
@@ -58,12 +72,12 @@ export default function RegisterForm() {
                 // className="input-box"
                 classNameicon="icon"
                 classNameI="bx bxs-user"
-                name="username"
+                name="name"
                 labelName="Username"
                 type="text"
                 classNameLabel="label"
                 errormessage={errors.username?.message}
-                register={{ ...register("username") }}
+                register={{ ...register("name") }}
               />
               <InputForm
                 // className="input-box"

@@ -36,6 +36,7 @@ const ForgetSend = () => {
     handleSubmit,
     register,
     formState: { errors },
+    reset
   } = useForm({
     resolver: yupResolver(schemaEmail),
     defaultValues: {
@@ -52,6 +53,7 @@ const ForgetSend = () => {
 
   const formSubmit = handleSubmit((data) => {
     forgotPasswordMutation.mutate(data)
+    reset()
   });
   return (
     <div className="forgetForm">

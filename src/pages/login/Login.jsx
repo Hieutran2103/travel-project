@@ -6,17 +6,37 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { useForm } from "react-hook-form";
 import { schema } from "../../utils/rules";
 import InputForm from "../../components/input/inputForm";
+import { useMutation } from "@tanstack/react-query";
 
 const Login = () => {
   const { login } = useGlobalContextAuth();
+
+  
+
+
+
   const {
     handleSubmit,
     register,
     formState: { errors },
   } = useForm({ resolver: yupResolver(schema) });
+
+  const loginMutation = useMutation({
+    mutationFn: (data) => customFetch.post("/users/login", data),
+    onSuccess: (data) => {
+      console.log(data);
+      alert(data.data.message)
+      localStorage.getItem('profile', JSON.stringify(data.data.user))
+    
+    },
+  })
+
   const formSubmit = (data) => {
-    console.log(data);
+    loginMutation.mutate(data)
   };
+ 
+
+
   return (
     <div className="loginForm">
       <div className="container">
@@ -93,7 +113,7 @@ const Login = () => {
               </button>
             </form>
             <div className="remember-password">
-              <Link to="/forgot-password" className="forgot-pass" > Forget pass</Link>
+              <Link to="/user-forgot-password" className="forgot-pass" > Forget pass</Link>
             </div>
             <div className="create-account">
               <p>

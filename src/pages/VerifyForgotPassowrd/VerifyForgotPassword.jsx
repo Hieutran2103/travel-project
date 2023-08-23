@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import useQueryParams from "../../components/getTokenForgotPasss/queryParam";
-
+import "./VerifyForgotPassword.scss";
 import customFetch from "../../utils/url";
 import { useNavigate } from "react-router-dom";
 import { useMutation } from "@tanstack/react-query";
@@ -25,5 +25,12 @@ export default function VerifyForgotPassword() {
       VerifyTokenMutation.mutate(token);
     }
   },[token]);
-  return <div>Verify Forgot Password</div>;
+  return <div>
+    <div className="VerifyEMAIL">
+        <h1>Verify email success</h1>
+
+
+
+    </div>
+  </div>;
 }

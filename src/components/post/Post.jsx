@@ -54,7 +54,6 @@ const Post = ({ post, index }) => {
       console.log(data);
     },
     onError: (error) => {
-      console.log(error);
       toast.error("error");
     },
   });

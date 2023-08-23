@@ -7,12 +7,15 @@ import { useForm } from "react-hook-form";
 import { schema } from "../../utils/rules";
 import InputForm from "../../components/input/inputForm";
 import { useMutation } from "@tanstack/react-query";
+import { useState } from "react";
 
 
 const Login = () => {
   const navigate = useNavigate();
-  
   const { login } = useGlobalContextAuth();
+  const [isShowPassword, setIsShowPassword] = useState(false);
+
+
   const {
     handleSubmit,
     register,
@@ -24,17 +27,16 @@ const Login = () => {
     onSuccess: (data) => {
       console.log(data);
       toast.success("Login success");
-      localStorage.getItem('profile', JSON.stringify(data.data.user));
-      navigate('/');
-    
+
+      localStorage.getItem("profile", JSON.stringify(data.data.user));
+      navigate("/");
+
     },
-  })
+  });
 
   const formSubmit = (data) => {
-    loginMutation.mutate(data)
+    loginMutation.mutate(data);
   };
- 
-
 
 
 
@@ -89,17 +91,28 @@ const Login = () => {
                 errormessage={errors.email?.message}
                 register={{ ...register("email") }}
               />
-              <InputForm
-                // className="input-box"
-                classNameicon="icon"
-                classNameI="bx bxs-lock"
-                name="password"
-                labelName="Password"
-                type="password"
-                classNameLabel="label"
-                errormessage={errors.password?.message}
-                register={{ ...register("password") }}
-              />
+              <div className="input2">
+                <InputForm
+                  // className="input-box"
+                  // classNameicon="icon"
+                  // classNameI="bx bxs-lock"
+                  name="password"
+                  labelName="Password"
+                  type={isShowPassword === true ? "text" : "password"}
+                  classNameLabel="label"
+                  errormessage={errors.password?.message}
+                  register={{ ...register("password") }}
+                />
+
+                <i
+                  className={
+                    isShowPassword === true
+                      ? "fa-solid fa-lock-open"
+                      : "fa-solid fa-lock"
+                  }
+                  onClick={() => setIsShowPassword(!isShowPassword)}
+                ></i>
+              </div>
 
               <button className="btn" onClick={login}>
                 <Link to="/" className="loginToHome">
@@ -114,7 +127,10 @@ const Login = () => {
               </button>
             </form>
             <div className="remember-password">
-              <Link to="/user-forgot-password" className="forgot-pass" > Forget pass</Link>
+              <Link to="/user-forgot-password" className="forgot-pass">
+                {" "}
+                Forget pass
+              </Link>
             </div>
             <div className="create-account">
               <p>

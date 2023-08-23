@@ -7,9 +7,11 @@ import { schema } from "../../utils/rules";
 import InputForm from "../../components/input/inputForm";
 import { useMutation } from "@tanstack/react-query";
 import customFetch from "../../utils/url";
+import { useState } from "react";
 
 export default function RegisterForm() {
-  const navigate = useNavigate()
+  const navigate = useNavigate();
+  const [isShowPassword, setIsShowPassword] = useState(false);
   const {
     handleSubmit,
     register,
@@ -22,14 +24,14 @@ export default function RegisterForm() {
     mutationFn: (data) => customFetch.post("/users/register", data),
     onSuccess: (data) => {
       console.log(data);
-      alert(data.data.message)
-      localStorage.setItem('profile', JSON.stringify(data.data.user))
-      navigate('/')
+      alert(data.data.message);
+      localStorage.setItem("profile", JSON.stringify(data.data.user));
+      navigate("/");
     },
   });
 
   const formSubmit = (data) => {
-    registerMutation.mutate(data)
+    registerMutation.mutate(data);
   };
   return (
     <div className="signup">
@@ -91,29 +93,49 @@ export default function RegisterForm() {
                 register={{ ...register("email") }}
               />
 
-              <InputForm
-                // className="input-box"
-                classNameicon="icon"
-                classNameI="bx bxs-lock"
-                name="password"
-                labelName="Password"
-                type="password"
-                classNameLabel="label"
-                errormessage={errors.password?.message}
-                register={{ ...register("password") }}
-              />
+              <div className="input2">
+                <InputForm
+                  // className="input-box"
+                  // classNameicon="icon"
+                  // classNameI="bx bxs-lock"
+                  name="password"
+                  labelName="Password"
+                  type={isShowPassword === true ? "text" : "password"}
+                  classNameLabel="label"
+                  errormessage={errors.password?.message}
+                  register={{ ...register("password") }}
+                />
+                <i
+                  className={
+                    isShowPassword === true
+                      ? "fa-solid fa-lock-open"
+                      : "fa-solid fa-lock"
+                  }
+                  onClick={() => setIsShowPassword(!isShowPassword)}
+                ></i>
+              </div>
 
-              <InputForm
-                // className="input-box"
-                classNameicon="icon"
-                classNameI="bx bxs-lock"
-                name="confirm_password"
-                labelName="Confirm Password"
-                type="password"
-                classNameLabel="label"
-                errormessage={errors.confirm_password?.message}
-                register={{ ...register("confirm_password") }}
-              />
+              <div className="input3">
+                <InputForm
+                  // className="input-box"
+                  // classNameicon="icon"
+                  // classNameI="bx bxs-lock"
+                  name="confirm_password"
+                  labelName="Confirm Password"
+                  type={isShowPassword === true ? "text" : "password"}
+                  classNameLabel="label"
+                  errormessage={errors.confirm_password?.message}
+                  register={{ ...register("confirm_password") }}
+                />
+                <i
+                  className={
+                    isShowPassword === true
+                      ? "fa-solid fa-lock-open"
+                      : "fa-solid fa-lock"
+                  }
+                  onClick={() => setIsShowPassword(!isShowPassword)}
+                ></i>
+              </div>
 
               <button className="btn">Sign Up</button>
               <div className="or">

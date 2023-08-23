@@ -71,7 +71,7 @@ const CreatePost = () => {
   };
 
   return (
-    <div className="createPost" id="createPosts">
+    <div className="createPost">
       <div className="container">
         <div className="top">
           <div className="left">

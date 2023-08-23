@@ -1,81 +1,161 @@
-import { useGlobalContextAuth } from "../../context/AuthContext";
+import { useState } from "react";
+import { useGlobalPage } from "../../context/Page";
 import { useGlobalSearch } from "../../context/Search&Notification";
 import "./specific.scss";
+import ChevronLeftOutlinedIcon from "@mui/icons-material/ChevronLeftOutlined";
+import ChevronRightOutlinedIcon from "@mui/icons-material/ChevronRightOutlined";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+import customFetch from "../../utils/url";
+import { toast } from "react-toastify";
 
-const SpecificEdit = ({ currentpost }) => {
-  const { currentUser } = useGlobalContextAuth();
+const SpecificEdit = ({
+  user,
+  currentPerson,
+  nextSlide,
+  prevSlide,
+  setAnchorEl,
+}) => {
+  // const rs = imagePost.data.data.medias;
+  // console.log(rs);
+  const [desc, setDesc] = useState("");
   const { editSpecific, closeEditSpecific } = useGlobalSearch();
+  const { imagePost } = useGlobalPage();
+  const [hasEnteredFirstValue, setHasEnteredFirstValue] = useState(false);
+  const queryClient = useQueryClient();
 
-  const posts = [
-    {
-      id: 1,
-      name: `${currentUser.name}`,
-      userId: `${currentUser.id}`,
-      profilePic: `${currentUser.profilePic}`,
-      desc: "Hieudzai1",
-      img: "https://images.unsplash.com/photo-1503220317375-aaad61436b1b?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80",
+  const { mutate: EditPost } = useMutation({
+    mutationFn: (posts) => customFetch.put(`/posts/${idEdit}`, posts),
+    onSuccess: (data) => {
+      queryClient.invalidateQueries({ queryKey: ["postsNF"] });
+      setDesc("");
+      setAnchorEl(null);
+      closeEditSpecific();
+      toast.success("Successfully edited post");
+      console.log(data);
     },
-    {
-      id: 2,
-      name: "Kien Ngu",
-      userId: 9,
-      profilePic:
-        "https://images.pexels.com/photos/1036623/pexels-photo-1036623.jpeg?auto=compress&cs=tinysrgb&w=1600",
-      desc: "Tenetur iste voluptates dolorem rem commodi voluptate pariatur, voluptatum, laboriosam consequatur enim nostrum cumque! Maiores a nam non adipisci minima modi tempore.",
+    onError: (error) => {
+      toast.error(error.response.data.errors.content.msg);
     },
-    {
-      id: 3,
-      name: "Huy Cai",
-      userId: 300,
-      profilePic:
-        "https://images.pexels.com/photos/1036623/pexels-photo-1036623.jpeg?auto=compress&cs=tinysrgb&w=1600",
-      desc: "Hieudzai3",
-      img: "https://images.unsplash.com/photo-1527631746610-bca00a040d60?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=387&q=80",
-    },
-  ];
-  const { desc, name, profilePic, img } = posts[currentpost];
+  });
+  if (!imagePost) {
+    return null;
+  }
+  const rs = imagePost.data?.data?.medias;
+  const idEdit = imagePost.data?.data?._id;
+  if (!idEdit) {
+    return null;
+  }
+  if (!rs) {
+    return null;
+  }
+
+  const handleDec = (event) => {
+    const newValue = event.target.value;
+    // Nếu chưa nhập lần đầu và giá trị nhập vào có chứa khoảng trắng, loại bỏ khoảng trắng
+    if (!hasEnteredFirstValue && newValue.includes(" ")) {
+      setDesc(newValue.replace(/\s/g, ""));
+    } else {
+      setDesc(newValue);
+      setHasEnteredFirstValue(true);
+    }
+  };
+
+  const handleEdit = (e) => {
+    e.preventDefault();
+    EditPost({
+      type: 0,
+      audience: 0,
+      hashtags: [],
+      content: desc,
+      medias: rs,
+      mentions: [],
+      parent_id: null,
+    });
+  };
 
   return (
     <div className={editSpecific ? "show-specificEdit" : "specificEdit"}>
-      <form>
-        <div className="tren">
-          <div
-            className="cancel"
-            style={{ color: "black" }}
-            onClick={closeEditSpecific}
-          >
-            Cancel
-          </div>
-          <div className="EditInfo" style={{ color: "black" }}>
-            Edit info
-          </div>
-          <button type="submit">Done</button>
-        </div>
-        <div className="duoi">
-          <div className="image">
-            <img src={img} alt="" />
-          </div>
-          <div className="writeEdit">
-            <div className="userCurrent">
-              <img src={profilePic} alt="" />
-              <div className="nameUser">{name}</div>
+      <div className="edittt">
+        <form>
+          <div className="tren">
+            <div
+              className="cancel"
+              style={{ color: "black" }}
+              onClick={closeEditSpecific}
+            >
+              Cancel
             </div>
-            <input
-              type="text"
-              style={{
-                width: "90%",
-                outline: "transparent",
-                border: "transparent",
-                margin: "0 16px",
-                wordWrap: "break-word",
-              }}
-              placeholder="Write a caption..."
-            />
+            <div className="EditInfo" style={{ color: "black" }}>
+              Edit info
+            </div>
+            <button type="submit" onClick={handleEdit}>
+              Done
+            </button>
           </div>
-        </div>
-      </form>
+          <div className="duoi">
+            <div className="showImage">
+              {rs.map((z, indexxX) => {
+                return (
+                  <div
+                    className="slideT"
+                    style={{
+                      transform: `translateX(${
+                        100 * (indexxX - currentPerson)
+                      }%)`,
+                    }}
+                    key={1}
+                  >
+                    <img className="person-imgT" src={z.url} alt="" />
+                  </div>
+                );
+              })}
+              {rs.length > 1 ? (
+                <>
+                  <button type="button" className="prevT" onClick={prevSlide}>
+                    {" "}
+                    <ChevronLeftOutlinedIcon />
+                  </button>
+                  <button type="button" className="nextT" onClick={nextSlide}>
+                    {" "}
+                    <ChevronRightOutlinedIcon />
+                  </button>
+                </>
+              ) : (
+                ""
+              )}
+            </div>
+            <div className="writeEdit">
+              <div className="userCurrent">
+                <img
+                  src={
+                    !user.avatar
+                      ? "https://antimatter.vn/wp-content/uploads/2022/11/anh-avatar-trang-fb-mac-dinh.jpg"
+                      : user.avatar
+                  }
+                  alt=""
+                />
+                <div className="nameUser">{user.name}</div>
+              </div>
+              <input
+                type="text"
+                style={{
+                  width: "90%",
+                  outline: "transparent",
+                  border: "transparent",
+                  margin: "0 16px",
+                  wordWrap: "break-word",
+                }}
+                onChange={handleDec}
+                placeholder="Write a caption..."
+                value={desc}
+              />
+            </div>
+          </div>
+        </form>{" "}
+      </div>
     </div>
   );
+  s;
 };
 
 export default SpecificEdit;

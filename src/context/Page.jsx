@@ -3,8 +3,10 @@ import { createContext, useContext, useState } from "react";
 const PageContext = createContext();
 
 const PageProvider = ({ children }) => {
+  const [imagePost, setImagePost] = useState([]);
+
   const [page, setPage] = useState(1);
-  const [limit, setLimit] = useState(10);
+  const [limit, setLimit] = useState(5);
   const [pageComment, setPageComment] = useState(1);
   const [limitComment, setLimitComment] = useState(5);
   const handleNextPage = () => {
@@ -19,6 +21,8 @@ const PageProvider = ({ children }) => {
   return (
     <PageContext.Provider
       value={{
+        imagePost,
+        setImagePost,
         page,
         limit,
         pageComment,

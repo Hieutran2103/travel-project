@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import "./login.scss";
 import Logo from "../../assets/logonewfeed2.svg";
 import { useGlobalContextAuth } from "../../context/AuthContext";
@@ -8,13 +8,11 @@ import { schema } from "../../utils/rules";
 import InputForm from "../../components/input/inputForm";
 import { useMutation } from "@tanstack/react-query";
 
+
 const Login = () => {
-  const { login } = useGlobalContextAuth();
-
+  const navigate = useNavigate();
   
-
-
-
+  const { login } = useGlobalContextAuth();
   const {
     handleSubmit,
     register,
@@ -25,8 +23,9 @@ const Login = () => {
     mutationFn: (data) => customFetch.post("/users/login", data),
     onSuccess: (data) => {
       console.log(data);
-      alert(data.data.message)
-      localStorage.getItem('profile', JSON.stringify(data.data.user))
+      toast.success("Login success");
+      localStorage.getItem('profile', JSON.stringify(data.data.user));
+      navigate('/');
     
     },
   })
@@ -35,6 +34,8 @@ const Login = () => {
     loginMutation.mutate(data)
   };
  
+
+
 
 
   return (

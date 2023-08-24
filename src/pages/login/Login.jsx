@@ -17,11 +17,11 @@ const Login = () => {
 
 import { useState } from "react";
 
-
 const Login = () => {
   const navigate = useNavigate();
   const { login } = useGlobalContextAuth();
   const [isShowPassword, setIsShowPassword] = useState(false);
+
   const {
     handleSubmit,
     register,
@@ -57,14 +57,12 @@ const Login = () => {
       toast.success("Login success");
       localStorage.getItem("profile", JSON.stringify(data.data.user));
       navigate("/");
-
     },
   });
 
   const formSubmit = (data) => {
     loginMutation.mutate(data);
   };
-
 
   return (
     <div className="loginForm">

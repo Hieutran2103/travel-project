@@ -1,10 +1,11 @@
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import "./settingPass.scss";
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useForm } from "react-hook-form";
 import InputPassword from "../../components/input/inputPassword";
 import { userSchema } from "../../utils/rules";
+import { useMutation } from "@tanstack/react-query";
 
 // const scheme = yup.object({
 //   old_password: yup
@@ -25,6 +26,8 @@ import { userSchema } from "../../utils/rules";
 //     .oneOf([yup.ref("password")], "nhap lai mk chua khop"),
 // });
 const SettingPass = () => {
+  const location = useLocation();
+  console.log(location.state);
   const {
     register,
     handleSubmit,
@@ -37,8 +40,21 @@ const SettingPass = () => {
     },
     resolver: yupResolver(userSchema),
   });
+  const settingPassword = useMutation({
+    mutationFn: (data) =>
+      customFetch.post("/users/setting/password", {
+        old_password: data.password,
+        password: data.password,
+        confirm_password: data.confirm_password,
+        // forgot_password_token: location.state.forgot_password_token,
+        // hoi Thang token setting Password
+      }),
+    onSuccess: (data) => {
+      console.log(data);
+    },
+  });
   const formSubmit = (data) => {
-    console.log(data);
+    settingPassword.mutate(data);
   };
   return (
     <>

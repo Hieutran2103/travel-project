@@ -7,19 +7,19 @@
     margin: 0px 100px;
     font-size: 20px;
     width: 1000px;
-    overflow: hidden;
     border-radius: 20px;
-    min-height: 550px;
+    // min-height: 620px;
     box-shadow: 0px 0px 25px -10px rgba(0, 0, 0, 0.38);
     .imageList {
       cursor: pointer;
       border-radius: 10px;
-      margin-left: 10px;
-      margin-right: 10px;
+      display: flex;
+      align-items: center;
+      margin-top: 5px;
       .createAlbumContent {
         background-color: grey;
-        width: 230px;
-        height: 230px;
+        width: 240px;
+        height: 240px;
         display: flex;
         flex-direction: column;
         justify-content: center;
@@ -28,8 +28,8 @@
         margin-bottom: 6px;
       }
       .imagePost {
-        width: 230px;
-        height: 230px;
+        width: 240px;
+        height: 240px;
         border-radius: 20px;
         object-fit: cover;
       }

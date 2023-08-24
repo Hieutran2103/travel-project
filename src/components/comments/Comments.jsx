@@ -12,7 +12,7 @@ import { toast } from "react-toastify";
 
 const Comments = ({ postID, user }) => {
   const { currentUser } = useGlobalContextAuth();
-  const { pageComment, limitComment } = useGlobalPage();
+  const { pageComment, limitComment, setComment, comment } = useGlobalPage();
   const [descomment, setDescomment] = useState("");
   const [hasEnteredFirstValue, setHasEnteredFirstValue] = useState(false);
 
@@ -21,6 +21,7 @@ const Comments = ({ postID, user }) => {
     mutationFn: (comment) => customFetch.post("/comments", comment),
     onSuccess: (data) => {
       queryClient.invalidateQueries({ queryKey: ["comments"] });
+      setComment(comment + 1);
       setDescomment("");
     },
     onError: (error) => {

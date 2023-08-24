@@ -7,6 +7,7 @@ import { useForm } from "react-hook-form";
 import { schema, schemaEmail } from "../../utils/rules";
 import InputForm from "../../components/input/inputForm";
 import { useMutation } from "@tanstack/react-query";
+
 import customFetch from "../../utils/url";
 import { toast } from "react-toastify";
 
@@ -14,6 +15,13 @@ const Login = () => {
   const { setCurrentUser, setAuthenticate } = useGlobalContextAuth();
   const navigate = useNavigate();
 
+import { useState } from "react";
+
+
+const Login = () => {
+  const navigate = useNavigate();
+  const { login } = useGlobalContextAuth();
+  const [isShowPassword, setIsShowPassword] = useState(false);
   const {
     handleSubmit,
     register,
@@ -26,6 +34,7 @@ const Login = () => {
   const loginMutation = useMutation({
     mutationFn: (data) => customFetch.post("/users/login", data),
     onSuccess: (data) => {
+
       // console.log(data);
       setCurrentUser(
         localStorage.setItem("user", JSON.stringify(data.data.data.user))
@@ -43,6 +52,19 @@ const Login = () => {
   const formSubmit = (data) => {
     loginMutation.mutate(data);
   };
+
+      console.log(data);
+      toast.success("Login success");
+      localStorage.getItem("profile", JSON.stringify(data.data.user));
+      navigate("/");
+
+    },
+  });
+
+  const formSubmit = (data) => {
+    loginMutation.mutate(data);
+  };
+
 
   return (
     <div className="loginForm">
@@ -95,17 +117,28 @@ const Login = () => {
                 errormessage={errors.email?.message}
                 register={{ ...register("email") }}
               />
-              <InputForm
-                // className="input-box"
-                classNameicon="icon"
-                classNameI="bx bxs-lock"
-                name="password"
-                labelName="Password"
-                type="password"
-                classNameLabel="label"
-                errormessage={errors.password?.message}
-                register={{ ...register("password") }}
-              />
+              <div className="input2">
+                <InputForm
+                  // className="input-box"
+                  // classNameicon="icon"
+                  // classNameI="bx bxs-lock"
+                  name="password"
+                  labelName="Password"
+                  type={isShowPassword === true ? "text" : "password"}
+                  classNameLabel="label"
+                  errormessage={errors.password?.message}
+                  register={{ ...register("password") }}
+                />
+
+                <i
+                  className={
+                    isShowPassword === true
+                      ? "fa-solid fa-lock-open"
+                      : "fa-solid fa-lock"
+                  }
+                  onClick={() => setIsShowPassword(!isShowPassword)}
+                ></i>
+              </div>
 
               <button className="btn" type="submit">
                 Login

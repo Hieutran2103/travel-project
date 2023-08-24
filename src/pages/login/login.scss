@@ -102,9 +102,17 @@
       flex-direction: column;
       width: 100%;
       height: 100%;
-      h2{
+             h2{
                   text-align: center;
                   font-size: 25px;
+              }
+              .input2{
+                i{
+                    position: absolute;
+                    right: 0px;
+                    bottom: 310px;
+                    cursor: pointer;
+                }
               }
 
               .input-box{

@@ -2,6 +2,7 @@ import { useTranslation } from "react-i18next";
 import { useGlobalContextAuth } from "../../context/AuthContext";
 import "./rightBar.scss";
 import MoreVertOutlinedIcon from "@mui/icons-material/MoreVertOutlined";
+import { Link } from "react-router-dom";
 const RightBar = () => {
   const { currentUser } = useGlobalContextAuth();
   const [t, i18] = useTranslation("global");
@@ -19,7 +20,9 @@ const RightBar = () => {
               }
               alt=""
             />
-
+            <Link to="/profile/:id">
+              <img src={currentUser.profilePic} alt="" />
+            </Link>
             <div className="info">
               <div className="name">{currentUser?.name}</div>
               <div className="email">{currentUser?.email}</div>

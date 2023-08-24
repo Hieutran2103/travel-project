@@ -40,17 +40,34 @@ export const userSchema = yup.object({
   confirm_password: handleConfirmPassword("password"),
 });
 
-export const schemaEmail = yup.object({
-  email: schema.fields["email"]
-})
+export const userSchema2 = yup.object({
+  username: yup
+    .string()
+    .required("username is required")
+    .min(3, "Do dai ky tu 3-100")
+    .max(100, "Do dai ky tu 3-100"),
+  telephone: yup
+    .string()
+    .required("telephone is required")
+    .min(8, "Do dai ky tu tu 8-12")
+    .max(12, "Do dai ky tu tu 8-12"),
+  address: yup.string().required("address is required"),
+  date: yup.string().required("date is required"),
+});
 
+export const schemaEmail = yup.object({
+  email: schema.fields["email"],
+});
 
 export const resetPasswordSchema = yup.object({
   password: schema.fields["password"],
   confirm_password: handleConfirmPassword("password")
 })
-
 export const schemaLogin = yup.object({
   email: schema.fields["email"],
   password: schema.fields["password"]
 })
+
+  confirm_password: handleConfirmPassword("password"),
+});
+

@@ -20,9 +20,6 @@ const RightBar = () => {
               }
               alt=""
             />
-            <Link to="/profile/:id">
-              <img src={currentUser.profilePic} alt="" />
-            </Link>
             <div className="info">
               <div className="name">{currentUser?.name}</div>
               <div className="email">{currentUser?.email}</div>

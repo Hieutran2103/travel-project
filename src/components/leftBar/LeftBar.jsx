@@ -16,6 +16,8 @@ import { useGlobalSearch } from "../../context/Search&Notification";
 import { useTranslation } from "react-i18next";
 import { useState } from "react";
 import Notification from "../Notification/Notification";
+import customFetch from "../../utils/url";
+import { useMutation } from "@tanstack/react-query";
 
 const LeftBar = () => {
   const { toggle, darkMode } = useGlobalContextDarkMode();
@@ -34,13 +36,25 @@ const LeftBar = () => {
     i18.changeLanguage("en");
     setIsLanguageViet(false);
   };
+  
+  const logoutMutation = useMutation({
+    mutationFn: () =>
+      customFetch.post("/users/logout", {
+        refresh_token: localStorage.getItem("refresh_token"),
+      }),
+    onSuccess: (data) => {
+      localStorage.removeItem("access_token");
+      localStorage.removeItem("refresh_token");
+      localStorage.removeItem("user");
+      setCurrentUser(null);
+      console.log(data)
+      navigate("/login");
+    },
+  });
+
   const logout = () => {
-    localStorage.removeItem("access_token");
-    localStorage.removeItem("refresh_token");
-    localStorage.removeItem("user");
-    setCurrentUser(null);
-    navigate("/login")
-  }
+    logoutMutation.mutate();
+  };
 
 
   return (

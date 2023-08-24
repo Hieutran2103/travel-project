@@ -113,8 +113,8 @@ const Login = () => {
                 <i
                   className={
                     isShowPassword === true
-                      ? "fa-solid fa-lock-open"
-                      : "fa-solid fa-lock"
+                      ? "fa-solid fa-eye"
+                      : "fa-solid fa-eye-slash"
                   }
                   onClick={() => setIsShowPassword(!isShowPassword)}
                 ></i>

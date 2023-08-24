@@ -5,31 +5,20 @@ export const AuthContext = createContext();
 export const useGlobalContextAuth = () => useContext(AuthContext);
 
 const Auth = ({ children }) => {
+  const [authenticate, setAuthenticate] = useState(
+    Boolean(localStorage.getItem("access_token"))
+    // Boolean(JSON.parse(localStorage.getItem("refresh_token")))
+  );
   const [currentUser, setCurrentUser] = useState(
     JSON.parse(localStorage.getItem("user")) || null
   );
 
-  const logout = () => {
-    setCurrentUser(false);
-  };
-
-  //Nhét vào button của Login
-  const login = () => {
-    setCurrentUser({
-      id: 100,
-      name: "Dương Văn Cải",
-      profilePic:
-        "https://images.unsplash.com/photo-1640951613773-54706e06851d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=580&q=80",
-      email: "hieudzai@gmail.com",
-    });
-  };
-
-  useEffect(() => {
-    localStorage.setItem("user", JSON.stringify(currentUser));
-  }, [currentUser]);
+  // useEffect(() => {
+  //   localStorage.setItem("user", JSON.stringify(currentUser));
+  // }, [currentUser]);
 
   return (
-    <AuthContext.Provider value={{ currentUser, login, logout }}>
+    <AuthContext.Provider value={{ setCurrentUser, currentUser, setAuthenticate, authenticate}}>
       {children}
     </AuthContext.Provider>
   );

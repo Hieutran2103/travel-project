@@ -75,10 +75,18 @@ const CreatePost = () => {
       <div className="container">
         <div className="top">
           <div className="left">
-            <img src={currentUser.profilePic} alt="" />
+            <img
+              src={
+                !currentUser?.avatar
+                  ? "https://antimatter.vn/wp-content/uploads/2022/11/anh-avatar-trang-fb-mac-dinh.jpg"
+                  : currentUser?.avatar
+              }
+              alt=""
+            />
+
             <input
               type="text"
-              placeholder={`${t("newfeed.inputPost")} ${currentUser.name}?`}
+              placeholder={`${t("newfeed.inputPost")} ${currentUser?.name}?`}
               onChange={handleDec}
               value={desc}
             />

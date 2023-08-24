@@ -10,16 +10,11 @@ import { useMutation } from "@tanstack/react-query";
 
 import customFetch from "../../utils/url";
 import { toast } from "react-toastify";
-
-const Login = () => {
-  const { setCurrentUser, setAuthenticate } = useGlobalContextAuth();
-  const navigate = useNavigate();
-
 import { useState } from "react";
 
 const Login = () => {
   const navigate = useNavigate();
-  const { login } = useGlobalContextAuth();
+  const { setCurrentUser, setAuthenticate } = useGlobalContextAuth();
   const [isShowPassword, setIsShowPassword] = useState(false);
 
   const {
@@ -34,7 +29,6 @@ const Login = () => {
   const loginMutation = useMutation({
     mutationFn: (data) => customFetch.post("/users/login", data),
     onSuccess: (data) => {
-
       // console.log(data);
       setCurrentUser(
         localStorage.setItem("user", JSON.stringify(data.data.data.user))
@@ -52,18 +46,6 @@ const Login = () => {
   const formSubmit = (data) => {
     loginMutation.mutate(data);
   };
-
-      console.log(data);
-      toast.success("Login success");
-      localStorage.getItem("profile", JSON.stringify(data.data.user));
-      navigate("/");
-    },
-  });
-
-  const formSubmit = (data) => {
-    loginMutation.mutate(data);
-  };
-
   return (
     <div className="loginForm">
       <div className="container">
@@ -168,4 +150,5 @@ const Login = () => {
     </div>
   );
 };
+
 export default Login;

@@ -57,14 +57,15 @@ export const userSchema2 = yup.object({
 
 export const schemaEmail = yup.object({
   email: schema.fields["email"],
+  password: schema.fields["password"],
+  // linh mới them pasword vào đây ae nhé
 });
 
 export const resetPasswordSchema = yup.object({
   password: schema.fields["password"],
-  confirm_password: handleConfirmPassword("password")
-})
+  confirm_password: handleConfirmPassword("password"),
+});
 export const schemaLogin = yup.object({
   email: schema.fields["email"],
-  password: schema.fields["password"]
+  password: schema.fields["password"],
 });
-

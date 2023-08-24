@@ -28,7 +28,11 @@ const Comments = ({ postID, user }) => {
       toast.error(error.response.data.errors.comment.msg);
     },
   });
-
+  //   const { data, isLoading } = useQuery(["likes", _id], () =>
+  //   customFetch.get(`/likes/count/${_id}`).then((res) => {
+  //     return res.data;
+  //   })
+  // );
   const { data, isLoading } = useQuery({
     queryKey: ["comments"],
     queryFn: () =>
@@ -62,7 +66,14 @@ const Comments = ({ postID, user }) => {
   return (
     <div className="comments">
       <div className="write">
-        <img src={currentUser.profilePic} alt="" />
+        <img
+          src={
+            !currentUser?.avatar
+              ? "https://antimatter.vn/wp-content/uploads/2022/11/anh-avatar-trang-fb-mac-dinh.jpg"
+              : currentUser?.avatar
+          }
+          alt=""
+        />
         <input
           type="text"
           placeholder="Write a comment..."

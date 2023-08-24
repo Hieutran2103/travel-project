@@ -19,7 +19,7 @@ export default function InputForm({
       </span>
       <input type={type} placeholder={placeholder} {...register} />
       <label className={classNameLabel}>{labelName}</label>
-      <div style={{ minHeight: 25, color: "#f72d7a" }}>{errormessage}</div>
+      <div style={{ minHeight: 25, color: "#FF0000" }}>{errormessage}</div>
     </div>
   );
 }

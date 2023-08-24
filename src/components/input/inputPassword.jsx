@@ -12,7 +12,7 @@ export default function InputPassword({
     <div className="input-group">
       <span>{spanName}</span>
       <input type={type} placeholder={placeholder} {...register} />
-      <div style={{ minHeight: 25, color: "#f72d7a" }}>{errormessage}</div>
+      <div style={{ minHeight: 25, color: "#FF0000" }}>{errormessage}</div>
     </div>
   );
 }

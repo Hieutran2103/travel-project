@@ -12,7 +12,7 @@ export default function InputUser({
     <div className="input-group">
       <span>{spanName}</span>
       <input type={type} placeholder={placeholder} {...register} />
-      <div style={{ minHeight: 20, color: "#f72d7a" }}>{errormessage}</div>
+      <div style={{ minHeight: 20, color: "#FF0000" }}>{errormessage}</div>
     </div>
   );
 }

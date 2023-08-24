@@ -4,34 +4,34 @@ export const schema = yup.object({
   name: yup
     .string()
     .required("username is required")
-    .min(3, "Do dai ky tu 3-100")
-    .max(100, "Do dai ky tu 3-100"),
+    .min(3, "Độ dài ký tự từ 3-100")
+    .max(100, "Độ dài ký tự từ 3-100"),
   email: yup
     .string()
     .required("email is required")
-    .email("email khong dung dinh dang")
-    .min(5, "Do dai ky tu 5-100")
-    .max(100, "Do dai ky tu 5-100"),
+    .email("email không đúng định dạng")
+    .min(5, "Độ dài ký tự từ 5-100")
+    .max(100, "Độ dài ký tự từ 5-100"),
   password: yup
     .string()
     .required("password is required")
-    .min(5, "Do dai ky tu 5-15")
-    .max(15, "Do dai ky tu 5-15"),
+    .min(5, "Độ dài ký tự từ 5-15")
+    .max(15, "Độ dài ký tự từ 5-15"),
   confirm_password: yup
     .string()
     .required("confirm_password is required")
-    .min(5, "Do dai ky tu 5-15")
-    .max(15, "Do dai ky tu 5-15")
-    .oneOf([yup.ref("password")], "nhap lai mk chua khop"),
+    .min(5, "Độ dài ký tự từ 5-15")
+    .max(15, "Độ dài ký tự từ 5-15")
+    .oneOf([yup.ref("password")], "Nhập lại mật khẩu chưa khớp"),
 });
 
 const handleConfirmPassword = (refString) => {
   return yup
     .string()
     .required("confirm_password is required")
-    .min(5, "Do dai ky tu 5-15")
-    .max(15, "Do dai ky tu 5-15")
-    .oneOf([yup.ref(refString)], "nhap lai mk chua khop");
+    .min(5, "Độ dài ký tự từ 5-15")
+    .max(15, "Độ dài ký tự từ 5-15")
+    .oneOf([yup.ref(refString)], "Nhập lại mật khẩu chưa khớp");
 };
 
 export const userSchema = yup.object({
@@ -44,13 +44,13 @@ export const userSchema2 = yup.object({
   username: yup
     .string()
     .required("username is required")
-    .min(3, "Do dai ky tu 3-100")
-    .max(100, "Do dai ky tu 3-100"),
+    .min(3, "Độ dài ký tự từ 3-100")
+    .max(100, "Độ dài ký tự từ 3-100"),
   telephone: yup
     .string()
     .required("telephone is required")
-    .min(8, "Do dai ky tu tu 8-12")
-    .max(12, "Do dai ky tu tu 8-12"),
+    .min(8, "Độ dài ký tự từ 8-12")
+    .max(12, "Độ dài ký tự từ 8-12"),
   address: yup.string().required("address is required"),
   date: yup.string().required("date is required"),
 });

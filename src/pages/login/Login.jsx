@@ -126,10 +126,11 @@ const Login = () => {
               <div className="or">
                 <p>OR</p>
               </div>
-              <button className="btn">
-                Login With Google <i className="bx bxl-google" />
-              </button>
             </form>
+
+            <button className="btnGG">
+              Login With Google <i className="bx bxl-google" />
+            </button>
             <div className="remember-password">
               <Link to="/user-forgot-password" className="forgot-pass">
                 {" "}

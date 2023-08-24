@@ -86,7 +86,7 @@ export default function RegisterForm() {
                 labelName="Username"
                 type="text"
                 classNameLabel="label"
-                errormessage={errors.username?.message}
+                errormessage={errors.name?.message}
                 register={{ ...register("name") }}
               />
               <InputForm

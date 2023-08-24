@@ -8,7 +8,9 @@
     "language": "English",
     "profile": "Cá nhân",
     "logout": "Đăng xuất",
-    "listSearch": "Danh sách tìm kiếm"
+    "listSearch": "Danh sách tìm kiếm",
+    "user": "Người dùng",
+    "vacation": "Kỳ nghỉ"
   },
   "newfeed": {
     "inputPost": "Bạn đang nghĩ cái gì thế",

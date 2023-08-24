@@ -8,7 +8,9 @@
     "language": "Tiếng Việt",
     "profile": "Profile",
     "logout": "Logout",
-    "listSearch": "List search"
+    "listSearch": "List search",
+    "user": "User",
+    "vacation": "Vacation"
   },
   "newfeed": {
     "inputPost": "What's on your mind",

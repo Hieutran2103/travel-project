@@ -11,6 +11,7 @@ $themes: (
     textoverlay: rgb(255, 255, 255),
     bgintro: #f6f3f3,
     itemintro: #fff,
+    bt: #cecccc,
   ),
   dark: (
     textColorActive: #ffffff,
@@ -24,6 +25,7 @@ $themes: (
     textoverlay: rgb(212, 212, 212),
     bgintro: #111111,
     itemintro: #1a1a1a,
+    bt: #808080,
   ),
 );
 @mixin themify($themes: $themes) {

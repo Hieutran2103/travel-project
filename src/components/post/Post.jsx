@@ -1,5 +1,4 @@
 import { Link } from "react-router-dom";
-
 import "./post.scss";
 import FavoriteBorderOutlinedIcon from "@mui/icons-material/FavoriteBorderOutlined";
 import FavoriteOutlinedIcon from "@mui/icons-material/FavoriteOutlined";
@@ -20,8 +19,9 @@ import MenuItem from "@mui/material/MenuItem";
 import SpecificEdit from "../specificEdit/SpecificEdit";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import customFetch from "../../utils/url";
-import { useRef } from "react";
+
 import { useGlobalPage } from "../../context/Page";
+import { toast } from "react-toastify";
 const Post = ({ post, index }) => {
   const { medias, content, userId, user, created_at, _id } = post;
 
@@ -34,18 +34,35 @@ const Post = ({ post, index }) => {
   //VIdu
   const [liked, setLiked] = useState(false);
   const [currentPerson, setCurrentPerson] = useState(0);
-
-  // const commentCount = useQuery({
-  //   queryKey: ["commentsCount", comment],
-  //   queryFn: () => customFetch.get(`/comments/count/${post._id}`),
-  // });
-  // if (!commentCount) {
-  //   return null;
-  // }
-  // const countComment = commentCount.data?.data?.total;
+  const [infoUser, setInfoUser] = useState();
 
   const queryClient = useQueryClient();
 
+  const { data, isLoading } = useQuery(["likes", _id], () =>
+    customFetch.get(`/likes/count/${_id}`).then((res) => {
+      return res.data;
+    })
+  );
+
+  // const { mutate: postLike } = useMutation({
+  //   mutationFn: (posts) => customFetch.post(`/likes`, posts),
+  //   onSuccess: (data) => {
+  //     queryClient.invalidateQueries({ queryKey: ["likes"] });
+  //   },
+  //   onError: (error) => {
+  //     toast.error("error");
+  //   },
+  // });
+
+  const { mutate: postLike } = useMutation({
+    mutationFn: (posts) => customFetch.post(`/likes`, posts),
+    onSuccess: (data) => {
+      queryClient.invalidateQueries({ queryKey: ["likes"] });
+    },
+    onError: (error) => {
+      toast.error("error");
+    },
+  });
   const { mutate: deletePost } = useMutation({
     mutationFn: (posts) => customFetch.delete(`/posts/${posts}`),
     onSuccess: (data) => {
@@ -101,7 +118,27 @@ const Post = ({ post, index }) => {
     setImagePost(await customFetch.get(`/posts/${_id}`));
     setAnchorEl(null);
     openEditSpecific();
+    setInfoUser(user);
   };
+
+  const handleLike = () => {
+    postLike({
+      status_id: _id,
+    });
+    setTimeout(() => {
+      setLiked(!liked);
+    }, 500);
+  };
+
+  // const handleDisLike = () => {
+  //   setTimeout(() => {
+  //     setLiked(!liked);
+  //   }, 500);
+
+  //   postLike({
+  //     status_id: _id,
+  //   });
+  // };
 
   return (
     <div className="post">
@@ -155,13 +192,7 @@ const Post = ({ post, index }) => {
               <MenuItem onClick={handleDeletePost}>Delete</MenuItem>
             </Menu>
           </div>
-          <SpecificEdit
-            user={user}
-            currentPerson={currentPerson}
-            prevSlide={prevSlide}
-            nextSlide={nextSlide}
-            setAnchorEl={setAnchorEl}
-          />
+          <SpecificEdit setAnchorEl={setAnchorEl} infoUser={infoUser} />
         </div>
         <div className="content">
           <p>{content}</p>
@@ -196,17 +227,16 @@ const Post = ({ post, index }) => {
           </div>
         </div>
         <div className="info">
-          <div className="item" onClick={() => setLiked(!liked)}>
+          <div className="item">
             {!liked ? (
-              <FavoriteBorderOutlinedIcon />
+              <FavoriteBorderOutlinedIcon onClick={handleLike} />
             ) : (
               <FavoriteOutlinedIcon style={{ color: "red" }} />
             )}{" "}
-            12 {t("newfeed.like")}
+            {data?.total} {t("newfeed.like")}
           </div>
           <div className="item" onClick={() => setCommentOpen(!commentOpen)}>
             <TextsmsOutlinedIcon />
-
             {t("newfeed.comment")}
           </div>
         </div>

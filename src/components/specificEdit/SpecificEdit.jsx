@@ -8,16 +8,11 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import customFetch from "../../utils/url";
 import { toast } from "react-toastify";
 
-const SpecificEdit = ({
-  user,
-  currentPerson,
-  nextSlide,
-  prevSlide,
-  setAnchorEl,
-}) => {
+const SpecificEdit = ({ setAnchorEl, infoUser }) => {
   // const rs = imagePost.data.data.medias;
   // console.log(rs);
   const [desc, setDesc] = useState("");
+  const [imageEdit, setImageEdit] = useState(0);
   const { editSpecific, closeEditSpecific } = useGlobalSearch();
   const { imagePost } = useGlobalPage();
   const [hasEnteredFirstValue, setHasEnteredFirstValue] = useState(false);
@@ -40,15 +35,20 @@ const SpecificEdit = ({
   if (!imagePost) {
     return null;
   }
-  const rs = imagePost.data?.data?.medias;
-  const idEdit = imagePost.data?.data?._id;
+  const rs = imagePost?.data?.data?.medias;
+  // const z = imagePost?.data?.data?.user_id;
+
+  const idEdit = imagePost?.data?.data?._id;
   if (!idEdit) {
     return null;
   }
   if (!rs) {
     return null;
   }
-
+  if (!infoUser) {
+    return null;
+  }
+  console.log(infoUser?.username);
   const handleDec = (event) => {
     const newValue = event.target.value;
     // Nếu chưa nhập lần đầu và giá trị nhập vào có chứa khoảng trắng, loại bỏ khoảng trắng
@@ -58,6 +58,29 @@ const SpecificEdit = ({
       setDesc(newValue);
       setHasEnteredFirstValue(true);
     }
+  };
+  const checkNumber = (number) => {
+    if (number > rs.length - 1) {
+      return (number = 0);
+    }
+    if (number < 0) {
+      return (number = rs.length - 1);
+    }
+    return number;
+  };
+
+  const prevSlide = () => {
+    setImageEdit((oldPerson) => {
+      const rerult = oldPerson - 1;
+      return checkNumber(rerult);
+    });
+  };
+
+  const nextSlide = () => {
+    setImageEdit((oldPerson) => {
+      const rerult = oldPerson + 1;
+      return checkNumber(rerult);
+    });
   };
 
   const handleEdit = (e) => {
@@ -94,14 +117,12 @@ const SpecificEdit = ({
           </div>
           <div className="duoi">
             <div className="showImage">
-              {rs.map((z, indexxX) => {
+              {rs?.map((z, indexxX) => {
                 return (
                   <div
                     className="slideT"
                     style={{
-                      transform: `translateX(${
-                        100 * (indexxX - currentPerson)
-                      }%)`,
+                      transform: `translateX(${100 * (indexxX - imageEdit)}%)`,
                     }}
                     key={1}
                   >
@@ -109,7 +130,7 @@ const SpecificEdit = ({
                   </div>
                 );
               })}
-              {rs.length > 1 ? (
+              {rs?.length > 1 ? (
                 <>
                   <button type="button" className="prevT" onClick={prevSlide}>
                     {" "}
@@ -128,13 +149,13 @@ const SpecificEdit = ({
               <div className="userCurrent">
                 <img
                   src={
-                    !user.avatar
+                    !infoUser?.avatar
                       ? "https://antimatter.vn/wp-content/uploads/2022/11/anh-avatar-trang-fb-mac-dinh.jpg"
-                      : user.avatar
+                      : infoUser?.avatar
                   }
                   alt=""
                 />
-                <div className="nameUser">{user.name}</div>
+                <div className="nameUser">{infoUser?.name}</div>
               </div>
               <input
                 type="text"

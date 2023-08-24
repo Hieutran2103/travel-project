@@ -27,13 +27,14 @@ import VacationList from "./components/vacationList/VacationList";
 import AlbumList from "./components/albumList/AlbumList";
 import AlbumDetail from "./components/albumDetail/AlbumDetail";
 import "./style.scss";
+import VerifyEmail from "./pages/VerifyEmail/VerifyEmail";
 
 function App() {
-  const { currentUser } = useGlobalContextAuth();
+  const { currentUser, authenticate } = useGlobalContextAuth();
   const { darkMode } = useGlobalContextDarkMode();
 
   const ProtectedRouter = ({ children }) => {
-    if (!currentUser) {
+    if (!authenticate) {
       return <Navigate to="/login" />;
     }
     return children;
@@ -136,6 +137,10 @@ function App() {
     {
       path: "/forgot-password",
       element: <VerifyForgotPassword />,
+    },
+    {
+      path: "/verify-email",
+      element: <VerifyEmail />,
     },
     {
       path: "/register",

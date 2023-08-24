@@ -4,9 +4,17 @@ import Logo from "../../assets/logonewfeed2.svg";
 import { useGlobalContextAuth } from "../../context/AuthContext";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useForm } from "react-hook-form";
-import { schema } from "../../utils/rules";
+import { schema, schemaEmail } from "../../utils/rules";
 import InputForm from "../../components/input/inputForm";
 import { useMutation } from "@tanstack/react-query";
+
+import customFetch from "../../utils/url";
+import { toast } from "react-toastify";
+
+const Login = () => {
+  const { setCurrentUser, setAuthenticate } = useGlobalContextAuth();
+  const navigate = useNavigate();
+
 import { useState } from "react";
 
 
@@ -14,20 +22,39 @@ const Login = () => {
   const navigate = useNavigate();
   const { login } = useGlobalContextAuth();
   const [isShowPassword, setIsShowPassword] = useState(false);
-
-
   const {
     handleSubmit,
     register,
     formState: { errors },
-  } = useForm({ resolver: yupResolver(schema) });
+  } = useForm({
+    resolver: yupResolver(schemaEmail),
+    defaultValues: { email: "", password: "" },
+  });
 
   const loginMutation = useMutation({
     mutationFn: (data) => customFetch.post("/users/login", data),
     onSuccess: (data) => {
+
+      // console.log(data);
+      setCurrentUser(
+        localStorage.setItem("user", JSON.stringify(data.data.data.user))
+      );
+      localStorage.setItem("access_token", data.data.data.access_token);
+      localStorage.setItem("refresh_token", data.data.data.refresh_token);
+      setAuthenticate(true);
+      setTimeout(() => {
+        navigate("/");
+        window.location.reload();
+      }, 500);
+      alert(data.data.message);
+    },
+  });
+  const formSubmit = (data) => {
+    loginMutation.mutate(data);
+  };
+
       console.log(data);
       toast.success("Login success");
-
       localStorage.getItem("profile", JSON.stringify(data.data.user));
       navigate("/");
 
@@ -37,7 +64,6 @@ const Login = () => {
   const formSubmit = (data) => {
     loginMutation.mutate(data);
   };
-
 
 
   return (
@@ -114,10 +140,8 @@ const Login = () => {
                 ></i>
               </div>
 
-              <button className="btn" onClick={login}>
-                <Link to="/" className="loginToHome">
-                  Login
-                </Link>
+              <button className="btn" type="submit">
+                Login
               </button>
               <div className="or">
                 <p>OR</p>

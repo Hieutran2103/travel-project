@@ -23,7 +23,8 @@ import customFetch from "../../utils/url";
 import { useGlobalPage } from "../../context/Page";
 import { toast } from "react-toastify";
 import { useGlobalContextAuth } from "../../context/AuthContext";
-import { truncate } from "lodash";
+import { set, truncate } from "lodash";
+import { useEffect } from "react";
 const Post = ({ post, index }) => {
   const { medias, content, userId, user, created_at, _id } = post;
   const { currentUser } = useGlobalContextAuth();
@@ -34,12 +35,18 @@ const Post = ({ post, index }) => {
   const [t, i18] = useTranslation("global");
   //State Comments
   const [commentOpen, setCommentOpen] = useState(false);
-  //VIdu
+
+  const getLikeFromLS = () => localStorage.getItem("like") || false;
+
+  const [liked, setLiked] = useState(Boolean(getLikeFromLS));
+  console.log(liked);
 
   const { mutate: postLike } = useMutation({
     mutationFn: (posts) => customFetch.post(`/likes`, posts),
     onSuccess: (data) => {
       queryClient.invalidateQueries({ queryKey: ["likes"] });
+      localStorage.setItem("like", true);
+      setLiked(true);
     },
     onError: (error) => {
       toast.error("error");
@@ -49,13 +56,13 @@ const Post = ({ post, index }) => {
     mutationFn: (posts) => customFetch.delete(`/likes/post/${posts}`),
     onSuccess: (data) => {
       queryClient.invalidateQueries({ queryKey: ["likes"] });
+      localStorage.removeItem("like");
+      setLiked(false);
     },
     onError: (error) => {
       toast.error("error");
     },
   });
-
-  const [liked, setLiked] = useState(false);
 
   const [currentPerson, setCurrentPerson] = useState(0);
   const [infoUser, setInfoUser] = useState();
@@ -135,18 +142,15 @@ const Post = ({ post, index }) => {
     postLike({
       status_id: _id,
     });
-    setTimeout(() => {
-      setLiked(!liked);
-    }, 500);
   };
 
   const handleDisLike = () => {
-    setTimeout(() => {
-      setLiked(!liked);
-    }, 500);
-
     deletePostLike(_id);
   };
+
+  // useEffect(() => {
+  //   setLiked(localStorage.getItem("like") === true);
+  // }, []);
 
   return (
     <div className="post">
@@ -240,14 +244,16 @@ const Post = ({ post, index }) => {
         </div>
         <div className="info">
           <div className="item">
-            {!liked ? (
-              <FavoriteBorderOutlinedIcon onClick={handleLike} />
-            ) : (
+            {/* {!liked && <FavoriteBorderOutlinedIcon onClick={handleLike} />} */}
+            {liked && data?.total >= 1 ? (
               <FavoriteOutlinedIcon
                 style={{ color: "red" }}
                 onClick={handleDisLike}
               />
-            )}{" "}
+            ):(
+              <FavoriteBorderOutlinedIcon onClick={handleLike} />
+            )}
+            {""}
             {data?.total} {t("newfeed.like")}
           </div>
           <div className="item" onClick={() => setCommentOpen(!commentOpen)}>

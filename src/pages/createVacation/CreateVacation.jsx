@@ -7,6 +7,7 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import customFetch from "../../utils/url";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { useNavigate } from "react-router-dom";
 const CreateVacation = () => {
   const inputRef = useRef(null);
   const [isPublic, setIsPublic] = useState("Công khai");
@@ -14,12 +15,9 @@ const CreateVacation = () => {
   const [name, setName] = useState("");
   const [something, setSomething] = useState("");
   const [intro, setIntro] = useState("");
-
-  const arrayBegin = [];
-  const UserID = [];
-
-  let userAdded = useRef([]);
-  let userIDD = useRef([]);
+  const [items, setItems] = useState([]);
+  const [idUser, IdUser] = useState([]);
+  const navigate = useNavigate();
 
   const [information, setInfomation] = useState({
     name: "",
@@ -27,7 +25,7 @@ const CreateVacation = () => {
     intro: "",
     option: "Công khai",
     image: "",
-    userAdd: userIDD,
+    userAdd: idUser,
   });
   const handleName = (e) => {
     setName(e.target.value);
@@ -64,18 +62,22 @@ const CreateVacation = () => {
   };
 
   const selectUser = (e) => {
-    arrayBegin.push(e);
-    UserID.push(e.userId);
-    let uniqueSet = [...new Set(arrayBegin)];
-    let userID = [...new Set(UserID)];
-    userIDD.current = userID;
-    userAdded.current = uniqueSet;
+    if (items.includes(e)) return;
+    const newItems = [...items, e];
+    const newItemsID = [...idUser, e._id];
+    console.log(items);
+    setItems(newItems);
+    IdUser(newItemsID);
+    setInfomation({ ...information, userAdd: newItemsID });
   };
 
   const deleteUser = (id) => {
-    const newUser = userAdded.current.filter((item) => item.userId !== id);
-    userAdded.current = newUser;
-    setInfomation({ ...information, userAdd: newUser });
+    const newUser = items.filter((item) => item._id !== id);
+    const newItemsID = idUser.filter((item) => item !== id);
+
+    setItems(newUser);
+    IdUser(newItemsID);
+    setInfomation({ ...information, userAdd: newItemsID });
   };
 
   const queryClient = useQueryClient();
@@ -85,13 +87,14 @@ const CreateVacation = () => {
         vacation_name: taskTitle.name,
         vacation_description: taskTitle.something,
         audience: taskTitle.option === "Công khai" ? 0 : 1,
-        mentions: taskTitle.userAdd.current,
+        mentions: taskTitle.userAdd,
         vacation_avatar: taskTitle.image,
         vacation_intro: taskTitle.intro,
       }),
     onSuccess: (data) => {
       queryClient.invalidateQueries({ queryKey: ["createVacation"] });
       toast.success("Successfully Created New Vacation");
+      navigate(`/vacation/${data.data.data._id}`);
       console.log(data);
     },
     onError: (error) => {
@@ -146,7 +149,7 @@ const CreateVacation = () => {
         handleOption={handleOption}
         information={information}
         selectUser={selectUser}
-        userAdded={userAdded}
+        items={items}
         deleteUser={deleteUser}
       />
       <RightVacation

@@ -19,10 +19,11 @@ const LeftVacation = ({
   handleOption,
   information,
   selectUser,
-  userAdded,
+  items,
   deleteUser,
 }) => {
   const { currentUser } = useGlobalContextAuth();
+
   return (
     <div className="leftVacation">
       <div className="cover">
@@ -35,7 +36,14 @@ const LeftVacation = ({
           </Link>
         </div>
         <div className="founder">
-          <img src={currentUser.profilePic} alt="" />
+          <img
+            src={
+              !currentUser?.avatar
+                ? "https://antimatter.vn/wp-content/uploads/2022/11/anh-avatar-trang-fb-mac-dinh.jpg"
+                : currentUser?.avatar
+            }
+            alt=""
+          />
           <div className="moree">
             <div className="name">{currentUser.name}</div>
             <div className="position">Quản trị viên</div>
@@ -80,7 +88,7 @@ const LeftVacation = ({
           {information.option == "Riêng tư" ? (
             <AddUser
               selectUser={selectUser}
-              userAdded={userAdded}
+              items={items}
               information={information}
               deleteUser={deleteUser}
             />

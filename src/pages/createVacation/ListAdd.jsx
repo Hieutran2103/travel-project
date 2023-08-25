@@ -1,15 +1,21 @@
 import "./listAdd.scss";
 
-const ListAdd = ({ results, selectUser }) => {
+const ListAdd = ({ selectUser, data }) => {
   return (
     <div className="listAdd">
-      {results.map((result, id) => {
+      {data?.map((result, id) => {
         return (
           <div className="userAdd" key={id} onClick={() => selectUser(result)}>
-            <img src={result.profilePic} alt="" />
+            <img
+              src={
+                !result?.avatar
+                  ? "https://antimatter.vn/wp-content/uploads/2022/11/anh-avatar-trang-fb-mac-dinh.jpg"
+                  : result?.avatar
+              }
+              alt=""
+            />
             <div className="detailAdd">
-              <span className="nameAdd">{result.name}</span>
-              <span className="followerAdd">100 follower</span>
+              <span className="nameAdd">{result?.name}</span>
             </div>
           </div>
         );

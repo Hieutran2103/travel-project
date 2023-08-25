@@ -34,7 +34,14 @@ const RightVacation = ({ image, isPublic, name, something, intro }) => {
           <div className="lefta">
             <div className="containerz">
               <div className="topz">
-                <img src={currentUser.profilePic} alt="" />
+                <img
+                  src={
+                    !currentUser?.avatar
+                      ? "https://antimatter.vn/wp-content/uploads/2022/11/anh-avatar-trang-fb-mac-dinh.jpg"
+                      : currentUser?.avatar
+                  }
+                  alt=""
+                />
                 <input
                   type="text"
                   placeholder={`${t("newfeed.inputPost")} ${currentUser.name}?`}

@@ -6,8 +6,9 @@ import AccessTimeOutlinedIcon from "@mui/icons-material/AccessTimeOutlined";
 import ClearIcon from "@mui/icons-material/Clear";
 import MoreHorizOutlinedIcon from "@mui/icons-material/MoreHorizOutlined";
 import "./introduces.scss";
+import moment from "moment";
 
-const Introduces = ({ posts }) => {
+const Introduces = ({ dataVacation }) => {
   const [t, i18] = useTranslation("global");
 
   const { isIntroduceOpen, closeIntroduce, openUserVacation } =
@@ -24,12 +25,16 @@ const Introduces = ({ posts }) => {
           <hr />
           <div className="other">
             <img
-              src="https://images.unsplash.com/photo-1543610892-0b1f7e6d8ac1?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=387&q=80"
+              src={
+                !dataVacation.user.avatar
+                  ? "https://antimatter.vn/wp-content/uploads/2022/11/anh-avatar-trang-fb-mac-dinh.jpg"
+                  : dataVacation.user.avatar
+              }
               alt=""
             />
             <div className="info">
-              <div className="name">Hiếu Trần</div>
-              <div className="text">500 {t("rightBar.follower")}</div>
+              <div className="name">{dataVacation.user.name}</div>
+              <div className="text">{dataVacation.user.email}</div>
             </div>
           </div>
         </div>
@@ -37,36 +42,84 @@ const Introduces = ({ posts }) => {
         <div className="gr">
           <span className="topic">Giới thiệu về nhóm</span>
           <hr />
-          <div className="item">
-            <div className="icon">
-              <PublicOutlinedIcon />
-            </div>
-            <div className="detail">
-              <span className="title"> Công khai</span>
-              <span className="nd">
-                Bất kì ai cũng có thể thấy mọi người trong nhóm và những bài
-                đăng
-              </span>
-            </div>
-          </div>
-          <div className="item">
-            <div className="icon">
-              <VisibilityOutlinedIcon />
-            </div>
-            <div className="detail">
-              <span className="title"> Hiển thị</span>
-              <span className="nd">Ai cũng có thể thấy nhóm này</span>
-            </div>
-          </div>
-          <div className="item">
-            <div className="icon">
-              <AccessTimeOutlinedIcon />
-            </div>
-            <div className="detail">
-              <span className="title"> Lịch sử</span>
-              <span className="nd">Đã tạo nhóm vào 13 tháng 8, 2022</span>
-            </div>
-          </div>
+
+          {dataVacation.audience == 0 ? (
+            <>
+              {" "}
+              <div className="item">
+                <div className="icon">
+                  <PublicOutlinedIcon />
+                </div>
+                <div className="detail">
+                  <span className="title"> Công khai</span>
+                  <span className="nd">
+                    Bất kì ai cũng có thể thấy mọi người trong nhóm và những bài
+                    đăng
+                  </span>
+                </div>
+              </div>
+              <div className="item">
+                <div className="icon">
+                  <VisibilityOutlinedIcon />
+                </div>
+                <div className="detail">
+                  <span className="title"> Hiển thị</span>
+                  <span className="nd">Ai cũng có thể thấy nhóm này</span>
+                </div>
+              </div>
+              <div className="item">
+                <div className="icon">
+                  <AccessTimeOutlinedIcon />
+                </div>
+                <div className="detail">
+                  <span className="title"> Lịch sử</span>
+                  <span className="nd">
+                    Đã tạo nhóm vào{" "}
+                    {moment(dataVacation.created_at).format("MMM Do YY")}
+                  </span>
+                </div>
+              </div>
+            </>
+          ) : (
+            <>
+              {" "}
+              <div className="item">
+                <div className="icon">
+                  <PublicOutlinedIcon />
+                </div>
+                <div className="detail">
+                  <span className="title"> Riêng tư</span>
+                  <span className="nd">
+                    Chỉ thành viên mới nhìn thấy mọi người trong nhóm và những
+                    bài đăng
+                  </span>
+                </div>
+              </div>
+              <div className="item">
+                <div className="icon">
+                  <VisibilityOutlinedIcon />
+                </div>
+                <div className="detail">
+                  <span className="title"> Hiển thị</span>
+                  <span className="nd">
+                    Chỉ thành viên mới có thể tìm thấy nhóm này
+                  </span>
+                </div>
+              </div>
+              <div className="item">
+                <div className="icon">
+                  <AccessTimeOutlinedIcon />
+                </div>
+                <div className="detail">
+                  <span className="title"> Lịch sử</span>
+                  <span className="nd">
+                    Đã tạo nhóm vào{" "}
+                    {moment(dataVacation.created_at).format("YY Do MMM")}
+                  </span>
+                </div>
+              </div>
+            </>
+          )}
         </div>
 
         <div className="memberVacationn">
@@ -74,15 +127,28 @@ const Introduces = ({ posts }) => {
           <hr />
           <div className="avaUsers">
             <div className="seeAva">
-              {posts.map((post, index) => {
-                const { profilePic } = post;
-                return <img key={index} src={profilePic} alt="1" />;
+              {dataVacation.mentions.map((post, index) => {
+                const { avatar } = post;
+                return (
+                  <img
+                    src={
+                      !avatar
+                        ? "https://antimatter.vn/wp-content/uploads/2022/11/anh-avatar-trang-fb-mac-dinh.jpg"
+                        : avatar
+                    }
+                    alt={index}
+                    key={index}
+                  />
+                );
               })}
             </div>
-
-            <div className="morePeople">
-              <MoreHorizOutlinedIcon style={{ fontSize: "15px" }} />
-            </div>
+            {dataVacation.mentions.length >= 11 ? (
+              <div className="morePeople">
+                <MoreHorizOutlinedIcon style={{ fontSize: "15px" }} />
+              </div>
+            ) : (
+              ""
+            )}
           </div>
           <div className="seeAll" onClick={openUserVacation}>
             Xem tất cả

@@ -9,6 +9,7 @@ import { useMutation } from "@tanstack/react-query";
 import customFetch from "../../utils/url";
 import { useState } from "react";
 import { useGlobalContextAuth } from "../../context/AuthContext";
+import { ToastContainer, toast } from "react-toastify";
 
 export default function RegisterForm() {
   const navigate = useNavigate();
@@ -27,7 +28,7 @@ export default function RegisterForm() {
     mutationFn: (data) => customFetch.post("/users/register", data),
     onSuccess: (data) => {
       // console.log(data);
-      alert(data.data.message);
+      toast.success(t("auth.Register"));
       setAuthenticate(true);
       setCurrentUser(
         localStorage.setItem("user", JSON.stringify(data.data.data.user))
@@ -43,6 +44,18 @@ export default function RegisterForm() {
   };
   return (
     <div className="signup">
+      <ToastContainer
+        position="top-center"
+        autoClose={5000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="light"
+      />
       <div className="container">
         <div className="item">
           <div className="logo">

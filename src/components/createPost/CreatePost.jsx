@@ -1,4 +1,4 @@
-import { useContext, useEffect, useState } from "react";
+import { useState } from "react";
 import "./createPost.scss";
 import { useGlobalContextAuth } from "../../context/AuthContext";
 import AddPhotoAlternateOutlinedIcon from "@mui/icons-material/AddPhotoAlternateOutlined";
@@ -9,6 +9,7 @@ import customFetch from "../../utils/url";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { toast } from "react-toastify";
 import { useGlobalPage } from "../../context/Page";
+
 const CreatePost = () => {
   const { currentUser } = useGlobalContextAuth();
   const [t, i18] = useTranslation("global");
@@ -24,7 +25,7 @@ const CreatePost = () => {
       setPage(1);
       setDesc("");
       setFile("");
-      toast.success("Successfully created post");
+      toast.success(t("toast.createPostNF"));
       console.log(data);
     },
     onError: (error) => {

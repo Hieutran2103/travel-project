@@ -25,5 +25,23 @@
     "visit": "Visit",
     "follower": "followers",
     "by": "By"
+  },
+  "auth": {
+    "Register": "Successfully Register",
+    "Login": "Successfully Login",
+    "Logout": "Successfully Logout"
+  },
+  "toast": {
+    "successPostNF": "Successfully created post!",
+    "DeletePostNF": "Successfully deleted post!",
+    "EditPostNF": "Successfully edited post!",
+    "createPostNF": "Successfully created post!"
+  },
+  "vacation": {
+    "success": "Successfully created new vacation!",
+    "image": "Please provide image",
+    "name": "Please provide name",
+    "title": "Please provide title",
+    "intro": "Please provide intro"
   }
 }

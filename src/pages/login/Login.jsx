@@ -9,7 +9,7 @@ import InputForm from "../../components/input/inputForm";
 import { useMutation } from "@tanstack/react-query";
 
 import customFetch from "../../utils/url";
-import { toast } from "react-toastify";
+import { ToastContainer, toast } from "react-toastify";
 import { useState } from "react";
 
 const Login = () => {
@@ -29,18 +29,17 @@ const Login = () => {
   const loginMutation = useMutation({
     mutationFn: (data) => customFetch.post("/users/login", data),
     onSuccess: (data) => {
-      // console.log(data);
       setCurrentUser(
         localStorage.setItem("user", JSON.stringify(data.data.data.user))
       );
       localStorage.setItem("access_token", data.data.data.access_token);
       localStorage.setItem("refresh_token", data.data.data.refresh_token);
       setAuthenticate(true);
+      toast.success(t("auth.Login"));
       setTimeout(() => {
         navigate("/");
         window.location.reload();
       }, 500);
-      alert(data.data.message);
     },
   });
   const formSubmit = (data) => {
@@ -48,6 +47,18 @@ const Login = () => {
   };
   return (
     <div className="loginForm">
+      <ToastContainer
+        position="top-center"
+        autoClose={5000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="light"
+      />
       <div className="container">
         <div className="item">
           <div className="logo">

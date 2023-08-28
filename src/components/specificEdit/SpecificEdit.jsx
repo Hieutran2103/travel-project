@@ -7,10 +7,10 @@ import ChevronRightOutlinedIcon from "@mui/icons-material/ChevronRightOutlined";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import customFetch from "../../utils/url";
 import { toast } from "react-toastify";
+import { useTranslation } from "react-i18next";
 
 const SpecificEdit = ({ setAnchorEl, infoUser }) => {
-  // const rs = imagePost.data.data.medias;
-  // console.log(rs);
+  const [t, i18] = useTranslation("global");
   const [desc, setDesc] = useState("");
   const [imageEdit, setImageEdit] = useState(0);
   const { editSpecific, closeEditSpecific } = useGlobalSearch();
@@ -21,12 +21,11 @@ const SpecificEdit = ({ setAnchorEl, infoUser }) => {
   const { mutate: EditPost } = useMutation({
     mutationFn: (posts) => customFetch.put(`/posts/${idEdit}`, posts),
     onSuccess: (data) => {
-      queryClient.invalidateQueries({ queryKey: ["postsNF"] });
+      queryClient.invalidateQueries({ queryKey: ["postsVacation"] });
       setDesc("");
       setAnchorEl(null);
       closeEditSpecific();
-      toast.success("Successfully edited post");
-      console.log(data);
+      toast.success(t("toast.EditPostNF"));
     },
     onError: (error) => {
       toast.error(error.response.data.errors.content.msg);

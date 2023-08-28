@@ -93,9 +93,10 @@ const CreateVacation = () => {
       }),
     onSuccess: (data) => {
       queryClient.invalidateQueries({ queryKey: ["createVacation"] });
-      toast.success("Successfully Created New Vacation");
-      navigate(`/vacation/${data.data.data._id}`);
-      console.log(data);
+      toast.success(t("vacation.success"));
+      setTimeout(() => {
+        navigate(`/vacation/${data.data.data._id}`);
+      }, 1000);
     },
     onError: (error) => {
       toast.error(error.response.data.message);
@@ -106,16 +107,16 @@ const CreateVacation = () => {
     e.preventDefault();
 
     if (!e.target.elements.image.value) {
-      return toast.error("Please provide image");
+      return toast.error(t("vacation.image"));
     }
     if (!e.target.elements.name.value) {
-      return toast.error("Please provide name");
+      return toast.error(t("vacation.name"));
     }
     if (!e.target.elements.something.value) {
-      return toast.error("Please provide title");
+      return toast.error(t("vacation.title"));
     }
     if (!e.target.elements.intro.value) {
-      return toast.error("Please provide intro");
+      return toast.error(t("vacation.intro"));
     }
     console.log(information);
     createTask(information);

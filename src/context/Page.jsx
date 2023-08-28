@@ -9,6 +9,8 @@ const PageProvider = ({ children }) => {
   const [limit, setLimit] = useState(5);
   const [pageComment, setPageComment] = useState(1);
   const [limitComment, setLimitComment] = useState(5);
+  const [limitVC, setLimitVC] = useState(10);
+
   const handleNextPage = () => {
     setPage(page + 1);
   };
@@ -33,6 +35,7 @@ const PageProvider = ({ children }) => {
         setPage,
         handleNextPage,
         handleNextLimit,
+        limitVC,
       }}
     >
       {children}

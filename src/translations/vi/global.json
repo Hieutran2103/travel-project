@@ -25,5 +25,23 @@
     "visit": "Xem",
     "follower": "Người theo dõi",
     "by": "Bởi"
+  },
+  "login": {
+    "Register": "Tạo thành công",
+    "Login": "Đăng nhập thành công",
+    "Logout": "Đăng xuất thành công"
+  },
+  "toast": {
+    "successPostNF": "Tạo bài thành công",
+    "DeletePostNF": "Xóa bài thành công",
+    "EditPostNF": "Chỉnh thành công",
+    "createPostNF": "Tạo thành công"
+  },
+  "vacation": {
+    "success": "Tạo thành công kì nghỉ mới",
+    "image": "Hãy thêm ảnh cho kì nghỉ",
+    "name": "Hãy thêm tên cho kì nghỉ",
+    "title": "Hãy tiêu đề cho kì nghỉ",
+    "intro": "Hãy giới thiệu về nhóm"
   }
 }

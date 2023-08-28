@@ -1,13 +1,12 @@
 import { Link } from "react-router-dom";
-import "./post.scss";
 import FavoriteBorderOutlinedIcon from "@mui/icons-material/FavoriteBorderOutlined";
 import FavoriteOutlinedIcon from "@mui/icons-material/FavoriteOutlined";
 import MoreHorizOutlinedIcon from "@mui/icons-material/MoreHorizOutlined";
 import TextsmsOutlinedIcon from "@mui/icons-material/TextsmsOutlined";
 import { useState } from "react";
-import Comments from "../comments/Comments";
+
 import { useTranslation } from "react-i18next";
-import EditPost from "../editPost/EditPost";
+
 import ChevronLeftOutlinedIcon from "@mui/icons-material/ChevronLeftOutlined";
 import ChevronRightOutlinedIcon from "@mui/icons-material/ChevronRightOutlined";
 import { useGlobalSearch } from "../../context/Search&Notification";
@@ -16,14 +15,17 @@ import * as React from "react";
 import Button from "@mui/material/Button";
 import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
-import SpecificEdit from "../specificEdit/SpecificEdit";
+
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import customFetch from "../../utils/url";
+
 import { useGlobalPage } from "../../context/Page";
 import { toast } from "react-toastify";
 import { useGlobalContextAuth } from "../../context/AuthContext";
+import Comments from "../../components/comments/Comments";
+import SpecificEdit from "../../components/specificEdit/SpecificEdit";
 
-const Post = ({ post }) => {
+const PostVC = ({ post }) => {
   const { medias, content, userId, user, created_at, _id } = post;
   const { currentUser } = useGlobalContextAuth();
 
@@ -77,7 +79,7 @@ const Post = ({ post }) => {
   const { mutate: deletePost } = useMutation({
     mutationFn: (posts) => customFetch.delete(`/posts/${posts}`),
     onSuccess: (data) => {
-      queryClient.invalidateQueries({ queryKey: ["postsNF"] });
+      queryClient.invalidateQueries({ queryKey: ["postsVacation"] });
       toast.success(t("toast.DeletePostNF"));
       console.log(data);
     },
@@ -145,7 +147,6 @@ const Post = ({ post }) => {
   const handleDisLike = () => {
     deletePostLike(_id);
   };
-
   return (
     <div className="post">
       <div className="container">
@@ -261,4 +262,4 @@ const Post = ({ post }) => {
   );
 };
 
-export default Post;
+export default PostVC;

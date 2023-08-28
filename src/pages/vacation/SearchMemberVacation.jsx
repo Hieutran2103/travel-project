@@ -4,13 +4,13 @@ import ClearIcon from "@mui/icons-material/Clear"; // x tren
 
 import SearchOutlinedIcon from "@mui/icons-material/SearchOutlined";
 import { useGlobalSearch } from "../../context/Search&Notification";
-const SearchMemberVacation = ({ posts, setMember }) => {
+const SearchMemberVacation = ({ setMember, dataVacation }) => {
   const [inputSearch, setInputSearch] = useState("");
   const { closeUserVacation } = useGlobalSearch();
 
   const handlesearchUser = (value) => {
     setInputSearch(value);
-    const result = posts.filter((user) => {
+    const result = dataVacation.mentions.filter((user) => {
       return user && user.name && user.name.toLowerCase().includes(value);
     });
 
@@ -20,7 +20,7 @@ const SearchMemberVacation = ({ posts, setMember }) => {
     <div className="searchMemberVacation">
       <div className="nameMember">
         <span className="T">Thành viên</span>
-        <span className="H"> {posts.length}</span>
+        <span className="H"> {dataVacation?.mentions?.length}</span>
         <span className="D" onClick={closeUserVacation}>
           <ClearIcon />
         </span>

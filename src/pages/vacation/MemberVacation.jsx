@@ -3,15 +3,18 @@ import MemberListVacation from "./MemberListVacation";
 import SearchMemberVacation from "./SearchMemberVacation";
 import "./memberVacation.scss";
 import { useGlobalSearch } from "../../context/Search&Notification";
-import ClearIcon from "@mui/icons-material/Clear"; // x tren
 
-const MemberVacation = ({ posts }) => {
-  const [member, setMember] = useState(posts);
+const MemberVacation = ({ dataVacation }) => {
+  const [member, setMember] = useState(dataVacation.mentions);
   const { userVacation } = useGlobalSearch();
+
   return (
     <div className={userVacation ? "show-memberVacation" : "memberVacation"}>
       <div className="containMember">
-        <SearchMemberVacation setMember={setMember} posts={posts} />
+        <SearchMemberVacation
+          setMember={setMember}
+          dataVacation={dataVacation}
+        />
         <MemberListVacation member={member} />
       </div>
     </div>

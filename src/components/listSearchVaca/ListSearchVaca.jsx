@@ -1,11 +1,15 @@
 import "./listSearchVaca.scss";
-import { Link } from "react-router-dom";
-
+import { useNavigate } from "react-router-dom";
 import logoNewfeed from "../../assets/NotFound.svg";
-import { useGlobalSearch } from "../../context/Search&Notification";
+
 const ListSearchVaca = ({ dataVacation }) => {
+  const navigate = useNavigate();
   console.log(dataVacation);
-  const { closeSearch } = useGlobalSearch();
+
+  const navigaVacation = (e) => {
+    navigate(`/vacation/${e?._id}`);
+    window.location.reload();
+  };
 
   return (
     <div className="listSearchz">
@@ -17,24 +21,17 @@ const ListSearchVaca = ({ dataVacation }) => {
         ) : (
           dataVacation?.map((post) => {
             return (
-              <div className="userz" key={post?._id}>
-                <Link
-                  to={`/vacation/${post?._id}`}
-                  style={{ textDecoration: "none", color: "inherit" }}
-                  onClick={closeSearch}
-                >
-                  <img src={post?.vacation_avatar} alt="" />
-                </Link>
-
+              <div
+                className="userz"
+                key={post?._id}
+                onClick={() => {
+                  navigaVacation(post);
+                }}
+              >
+                <img src={post?.vacation_avatar} alt="" />
                 <div className="detailz">
-                  <Link
-                    to={`/vacation/${post?._id}`}
-                    style={{ textDecoration: "none", color: "inherit" }}
-                    onClick={closeSearch}
-                  >
-                    <div className="namez">{post?.vacation_name}</div>
-                    <div className="namezFounder"> by {post?.user?.name}</div>
-                  </Link>
+                  <div className="namez">{post?.vacation_name}</div>
+                  <div className="namezFounder"> by {post?.user?.name}</div>
                 </div>
               </div>
             );

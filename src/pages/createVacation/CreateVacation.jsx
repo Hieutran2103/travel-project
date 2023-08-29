@@ -45,15 +45,15 @@ const CreateVacation = () => {
   };
   const handleImageChange = async (e) => {
     const file = e.target.files[0];
-    console.log(file);
+
     const formData = new FormData();
     formData.append("image", file);
     let res = await customFetch.post("/medias/upload-single-image", formData);
-    console.log(res.data);
     setInfomation({
       ...information,
       [e.target.name]: res.data.result,
     });
+    console.log(res);
     setImage(res.data.result);
   };
   const handleOption = (e) => {
@@ -74,7 +74,6 @@ const CreateVacation = () => {
   const deleteUser = (id) => {
     const newUser = items.filter((item) => item._id !== id);
     const newItemsID = idUser.filter((item) => item !== id);
-
     setItems(newUser);
     IdUser(newItemsID);
     setInfomation({ ...information, userAdd: newItemsID });

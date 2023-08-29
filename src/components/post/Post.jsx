@@ -37,7 +37,7 @@ const Post = ({ post }) => {
   const getLikeFromLS = () => localStorage.getItem("like") || false;
 
   const [liked, setLiked] = useState(Boolean(getLikeFromLS));
-  console.log(liked);
+  // console.log(liked);
 
   const { mutate: postLike } = useMutation({
     mutationFn: (posts) => customFetch.post(`/likes`, posts),

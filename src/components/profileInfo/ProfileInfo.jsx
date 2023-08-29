@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from "react";
+import React, {useState} from "react";
 import CloseIcon from "@mui/icons-material/Close";
 import {Link} from "react-router-dom";
 import {useGlobalPage} from "../../context/Page";
@@ -6,42 +6,30 @@ import {useQuery} from "@tanstack/react-query";
 import customFetch from "../../utils/url";
 import {useGlobalContextAuth} from "../../context/AuthContext";
 import {useTranslation} from "react-i18next";
+import {usePostsData} from "../../context/PostsDataContext";
 import "./profileInfo.scss";
+import {useEffect} from "react";
 
 function ProfileInfo() {
   const [followerModal, setFollowerModal] = useState(false);
   const [followingModal, setFollowingModal] = useState(false);
-  const [followerCount, setFollowerCount] = useState(0);
-  const [followingCount, setFollowingCount] = useState(0);
   const {page, limit} = useGlobalPage();
-  const {currentUser} = useGlobalContextAuth();
   const [t, i18] = useTranslation("global");
+  const {currentUser} = useGlobalContextAuth();
+  const {postsData} = usePostsData();
+  const url = window.location.pathname.split("/");
+  const userID = url[url.length - 2];
+  const username = "user64d0c2d495b2d6b429e09bc4";
 
-  const userID = currentUser.id;
-
-  const toggleModalFollower = () => {
-    setFollowerModal(!followerModal);
-  };
-
-  const toggleModalFollowing = () => {
-    setFollowingModal(!followingModal);
-  };
-
-  const openFollowerModal = () => {
-    if (followerCount > 0) {
-      toggleModalFollower();
+  useEffect(() => {
+    if (postsData) {
+      console.log(postsData);
     }
-  };
-
-  const openFollowingModal = () => {
-    if (followingCount > 0) {
-      toggleModalFollowing();
-    }
-  };
+  }, [postsData]);
   //Current user
   const apiUrlUser = `users/get-profile`;
   //Friend profile
-  const apiUrlFriend = `users/user64d0c2d495b2d6b429e09bc2`;
+  const apiUrlFriend = `users/${username}`;
   const apiUrlFollower = `users/follower/${userID}?limit=${limit}&page=${page}`;
   const apiUrlFollowing = `users/following/${userID}?limit=${limit}&page=${page}`;
   const apiUrlPost = `posts/status/${userID}?limit=${limit}&page=${page}`;
@@ -73,6 +61,15 @@ function ProfileInfo() {
     }
   };
 
+  const fetchPostInfo = async () => {
+    try {
+      const response = await customFetch.get(apiUrlPost);
+      return response.data;
+    } catch (error) {
+      throw new Error("Error fetching post data");
+    }
+  };
+
   const {
     data: followerData,
     isLoading: isFollowerLoading,
@@ -91,38 +88,11 @@ function ProfileInfo() {
     isError: isUserError,
   } = useQuery(["userData", apiUrlUser], fetchUserInfo);
 
-  const fetchPostInfo = async () => {
-    try {
-      const response = await customFetch.get(apiUrlPost);
-      return response.data;
-    } catch (error) {
-      throw new Error("Error fetching post data");
-    }
-  };
-
   const {
     data: postData,
     isLoading: isPostLoading,
     isError: isPostError,
   } = useQuery(["postData", apiUrlPost], fetchPostInfo);
-
-  useEffect(() => {
-    if (followerData) {
-      const followerCounts = followerData.data.map(
-        (follower) => follower.follower_info.length
-      );
-      const totalFollowerCount = followerCounts.reduce(
-        (total, count) => total + count,
-        0
-      );
-      setFollowerCount(totalFollowerCount);
-    }
-
-    if (followingData) {
-      const followingInfo = followingData.data[0]?.following_info;
-      setFollowingCount(followingInfo?.length || 0);
-    }
-  }, [followerData, followingData]);
 
   if (
     isFollowerLoading ||
@@ -134,22 +104,39 @@ function ProfileInfo() {
   }
 
   if (isFollowerError || isFollowingError || isUserError || isPostError) {
-    return (
-      <div className="lds-ring">
-        <div></div>
-        <div></div>
-        <div></div>
-        <div></div>
-      </div>
-    );
+    return;
   }
 
-  const followerInfo = followerData.data.map(
-    (follower) => follower.follower_info
-  );
-  const followingInfo = followingData.data.map(
-    (following) => following.following_info
-  );
+  const followerInfo = followerData
+    ? followerData.data.map((follower) => follower.follower_info)
+    : [];
+
+  const followingInfo = followingData
+    ? followingData.data.map((following) => following.following_info)
+    : [];
+
+  // console.log("followerData:", followerInfo);
+  // console.log("followingData:", followingData.data);
+
+  const toggleModalFollower = () => {
+    setFollowerModal(!followerModal);
+  };
+
+  const toggleModalFollowing = () => {
+    setFollowingModal(!followingModal);
+  };
+
+  const openFollowerModal = () => {
+    if (followerData.data.length > 0) {
+      toggleModalFollower();
+    }
+  };
+
+  const openFollowingModal = () => {
+    if (followingData.data.length > 0) {
+      toggleModalFollowing();
+    }
+  };
 
   return (
     <div className="profileInfo">
@@ -157,7 +144,7 @@ function ProfileInfo() {
         <img
           src={
             userData.user.avatar ||
-            "https://t4.ftcdn.net/jpg/03/59/58/91/360_F_359589186_JDLl8dIWoBNf1iqEkHxhUeeOulx0wOC5.jpg"
+            "https://antimatter.vn/wp-content/uploads/2022/11/anh-avatar-trang-fb-mac-dinh.jpg"
           }
           alt="avatar"
           className="avatar"
@@ -166,25 +153,34 @@ function ProfileInfo() {
       <div className="rightProfile">
         <div className="info">
           <div className="userName">{userData.user.name}</div>
-          <button className="editButton">
-            <Link
-              to="/setting/account"
-              style={{
-                textDecoration: "none",
-                color: "black",
-              }}
-            >
-              {t("profile.edit")}
-            </Link>
-          </button>
-          <button className="editButton">{t("profile.view")}</button>
+          {currentUser.id === userID ? (
+            <>
+              <button className="editButton">
+                <Link
+                  to="/setting/account"
+                  style={{
+                    textDecoration: "none",
+                    color: "black",
+                  }}
+                >
+                  {t("profile.edit")}
+                </Link>
+              </button>
+              <button className="editButton">{t("profile.view")}</button>
+            </>
+          ) : (
+            <>
+              <button className="editButton">{t("profile.follow")}</button>
+              <button className="editButton">{t("profile.dm")}</button>
+            </>
+          )}
         </div>
         <div className="info">
           <div className="postNum">
             {postData.total} {t("profile.post")}
           </div>
           <div className="btn-modal-follow" onClick={openFollowerModal}>
-            {followerCount} {t("profile.follower")}
+            {followerData.data.length} {t("profile.follower")}
           </div>
           {followerModal && (
             <div className="modal">
@@ -200,7 +196,7 @@ function ProfileInfo() {
                             className="avaU"
                             src={
                               follower.avatar ||
-                              "https://t4.ftcdn.net/jpg/03/59/58/91/360_F_359589186_JDLl8dIWoBNf1iqEkHxhUeeOulx0wOC5.jpg"
+                              "https://antimatter.vn/wp-content/uploads/2022/11/anh-avatar-trang-fb-mac-dinh.jpg"
                             }
                             alt="Follower Avatar"
                           />
@@ -224,7 +220,7 @@ function ProfileInfo() {
             </div>
           )}
           <div className="btn-modal-follow" onClick={openFollowingModal}>
-            {followingCount} {t("profile.following")}
+            {followingData.data.length} {t("profile.following")}
           </div>
           {followingModal && (
             <div className="modal">
@@ -240,7 +236,7 @@ function ProfileInfo() {
                             className="avaU"
                             src={
                               following.avatar ||
-                              "https://static2-images.vnncdn.net/files/publish/2022/12/8/meo-1-1416.jpg"
+                              "https://antimatter.vn/wp-content/uploads/2022/11/anh-avatar-trang-fb-mac-dinh.jpg"
                             }
                             alt="Following Avatar"
                           />

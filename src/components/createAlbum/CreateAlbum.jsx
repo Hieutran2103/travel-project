@@ -1,37 +1,37 @@
-import React, { useState } from "react";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
+import React, {useState} from "react";
+import {useMutation, useQueryClient} from "@tanstack/react-query";
 import customFetch from "../../utils/url";
-import { toast } from "react-toastify";
-import { ToastContainer } from "react-toastify";
+import {toast} from "react-toastify";
+import {ToastContainer} from "react-toastify";
+import {ImageList, ImageListItem} from "@mui/material";
+import {Link, useNavigate} from "react-router-dom";
+import FileUploadOutlinedIcon from "@mui/icons-material/FileUploadOutlined";
+import {useGlobalContextAuth} from "../../context/AuthContext";
 import "./createAlbum.scss";
-import { ImageList, ImageListItem } from "@mui/material";
-import { Link, useNavigate } from "react-router-dom";
 
 function CreateAlbum() {
+  const {currentUser} = useGlobalContextAuth();
   const [file, setFile] = useState(null);
   const [desc, setDesc] = useState("");
   const [name, setName] = useState("");
   const [imageNames, setImageNames] = useState([]);
+  const [unSelectedFile, setunSelectedFile] = useState(false);
   const queryClient = useQueryClient();
   const navigate = useNavigate();
-  let userID = "";
-  const userJSON = localStorage.getItem("user");
-  if (userJSON) {
-    userID = JSON.parse(userJSON);
-  }
 
-  const { mutate: createTask } = useMutation({
+  const userID = currentUser.id;
+
+  const {mutate: createTask} = useMutation({
     mutationFn: (album) => customFetch.post("/albums", album),
     onSuccess: (data) => {
-      queryClient.invalidateQueries({ queryKey: ["albumsNF"] });
+      queryClient.invalidateQueries({queryKey: ["albumsNF"]});
       setName("");
       setDesc("");
       setFile("");
       toast.success("Successfully created album");
       setTimeout(() => {
-        navigate(`/profile/${userID.id}/albums`);
+        navigate(`/profile/${userID}/albums`);
       }, 3000);
-      console.log(data);
     },
     onError: (error) => {
       console.log(error);
@@ -67,8 +67,24 @@ function CreateAlbum() {
   };
 
   const handleImg = (e) => {
-    const selectedFiles = Array.from(e.target.files);
-    setFile(selectedFiles);
+    if (e.dataTransfer && e.dataTransfer.files) {
+      const selectedFiles = Array.from(e.dataTransfer.files);
+      setFile(selectedFiles);
+      setunSelectedFile(selectedFiles.length > 0);
+    } else if (e.target.files) {
+      const selectedFiles = Array.from(e.target.files);
+      setFile(selectedFiles);
+      setunSelectedFile(selectedFiles.length > 0);
+    }
+  };
+
+  const handleDropAreaDragOver = (e) => {
+    e.preventDefault();
+  };
+
+  const handleDropAreaDrop = (e) => {
+    e.preventDefault();
+    handleImg(e);
   };
 
   const handleDesc = (e) => {
@@ -101,9 +117,9 @@ function CreateAlbum() {
       />
       <div class="container">
         <Link
-          to={`/profile/${userID.id}/`}
+          to={`/profile/${userID}/albums`}
           className="link"
-          style={{ textDecoration: "none" }}
+          style={{textDecoration: "none"}}
         >
           <div class="button button--piyo">
             <div class="button__wrapper">
@@ -116,7 +132,8 @@ function CreateAlbum() {
         style={{
           display: "flex",
           justifyContent: "center",
-          fontSize: "35px",
+          fontSize: "50px",
+          fontWeight: 600,
         }}
       >
         Create Album
@@ -125,38 +142,23 @@ function CreateAlbum() {
         <div
           style={{
             display: "flex",
-            justifyContent: "space-between",
+            justifyContent: "flex-end",
+            cursor: "pointer",
           }}
         >
-          <div className="input">
-            <input
-              type="file"
-              id="file"
-              multiple
-              onChange={handleImg}
-              style={{
-                display: "none",
-              }}
-            />
-            <label className="labelInput" htmlFor="file">
-              Upload Photo
-            </label>
-          </div>
-          <div class="container">
-            <div onClick={handleCreate} class="button button--piyo">
-              <div class="button__wrapper">
-                <span class="button__text">CREATE</span>
+          <div onClick={handleCreate} class="button button--piyo">
+            <div class="button__wrapper">
+              <span class="button__text">CREATE</span>
+            </div>
+            <div class="characterBox">
+              <div class="character wakeup">
+                <div class="character__face"></div>
               </div>
-              <div class="characterBox">
-                <div class="character wakeup">
-                  <div class="character__face"></div>
-                </div>
-                <div class="character wakeup">
-                  <div class="character__face"></div>
-                </div>
-                <div class="character">
-                  <div class="character__face"></div>
-                </div>
+              <div class="character wakeup">
+                <div class="character__face"></div>
+              </div>
+              <div class="character">
+                <div class="character__face"></div>
               </div>
             </div>
           </div>
@@ -183,18 +185,57 @@ function CreateAlbum() {
         </div>
       </div>
       <hr className="line" />
+      {!unSelectedFile && (
+        <div
+          onDragOver={handleDropAreaDragOver}
+          onDrop={handleDropAreaDrop}
+          onChange={handleImg}
+          className="uploadFile"
+        >
+          <div className="input">
+            <input
+              type="file"
+              id="file"
+              multiple
+              style={{
+                display: "none",
+              }}
+            />
+            <label
+              style={{
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center",
+                flexDirection: "column",
+                fontWeight: 800,
+                paddingBottom: "40px",
+              }}
+              className="labelInput"
+              htmlFor="file"
+            >
+              Choose a file or drag it here.
+              <div>
+                <FileUploadOutlinedIcon
+                  className="icon"
+                  sx={{fontSize: "100px"}}
+                />
+              </div>
+            </label>
+          </div>
+        </div>
+      )}
       {file && (
         <ImageList
-          cols={3}
+          cols={4}
           gap={10}
-          style={{ marginTop: "20px", marginLeft: "5px", marginRight: "5px" }}
+          style={{marginTop: "20px", marginLeft: "5px", marginRight: "5px"}}
         >
           {file.map((selectedFile, index) => (
             <ImageListItem key={index}>
               <img
                 src={URL.createObjectURL(selectedFile)}
                 alt={`Selected ${index + 1}`}
-                style={{ width: "100%" }}
+                style={{width: "100%"}}
               />
               <div
                 style={{

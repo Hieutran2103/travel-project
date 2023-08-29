@@ -16,13 +16,15 @@ import {useTranslation} from "react-i18next";
 import "./postList.scss";
 
 function PostList() {
-  const {currentUser} = useGlobalContextAuth();
+  // const {currentUser} = useGlobalContextAuth();
   const {page, limit, handleNextLimit} = useGlobalPage();
   const [modalOpen, setModalOpen] = useState(false);
   const [selectedImage, setSelectedImage] = useState(null);
   const [t, i18] = useTranslation("global");
 
-  const userID = currentUser.id;
+  const url = window.location.pathname.split("/");
+  const userID = url[url.length - 2];
+
   const apiUrlPost = `posts/status/${userID}?limit=${limit}&page=${page}`;
   const apiUrlUser = `users/get-profile`;
 
@@ -61,14 +63,7 @@ function PostList() {
   }
 
   if (isPostError || isUserError) {
-    return (
-      <div className="lds-ring">
-        <div></div>
-        <div></div>
-        <div></div>
-        <div></div>
-      </div>
-    );
+    return;
   }
 
   const post = postData.data;
@@ -84,7 +79,7 @@ function PostList() {
     setSelectedImage(null);
     setModalOpen(false);
   };
-  console.log(post);
+  // console.log(post);
   return (
     <div className="postList">
       <ImageList cols={3} rowHeight={250} className="noGapImageList">
@@ -173,7 +168,7 @@ function PostList() {
                     <img
                       src={
                         userAva ||
-                        "https://t4.ftcdn.net/jpg/03/59/58/91/360_F_359589186_JDLl8dIWoBNf1iqEkHxhUeeOulx0wOC5.jpg"
+                        "https://antimatter.vn/wp-content/uploads/2022/11/anh-avatar-trang-fb-mac-dinh.jpg"
                       }
                       alt="avatar"
                       style={{

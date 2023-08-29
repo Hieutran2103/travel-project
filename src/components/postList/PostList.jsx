@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, {useState} from "react";
 import ImageList from "@mui/material/ImageList";
 import ImageListItem from "@mui/material/ImageListItem";
 import FavoriteIcon from "@mui/icons-material/Favorite";
@@ -8,23 +8,72 @@ import ModeCommentOutlinedIcon from "@mui/icons-material/ModeCommentOutlined";
 import SendOutlinedIcon from "@mui/icons-material/SendOutlined";
 import Modal from "@mui/material/Modal";
 import Box from "@mui/material/Box";
+import {useQuery} from "@tanstack/react-query";
+import {useGlobalPage} from "../../context/Page";
+import customFetch from "../../utils/url";
+import {useGlobalContextAuth} from "../../context/AuthContext";
+import {useTranslation} from "react-i18next";
 import "./postList.scss";
 
-const itemData = [
-  {
-    img: "https://images.unsplash.com/photo-1551963831-b3b1ca40c98e",
-    title: "Breakfast",
-    likes: 368,
-    comments: 34,
-  },
-];
-
-function PostList({ setNumberOfPosts }) {
-  const numberOfPosts = itemData.length;
-  setNumberOfPosts(numberOfPosts);
-
+function PostList() {
+  const {currentUser} = useGlobalContextAuth();
+  const {page, limit, handleNextLimit} = useGlobalPage();
   const [modalOpen, setModalOpen] = useState(false);
   const [selectedImage, setSelectedImage] = useState(null);
+  const [t, i18] = useTranslation("global");
+
+  const userID = currentUser.id;
+  const apiUrlPost = `posts/status/${userID}?limit=${limit}&page=${page}`;
+  const apiUrlUser = `users/get-profile`;
+
+  const fetchUserInfo = async () => {
+    try {
+      const response = await customFetch.get(apiUrlUser);
+      return response.data;
+    } catch (error) {
+      throw new Error("Error fetching follower data");
+    }
+  };
+
+  const fetchPostInfo = async () => {
+    try {
+      const response = await customFetch.get(apiUrlPost);
+      return response.data;
+    } catch (error) {
+      throw new Error("Error fetching post data");
+    }
+  };
+
+  const {
+    data: userData,
+    isLoading: isUserLoading,
+    isError: isUserError,
+  } = useQuery(["userData", apiUrlUser], fetchUserInfo);
+
+  const {
+    data: postData,
+    isLoading: isPostLoading,
+    isError: isPostError,
+  } = useQuery(["postData", apiUrlPost], fetchPostInfo);
+
+  if (isPostLoading || isUserLoading) {
+    return;
+  }
+
+  if (isPostError || isUserError) {
+    return (
+      <div className="lds-ring">
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+      </div>
+    );
+  }
+
+  const post = postData.data;
+  const userName = userData.user.name;
+  const userAva = userData.user.avatar;
 
   const openModal = (image) => {
     setSelectedImage(image);
@@ -35,37 +84,36 @@ function PostList({ setNumberOfPosts }) {
     setSelectedImage(null);
     setModalOpen(false);
   };
-
+  console.log(post);
   return (
     <div className="postList">
-      <ImageList cols={3} rowHeight={250}>
-        {itemData.map((item) => (
+      <ImageList cols={3} rowHeight={250} className="noGapImageList">
+        {post.map((item) => (
           <ImageListItem
             className="imageList"
-            key={item.img}
+            key={item._id}
             onClick={() => openModal(item)}
           >
             <img
               className="imagePost"
-              src={`${item.img}`}
-              srcSet={`${item.img}`}
-              alt={item.title}
+              src={item.medias[0]?.url || "default_image_url"}
+              alt="Error"
               loading="lazy"
             />
             <div className="info">
               <div className="icon">
                 <FavoriteIcon />
               </div>
-              <div className="count">{`${item.likes}`}</div>
+              <div className="count">{`${item.like}`}</div>
               <div className="icon">
                 <ModeCommentIcon />
               </div>
-              <div className="count">{`${item.comments}`}</div>
+              <div className="count">{`${item.comment}`}</div>
             </div>
           </ImageListItem>
         ))}
       </ImageList>
-      <div style={{ outline: "none" }}>
+      <div style={{outline: "none"}}>
         <Modal
           open={modalOpen}
           onClose={closeModal}
@@ -89,8 +137,8 @@ function PostList({ setNumberOfPosts }) {
                 }}
               >
                 <img
-                  src={selectedImage.img}
-                  alt={selectedImage.title}
+                  src={selectedImage.medias[0]?.url}
+                  alt="Error"
                   loading="lazy"
                   style={{
                     width: "910px",
@@ -123,7 +171,10 @@ function PostList({ setNumberOfPosts }) {
                     }}
                   >
                     <img
-                      src="https://i.ebayimg.com/images/g/ksYAAOSwD7ljaYRn/s-l1600.jpg"
+                      src={
+                        userAva ||
+                        "https://t4.ftcdn.net/jpg/03/59/58/91/360_F_359589186_JDLl8dIWoBNf1iqEkHxhUeeOulx0wOC5.jpg"
+                      }
                       alt="avatar"
                       style={{
                         width: "50px",
@@ -140,7 +191,7 @@ function PostList({ setNumberOfPosts }) {
                         fontWeight: 600,
                       }}
                     >
-                      hientruongvkl
+                      {userName}
                     </div>
                   </div>
                   <div
@@ -216,9 +267,10 @@ function PostList({ setNumberOfPosts }) {
                       style={{
                         marginLeft: "10px",
                         marginBottom: "10px",
+                        fontWeight: 600,
                       }}
                     >
-                      {`${selectedImage.likes}`} likes
+                      {`${selectedImage.like}`} likes
                     </div>
                     <div
                       style={{
@@ -228,7 +280,7 @@ function PostList({ setNumberOfPosts }) {
                       }}
                     >
                       <input
-                        placeholder="Add a comment..."
+                        placeholder={t("profile.comment")}
                         style={{
                           border: "none",
                           marginLeft: "10px",

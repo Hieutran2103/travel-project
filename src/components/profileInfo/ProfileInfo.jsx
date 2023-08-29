@@ -1,18 +1,23 @@
-import React, { useEffect, useState } from "react";
+import React, {useEffect, useState} from "react";
 import CloseIcon from "@mui/icons-material/Close";
-import { Link } from "react-router-dom";
-import { useGlobalPage } from "../../context/Page";
-import { useQuery } from "@tanstack/react-query";
+import {Link} from "react-router-dom";
+import {useGlobalPage} from "../../context/Page";
+import {useQuery} from "@tanstack/react-query";
 import customFetch from "../../utils/url";
+import {useGlobalContextAuth} from "../../context/AuthContext";
+import {useTranslation} from "react-i18next";
 import "./profileInfo.scss";
 
-function ProfileInfo({ numberOfPosts }) {
+function ProfileInfo() {
   const [followerModal, setFollowerModal] = useState(false);
   const [followingModal, setFollowingModal] = useState(false);
   const [followerCount, setFollowerCount] = useState(0);
   const [followingCount, setFollowingCount] = useState(0);
-  const [hasMore, setHasMore] = useState(true);
-  const { page, limit, handleNextLimit } = useGlobalPage();
+  const {page, limit} = useGlobalPage();
+  const {currentUser} = useGlobalContextAuth();
+  const [t, i18] = useTranslation("global");
+
+  const userID = currentUser.id;
 
   const toggleModalFollower = () => {
     setFollowerModal(!followerModal);
@@ -33,16 +38,13 @@ function ProfileInfo({ numberOfPosts }) {
       toggleModalFollowing();
     }
   };
-
-  let userID = "";
-  const userJSON = localStorage.getItem("user");
-  if (userJSON) {
-    userID = JSON.parse(userJSON);
-  }
-
-  const apiUrlFollower = `users/follower/${userID.id}?limit=${limit}&page=${page}`;
-
-  const apiUrlFollowing = `users/following/${userID.id}limit=${limit}&page=${page}`;
+  //Current user
+  const apiUrlUser = `users/get-profile`;
+  //Friend profile
+  const apiUrlFriend = `users/user64d0c2d495b2d6b429e09bc2`;
+  const apiUrlFollower = `users/follower/${userID}?limit=${limit}&page=${page}`;
+  const apiUrlFollowing = `users/following/${userID}?limit=${limit}&page=${page}`;
+  const apiUrlPost = `posts/status/${userID}?limit=${limit}&page=${page}`;
 
   const fetchFollowerInfo = async () => {
     try {
@@ -62,6 +64,15 @@ function ProfileInfo({ numberOfPosts }) {
     }
   };
 
+  const fetchUserInfo = async () => {
+    try {
+      const response = await customFetch.get(apiUrlUser);
+      return response.data;
+    } catch (error) {
+      throw new Error("Error fetching follower data");
+    }
+  };
+
   const {
     data: followerData,
     isLoading: isFollowerLoading,
@@ -73,6 +84,27 @@ function ProfileInfo({ numberOfPosts }) {
     isLoading: isFollowingLoading,
     isError: isFollowingError,
   } = useQuery(["followingData", apiUrlFollowing], fetchFollowingInfo);
+
+  const {
+    data: userData,
+    isLoading: isUserLoading,
+    isError: isUserError,
+  } = useQuery(["userData", apiUrlUser], fetchUserInfo);
+
+  const fetchPostInfo = async () => {
+    try {
+      const response = await customFetch.get(apiUrlPost);
+      return response.data;
+    } catch (error) {
+      throw new Error("Error fetching post data");
+    }
+  };
+
+  const {
+    data: postData,
+    isLoading: isPostLoading,
+    isError: isPostError,
+  } = useQuery(["postData", apiUrlPost], fetchPostInfo);
 
   useEffect(() => {
     if (followerData) {
@@ -92,7 +124,16 @@ function ProfileInfo({ numberOfPosts }) {
     }
   }, [followerData, followingData]);
 
-  if (isFollowerLoading || isFollowingLoading) {
+  if (
+    isFollowerLoading ||
+    isFollowingLoading ||
+    isUserLoading ||
+    isPostLoading
+  ) {
+    return;
+  }
+
+  if (isFollowerError || isFollowingError || isUserError || isPostError) {
     return (
       <div className="lds-ring">
         <div></div>
@@ -103,10 +144,6 @@ function ProfileInfo({ numberOfPosts }) {
     );
   }
 
-  if (isFollowerError || isFollowingError) {
-    return <div>Error</div>;
-  }
-
   const followerInfo = followerData.data.map(
     (follower) => follower.follower_info
   );
@@ -114,33 +151,21 @@ function ProfileInfo({ numberOfPosts }) {
     (following) => following.following_info
   );
 
-  const moreData = () => {
-    if (reponse.length < 50) {
-      setTimeout(() => {
-        handleNextLimit();
-      }, 2000);
-    } else {
-      setHasMore(false);
-    }
-  };
-
-  const { data, isLoading } = useQuery({
-    queryKey: ["followersNF", limit],
-    queryFn: () => customFetch.get(apiUrlFollower),
-  });
-
   return (
     <div className="profileInfo">
       <div className="leftProfile">
         <img
-          src="https://i.ebayimg.com/images/g/ksYAAOSwD7ljaYRn/s-l1600.jpg"
+          src={
+            userData.user.avatar ||
+            "https://t4.ftcdn.net/jpg/03/59/58/91/360_F_359589186_JDLl8dIWoBNf1iqEkHxhUeeOulx0wOC5.jpg"
+          }
           alt="avatar"
           className="avatar"
         />
       </div>
       <div className="rightProfile">
         <div className="info">
-          <div className="userName">hientruongvkl</div>
+          <div className="userName">{userData.user.name}</div>
           <button className="editButton">
             <Link
               to="/setting/account"
@@ -149,21 +174,23 @@ function ProfileInfo({ numberOfPosts }) {
                 color: "black",
               }}
             >
-              Edit Profile
+              {t("profile.edit")}
             </Link>
           </button>
-          <button className="editButton">View Archive</button>
+          <button className="editButton">{t("profile.view")}</button>
         </div>
         <div className="info">
-          <div className="postNum">{numberOfPosts} post</div>
+          <div className="postNum">
+            {postData.total} {t("profile.post")}
+          </div>
           <div className="btn-modal-follow" onClick={openFollowerModal}>
-            {followerCount} followers
+            {followerCount} {t("profile.follower")}
           </div>
           {followerModal && (
             <div className="modal">
               <div onClick={toggleModalFollower} className="overlay"></div>
               <div className="modal-content">
-                <div className="modalTitle">Followers</div>
+                <div className="modalTitle"> {t("profile.follower")}</div>
                 {followerInfo.map((followersArray, index) => (
                   <div className="modalContent" key={index}>
                     {followersArray.map((follower) => (
@@ -182,7 +209,10 @@ function ProfileInfo({ numberOfPosts }) {
                             <div className="emailU">{follower.email}</div>
                           </div>
                         </div>
-                        <button className="followButton">Follow</button>
+                        <button className="followButton">
+                          {" "}
+                          {t("profile.follow")}
+                        </button>
                       </div>
                     ))}
                   </div>
@@ -194,13 +224,13 @@ function ProfileInfo({ numberOfPosts }) {
             </div>
           )}
           <div className="btn-modal-follow" onClick={openFollowingModal}>
-            {followingCount} following
+            {followingCount} {t("profile.following")}
           </div>
           {followingModal && (
             <div className="modal">
               <div onClick={toggleModalFollowing} className="overlay"></div>
               <div className="modal-content">
-                <div className="modalTitle">Followings</div>
+                <div className="modalTitle"> {t("profile.following")}</div>
                 {followingInfo.map((followingsArray, index) => (
                   <div className="modalContent" key={index}>
                     {followingsArray.map((following) => (
@@ -219,7 +249,10 @@ function ProfileInfo({ numberOfPosts }) {
                             <div className="emailU">{following.email}</div>
                           </div>
                         </div>
-                        <button className="followButton">Follow</button>
+                        <button className="followButton">
+                          {" "}
+                          {t("profile.follow")}
+                        </button>
                       </div>
                     ))}
                   </div>

@@ -9,8 +9,8 @@ import Register from "./pages/register/Register";
 import LeftBar from "./components/leftBar/LeftBar";
 import RightBar from "./components/rightBar/RightBar";
 import Home from "./pages/home/Home";
-import { useGlobalContextDarkMode } from "./context/darkModeContext";
-import { useGlobalContextAuth } from "./context/AuthContext";
+import {useGlobalContextDarkMode} from "./context/darkModeContext";
+import {useGlobalContextAuth} from "./context/AuthContext";
 import Vacation from "./pages/vacation/Vacation";
 import Setting from "./pages/setting/Setting";
 import SettingPass from "./pages/setting/settingPass";
@@ -20,7 +20,6 @@ import ErrorPage from "./pages/Error/Error-Page";
 import ResetPass from "./pages/reset_Password/resetPass";
 import ForgetSend from "./pages/forget_Password/forget.send";
 import VerifyForgotPassword from "./pages/VerifyForgotPassowrd/VerifyForgotPassword";
-import CreateAlbum from "./components/createAlbum/CreateAlbum";
 import Album from "./pages/createAlbum/Album";
 import PostList from "./components/postList/PostList";
 import VacationList from "./components/vacationList/VacationList";
@@ -30,10 +29,10 @@ import "./style.scss";
 import VerifyEmail from "./pages/VerifyEmail/VerifyEmail";
 
 function App() {
-  const { currentUser, authenticate } = useGlobalContextAuth();
-  const { darkMode } = useGlobalContextDarkMode();
+  const {currentUser, authenticate} = useGlobalContextAuth();
+  const {darkMode} = useGlobalContextDarkMode();
 
-  const ProtectedRouter = ({ children }) => {
+  const ProtectedRouter = ({children}) => {
     if (!authenticate) {
       return <Navigate to="/login" />;
     }
@@ -43,9 +42,9 @@ function App() {
   const LayoutHome = () => {
     return (
       <div className={`theme-${darkMode ? "dark" : "light"}`}>
-        <div style={{ display: "flex" }}>
+        <div style={{display: "flex"}}>
           <LeftBar />
-          <div style={{ flex: 7 }}>
+          <div style={{flex: 7}}>
             <Outlet />
           </div>
           <RightBar />
@@ -57,9 +56,9 @@ function App() {
   const Layout = () => {
     return (
       <div className={`theme-${darkMode ? "dark" : "light"}`}>
-        <div style={{ display: "flex" }}>
+        <div style={{display: "flex"}}>
           <LeftBar />
-          <div style={{ flex: 10 }}>
+          <div style={{flex: 10}}>
             <Outlet />
           </div>
         </div>
@@ -107,11 +106,11 @@ function App() {
           path: "/profile/:id",
           element: <Profile />,
           children: [
-            { path: "", element: <PostList /> },
-            { path: "vacations", element: <VacationList /> },
-            { path: "albums", element: <AlbumList /> },
+            {path: "", element: <PostList />},
+            {path: "vacations", element: <VacationList />},
+            {path: "albums", element: <AlbumList />},
             {
-              path: "albums/:id",
+              path: "albums/:albumname",
               element: <AlbumDetail />,
             },
           ],

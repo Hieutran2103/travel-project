@@ -1,35 +1,35 @@
-import { Link } from "react-router-dom";
+import {Link} from "react-router-dom";
 import "./post.scss";
 import FavoriteBorderOutlinedIcon from "@mui/icons-material/FavoriteBorderOutlined";
 import FavoriteOutlinedIcon from "@mui/icons-material/FavoriteOutlined";
 import MoreHorizOutlinedIcon from "@mui/icons-material/MoreHorizOutlined";
 import TextsmsOutlinedIcon from "@mui/icons-material/TextsmsOutlined";
-import { useState } from "react";
+import {useState} from "react";
 import Comments from "../comments/Comments";
-import { useTranslation } from "react-i18next";
+import {useTranslation} from "react-i18next";
 import EditPost from "../editPost/EditPost";
 import ChevronLeftOutlinedIcon from "@mui/icons-material/ChevronLeftOutlined";
 import ChevronRightOutlinedIcon from "@mui/icons-material/ChevronRightOutlined";
-import { useGlobalSearch } from "../../context/Search&Notification";
+import {useGlobalSearch} from "../../context/Search&Notification";
 import moment from "moment";
 import * as React from "react";
 import Button from "@mui/material/Button";
 import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
 import SpecificEdit from "../specificEdit/SpecificEdit";
-import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import {useMutation, useQuery, useQueryClient} from "@tanstack/react-query";
 import customFetch from "../../utils/url";
-import { useGlobalPage } from "../../context/Page";
-import { toast } from "react-toastify";
-import { useGlobalContextAuth } from "../../context/AuthContext";
+import {useGlobalPage} from "../../context/Page";
+import {toast} from "react-toastify";
+import {useGlobalContextAuth} from "../../context/AuthContext";
 
-const Post = ({ post }) => {
-  const { medias, content, userId, user, created_at, _id } = post;
-  const { currentUser } = useGlobalContextAuth();
+const Post = ({post}) => {
+  const {medias, content, user, created_at, _id} = post;
+  const {currentUser} = useGlobalContextAuth();
 
   // const currentPost = index;
-  const { setImagePost } = useGlobalPage();
-  const { openEditSpecific } = useGlobalSearch();
+  const {setImagePost} = useGlobalPage();
+  const {openEditSpecific} = useGlobalSearch();
   const [t, i18] = useTranslation("global");
   //State Comments
   const [commentOpen, setCommentOpen] = useState(false);
@@ -39,10 +39,10 @@ const Post = ({ post }) => {
   const [liked, setLiked] = useState(Boolean(getLikeFromLS));
   console.log(liked);
 
-  const { mutate: postLike } = useMutation({
+  const {mutate: postLike} = useMutation({
     mutationFn: (posts) => customFetch.post(`/likes`, posts),
     onSuccess: (data) => {
-      queryClient.invalidateQueries({ queryKey: ["likes"] });
+      queryClient.invalidateQueries({queryKey: ["likes"]});
       localStorage.setItem("like", true);
       setLiked(true);
     },
@@ -50,10 +50,10 @@ const Post = ({ post }) => {
       toast.error("error");
     },
   });
-  const { mutate: deletePostLike } = useMutation({
+  const {mutate: deletePostLike} = useMutation({
     mutationFn: (posts) => customFetch.delete(`/likes/post/${posts}`),
     onSuccess: (data) => {
-      queryClient.invalidateQueries({ queryKey: ["likes"] });
+      queryClient.invalidateQueries({queryKey: ["likes"]});
       localStorage.removeItem("like");
       setLiked(false);
     },
@@ -68,16 +68,16 @@ const Post = ({ post }) => {
 
   const queryClient = useQueryClient();
 
-  const { data, isLoading } = useQuery(["likes", _id], () =>
+  const {data, isLoading} = useQuery(["likes", _id], () =>
     customFetch.get(`/likes/count/${_id}`).then((res) => {
       return res.data;
     })
   );
 
-  const { mutate: deletePost } = useMutation({
+  const {mutate: deletePost} = useMutation({
     mutationFn: (posts) => customFetch.delete(`/posts/${posts}`),
     onSuccess: (data) => {
-      queryClient.invalidateQueries({ queryKey: ["postsNF"] });
+      queryClient.invalidateQueries({queryKey: ["postsNF"]});
       toast.success(t("toast.DeletePostNF"));
       console.log(data);
     },
@@ -161,8 +161,8 @@ const Post = ({ post }) => {
             />
             <div className="details">
               <Link
-                to={`/profile/${userId}`}
-                style={{ textDecoration: "none", color: "inherit" }}
+                to={`/profile/${user._id}`}
+                style={{textDecoration: "none", color: "inherit"}}
               >
                 <span className="name"> {user.name}</span>
               </Link>
@@ -177,7 +177,7 @@ const Post = ({ post }) => {
               aria-expanded={open ? "true" : undefined}
               onClick={handleClick}
             >
-              <MoreHorizOutlinedIcon style={{ color: "#E84BE5" }} />
+              <MoreHorizOutlinedIcon style={{color: "#E84BE5"}} />
             </Button>
             {editFounder ? (
               <Menu
@@ -241,7 +241,7 @@ const Post = ({ post }) => {
             {/* {!liked && <FavoriteBorderOutlinedIcon onClick={handleLike} />} */}
             {liked && data?.total >= 1 ? (
               <FavoriteOutlinedIcon
-                style={{ color: "red" }}
+                style={{color: "red"}}
                 onClick={handleDisLike}
               />
             ) : (

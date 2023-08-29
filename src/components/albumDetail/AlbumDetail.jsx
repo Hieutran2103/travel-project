@@ -1,20 +1,21 @@
-import React, { useState } from "react";
-import { useNavigate, useParams } from "react-router-dom";
+import React, {useState} from "react";
+import {useNavigate} from "react-router-dom";
 import ImageList from "@mui/material/ImageList";
 import ImageListItem from "@mui/material/ImageListItem";
 import Modal from "@mui/material/Modal";
 import Box from "@mui/material/Box";
 import customFetch from "../../utils/url";
-import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import {useMutation, useQuery, useQueryClient} from "@tanstack/react-query";
 import DeleteIcon from "@mui/icons-material/Delete";
-import { styled, alpha } from "@mui/material/styles";
+import {styled, alpha} from "@mui/material/styles";
 import Button from "@mui/material/Button";
 import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
 import EditIcon from "@mui/icons-material/Edit";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
-import { toast } from "react-toastify";
-import { ToastContainer } from "react-toastify";
+import {toast} from "react-toastify";
+import {ToastContainer} from "react-toastify";
+import {useGlobalContextAuth} from "../../context/AuthContext";
 import "./albumDetail.scss";
 
 const StyledMenu = styled((props) => (
@@ -30,7 +31,7 @@ const StyledMenu = styled((props) => (
     }}
     {...props}
   />
-))(({ theme }) => ({
+))(({theme}) => ({
   "& .MuiPaper-root": {
     borderRadius: 6,
     marginTop: theme.spacing(1),
@@ -61,18 +62,17 @@ const StyledMenu = styled((props) => (
 }));
 
 function AlbumDetail() {
-  const { id } = useParams();
+  const {currentUser} = useGlobalContextAuth();
   const [modalOpen, setModalOpen] = useState(false);
   const [selectedImage, setSelectedImage] = useState(null);
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
   const navigate = useNavigate();
+  const queryClient = useQueryClient();
 
-  let userID = "";
-  const userJSON = localStorage.getItem("user");
-  if (userJSON) {
-    userID = JSON.parse(userJSON);
-  }
+  const url = window.location.pathname.split("/");
+  const albumId = url[url.length - 1];
+  const userID = currentUser.id;
 
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
@@ -92,7 +92,7 @@ function AlbumDetail() {
     setModalOpen(false);
   };
 
-  const apiUrlAlbumDetail = `/albums/${id}`;
+  const apiUrlAlbumDetail = `/albums/${albumId}`;
 
   const fetchAlbumDetail = async () => {
     try {
@@ -103,13 +103,13 @@ function AlbumDetail() {
     }
   };
 
-  const { mutate: deleteAlbumMutation } = useMutation({
+  const {mutate: deleteAlbumMutation} = useMutation({
     mutationFn: (album) => customFetch.delete(apiUrlAlbumDetail, album),
     onSuccess: (data) => {
-      queryClient.invalidateQueries({ queryKey: ["albumsNF"] });
+      queryClient.invalidateQueries({queryKey: ["albumsNF"]});
       toast.success("Successfully deleted album");
       setTimeout(() => {
-        navigate(`/profile/${userID.id}/albums`);
+        navigate(`/profile/${userID}/albums`);
       }, 1000);
       console.log(data);
     },
@@ -126,6 +126,10 @@ function AlbumDetail() {
   } = useQuery(["albumDataDetail", apiUrlAlbumDetail], fetchAlbumDetail);
 
   if (isAlbumDetailLoading) {
+    return;
+  }
+
+  if (isAlbumDetailError) {
     return (
       <div className="lds-ring">
         <div></div>
@@ -136,14 +140,8 @@ function AlbumDetail() {
     );
   }
 
-  if (isAlbumDetailError) {
-    return <div>Error</div>;
-  }
-
   const mediaItems = albumDataDetail.data.medias;
   const mediaName = albumDataDetail.data.album_name;
-
-  const queryClient = useQueryClient();
 
   const handleDelete = () => {
     deleteAlbumMutation();
@@ -241,7 +239,7 @@ function AlbumDetail() {
           </ImageListItem>
         ))}
       </ImageList>
-      <div style={{ outline: "none" }}>
+      <div style={{outline: "none"}}>
         <Modal
           open={modalOpen}
           onClose={closeModal}
@@ -274,7 +272,7 @@ function AlbumDetail() {
                     flex: "1",
                     objectFit: "contain",
                     margin: "auto",
-                    // backgroundColor: "black",
+                    backgroundColor: "black",
                   }}
                 />
               </div>

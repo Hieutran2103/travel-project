@@ -106,7 +106,7 @@ function App() {
           path: "/profile/:id",
           element: <Profile />,
           children: [
-            {path: "", element: <PostList />},
+            {path: "posts", element: <PostList />},
             {path: "vacations", element: <VacationList />},
             {path: "albums", element: <AlbumList />},
             {

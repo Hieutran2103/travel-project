@@ -6,6 +6,9 @@ import { useForm } from "react-hook-form";
 import InputPassword from "../../components/input/inputPassword";
 import { userSchema } from "../../utils/rules";
 import { useMutation } from "@tanstack/react-query";
+import customFetch from "../../utils/url";
+import { toast } from "react-toastify";
+
 
 // const scheme = yup.object({
 //   old_password: yup
@@ -41,19 +44,19 @@ const SettingPass = () => {
     resolver: yupResolver(userSchema),
   });
   const settingPassword = useMutation({
-    mutationFn: (data) =>
-      customFetch.post("/users/setting/password", {
-        old_password: data.password,
-        password: data.password,
-        confirm_password: data.confirm_password,
-        // forgot_password_token: location.state.forgot_password_token,
-        // hoi Thang token setting Password
-      }),
+    mutationFn: (data) => 
+     customFetch.put("/users/change-password", {
+      old_password:data.old_password,
+      new_password:data.password,
+      confirm_new_password:data.confirm_password,
+     }),
     onSuccess: (data) => {
+      
       console.log(data);
+      alert(data.data.message)
     },
   });
-  const formSubmit = (data) => {
+  const formSubmit =  (data) => {
     settingPassword.mutate(data);
   };
   return (

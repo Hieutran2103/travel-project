@@ -25,9 +25,9 @@ const Setting = () => {
   });
 
   const settingAccount = useMutation({
-    mutationFn: (data) =>
-      customFetch.post("/users/setting/account", {
-        username: data.username,
+    mutationFn:  (data) =>
+      customFetch.post("/users/update-user-infor", {
+        name: data.name,
         telephone: data.telephone,
         address: data.address,
         date: data.date,

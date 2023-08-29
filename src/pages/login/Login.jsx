@@ -7,15 +7,17 @@ import { useForm } from "react-hook-form";
 import { schema, schemaEmail } from "../../utils/rules";
 import InputForm from "../../components/input/inputForm";
 import { useMutation } from "@tanstack/react-query";
-
+// import {t} from "react-i18next";
 import customFetch from "../../utils/url";
 import { ToastContainer, toast } from "react-toastify";
 import { useState } from "react";
+import { useTranslation } from "react-i18next";
 
 const Login = () => {
   const navigate = useNavigate();
   const { setCurrentUser, setAuthenticate } = useGlobalContextAuth();
   const [isShowPassword, setIsShowPassword] = useState(false);
+  const [t, i18] = useTranslation("global");
 
   const {
     handleSubmit,

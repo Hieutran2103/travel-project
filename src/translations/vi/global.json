@@ -43,5 +43,16 @@
     "name": "Hãy thêm tên cho kì nghỉ",
     "title": "Hãy tiêu đề cho kì nghỉ",
     "intro": "Hãy giới thiệu về nhóm"
+  },
+  "profile": {
+    "edit": "Chỉnh sửa trang cá nhân",
+    "view": "Xem kho lưu trữ",
+    "post": "Bài đăng",
+    "follow": "Theo dõi",
+    "follower": "Người theo dõi",
+    "following": "Đang theo dõi",
+    "album": "Album",
+    "vacation": "Kì nghỉ",
+    "comment": "Bình luận..."
   }
 }

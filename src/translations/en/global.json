@@ -43,5 +43,16 @@
     "name": "Please provide name",
     "title": "Please provide title",
     "intro": "Please provide intro"
+  },
+  "profile": {
+    "edit": "Edit Profile",
+    "view": "View Archive",
+    "post": "Post",
+    "follow": "Follow",
+    "follower": "Followers",
+    "following": "Following",
+    "album": "Album",
+    "vacation": "Vacation",
+    "comment": "Add a comment..."
   }
 }

@@ -1,29 +1,27 @@
-import React from "react";
-import { Link, useParams } from "react-router-dom";
+import React, {useEffect, useRef} from "react";
+import {Link} from "react-router-dom";
 import ImageList from "@mui/material/ImageList";
 import ImageListItem from "@mui/material/ImageListItem";
 import ImageListItemBar from "@mui/material/ImageListItemBar";
 import AddIcon from "@mui/icons-material/Add";
 import customFetch from "../../utils/url";
-import { useQuery } from "@tanstack/react-query";
+import {useQuery} from "@tanstack/react-query";
+import {useGlobalPage} from "../../context/Page";
+import {useGlobalContextAuth} from "../../context/AuthContext";
 import "./albumList.scss";
 
 function AlbumList() {
-  const { id } = useParams();
-
+  const {currentUser} = useGlobalContextAuth();
+  const {page, limit, handleNextLimit} = useGlobalPage();
+  const containerRef = useRef(null);
   const createAlbumItem = {
     title: "Create Album",
     num: 0,
     isCreateAlbum: true,
   };
 
-  let userID = "";
-  const userJSON = localStorage.getItem("user");
-  if (userJSON) {
-    userID = JSON.parse(userJSON);
-  }
-
-  const apiUrlAlbum = `albums/user/${userID.id}?limit=100&page=1`;
+  const userID = currentUser.id;
+  const apiUrlAlbum = `albums/user/${userID}?limit=${limit}&page=${page}`;
 
   const fetchAlbumInfo = async () => {
     try {
@@ -40,7 +38,31 @@ function AlbumList() {
     isError: isAlbumError,
   } = useQuery(["albumData", apiUrlAlbum], fetchAlbumInfo);
 
+  useEffect(() => {
+    function handleScroll() {
+      const container = containerRef.current;
+      if (
+        container &&
+        container.scrollTop + container.clientHeight >= container.scrollHeight
+      ) {
+        handleNextLimit();
+      }
+    }
+
+    const container = containerRef.current;
+    if (container) {
+      container.addEventListener("scroll", handleScroll);
+      return () => {
+        container.removeEventListener("scroll", handleScroll);
+      };
+    }
+  }, [handleNextLimit, page, limit]);
+
   if (isAlbumLoading) {
+    return;
+  }
+
+  if (isAlbumError) {
     return (
       <div className="lds-ring">
         <div></div>
@@ -51,17 +73,18 @@ function AlbumList() {
     );
   }
 
-  if (isAlbumError) {
-    return <div>Error: {error.message}</div>;
-  }
-
-  const albums = albumData.data.result;
+  const albums = albumData.data;
 
   const modifiedItemData = [createAlbumItem, ...(albums || [])];
 
+  console.log(albums);
   return (
-    <div className="albumList">
-      <ImageList cols={4} style={{ paddingTop: 0, paddingBottom: 0 }}>
+    <div className="albumList" ref={containerRef}>
+      <ImageList
+        cols={4}
+        className="noGapImageList"
+        style={{paddingTop: 0, paddingBottom: 0}}
+      >
         {modifiedItemData.map((item) => (
           <ImageListItem
             className={`imageList ${
@@ -77,7 +100,7 @@ function AlbumList() {
                   color: "inherit",
                 }}
               >
-                <div style={{ position: "relative" }}>
+                <div style={{position: "relative"}}>
                   <div className="createAlbumContent">
                     <AddIcon
                       style={{
@@ -97,7 +120,7 @@ function AlbumList() {
               </Link>
             ) : (
               <Link
-                to={`/profile/${id}/albums/${item._id}`}
+                to={`/profile/${userID}/albums/${item._id}`}
                 style={{
                   textDecoration: "none",
                   color: "inherit",

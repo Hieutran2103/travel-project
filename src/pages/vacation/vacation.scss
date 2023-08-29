@@ -69,6 +69,31 @@
           }
         }
       }
+      .inviteUser {
+        position: absolute;
+        bottom: 55px;
+        right: 150px;
+        background-color: rgba(150, 149, 149, 0.8);
+        border-radius: 10px;
+        font-size: 16px;
+        font-weight: 500;
+        color: black;
+        height: 40px;
+        width: 82px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 5px;
+        cursor: pointer;
+      }
+
+      .buttonEditVacation {
+        position: absolute;
+        bottom: 55px;
+        right: 65px;
+        background-color: rgba(150, 149, 149, 0.8);
+        border-radius: 10px;
+      }
     }
     .detailVacation {
       margin-bottom: 20px;

@@ -35,7 +35,6 @@ const PostsVacation = ({ dataVacation }) => {
     return null;
   }
   const reponse = data.data.data;
-  console.log(reponse);
 
   if (isLoading) {
     return <div className="div">21341234</div>;

@@ -8,7 +8,7 @@ import { userSchema } from "../../utils/rules";
 import { useMutation } from "@tanstack/react-query";
 import customFetch from "../../utils/url";
 import { toast } from "react-toastify";
-
+import { useState } from "react";
 
 // const scheme = yup.object({
 //   old_password: yup
@@ -31,6 +31,8 @@ import { toast } from "react-toastify";
 const SettingPass = () => {
   const location = useLocation();
   console.log(location.state);
+  const [isShowPassword, setIsShowPassword] = useState("");
+
   const {
     register,
     handleSubmit,
@@ -44,19 +46,18 @@ const SettingPass = () => {
     resolver: yupResolver(userSchema),
   });
   const settingPassword = useMutation({
-    mutationFn: (data) => 
-     customFetch.put("/users/change-password", {
-      old_password:data.old_password,
-      new_password:data.password,
-      confirm_new_password:data.confirm_password,
-     }),
+    mutationFn: (data) =>
+      customFetch.put("/users/change-password", {
+        old_password: data.old_password,
+        new_password: data.password,
+        confirm_new_password: data.confirm_password,
+      }),
     onSuccess: (data) => {
-      
       console.log(data);
-      alert(data.data.message)
+      alert(data.data.message);
     },
   });
-  const formSubmit =  (data) => {
+  const formSubmit = (data) => {
     settingPassword.mutate(data);
   };
   return (
@@ -79,26 +80,48 @@ const SettingPass = () => {
             <div className="form">
               <form noValidate onSubmit={handleSubmit(formSubmit)}>
                 <h2>Password</h2>
-                <InputPassword
-                  spanName="Old Password"
-                  type="password"
-                  name="old_password"
-                  placeholder="Enter your old password..."
-                  errormessage={errors.old_password?.message}
-                  register={{ ...register("old_password") }}
-                />
+                <div className="input1">
+                  <InputPassword
+                    spanName="Old Password"
+                    type={isShowPassword === true ? "text" : "password"}
+                    name="old_password"
+                    placeholder="Enter your old password..."
+                    errormessage={errors.old_password?.message}
+                    register={{ ...register("old_password") }}
+                  />
+                  <i
+                    className={
+                      isShowPassword === true
+                        ? "fa-solid fa-eye"
+                        : "fa-solid fa-eye-slash"
+                    }
+                    onClick={() => setIsShowPassword(!isShowPassword)}
+                  ></i>
+                </div>
+
                 {/* <div className="input-group">
                 <span>New Password</span>
                 <input type="text" placeholder="enter your new password..." />
               </div> */}
-                <InputPassword
-                  spanName="Password"
-                  type="password"
-                  name="password"
-                  placeholder="Enter your new password..."
-                  errormessage={errors.password?.message}
-                  register={{ ...register("password") }}
-                />
+                <div className="input1">
+                  <InputPassword
+                    spanName="Password"
+                    type={isShowPassword === true ? "text" : "password"}
+                    name="password"
+                    placeholder="Enter your new password..."
+                    errormessage={errors.password?.message}
+                    register={{ ...register("password") }}
+                  />
+                  <i
+                    className={
+                      isShowPassword === true
+                        ? "fa-solid fa-eye"
+                        : "fa-solid fa-eye-slash"
+                    }
+                    onClick={() => setIsShowPassword(!isShowPassword)}
+                  ></i>
+                </div>
+
                 {/* <div className="input-group">
                   <span>Confirm</span>
                   <input
@@ -106,14 +129,25 @@ const SettingPass = () => {
                     placeholder="confirm your new password..."
                   />
                 </div> */}
-                <InputPassword
-                  spanName="Confirm"
-                  type="password"
-                  name="confirm_password"
-                  placeholder="Confirm your new password..."
-                  errormessage={errors.confirm_password?.message}
-                  register={{ ...register("confirm_password") }}
-                />
+                <div className="input1">
+                  <InputPassword
+                    spanName="Confirm"
+                    type={isShowPassword === true ? "text" : "password"}
+                    name="confirm_password"
+                    placeholder="Confirm your new password..."
+                    errormessage={errors.confirm_password?.message}
+                    register={{ ...register("confirm_password") }}
+                  />
+                  <i
+                    className={
+                      isShowPassword === true
+                        ? "fa-solid fa-eye"
+                        : "fa-solid fa-eye-slash"
+                    }
+                    onClick={() => setIsShowPassword(!isShowPassword)}
+                  ></i>
+                </div>
+
                 <button>Save</button>
               </form>
             </div>

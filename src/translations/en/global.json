@@ -35,7 +35,8 @@
     "successPostNF": "Successfully created post!",
     "DeletePostNF": "Successfully deleted post!",
     "EditPostNF": "Successfully edited post!",
-    "createPostNF": "Successfully created post!"
+    "createPostNF": "Successfully created post!",
+    "uncreatePostNF": "Unsuccessfully created post!"
   },
   "vacation": {
     "success": "Successfully created new vacation!",

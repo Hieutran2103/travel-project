@@ -9,6 +9,7 @@ import customFetch from "../../utils/url";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { toast } from "react-toastify";
 import { useGlobalPage } from "../../context/Page";
+import TinyMCEEditor from "../Tinymce/TinyMCEEditor ";
 
 const CreatePost = () => {
   const { currentUser } = useGlobalContextAuth();
@@ -26,11 +27,9 @@ const CreatePost = () => {
       setDesc("");
       setFile("");
       toast.success(t("toast.createPostNF"));
-      console.log(data);
     },
     onError: (error) => {
-      console.log(error);
-      toast.error("error");
+      toast.error(t("toast.uncreatePostNF"));
     },
   });
 
@@ -69,6 +68,7 @@ const CreatePost = () => {
   };
   const handleDec = (e) => {
     setDesc(e.target.value);
+    // setDesc(e);
   };
 
   return (
@@ -84,13 +84,23 @@ const CreatePost = () => {
               }
               alt=""
             />
-
-            <input
+            {/* <div className="designInput">
+              <TinyMCEEditor  onChange={handleDec} value={desc}/>
+            </div> */}
+            {/* <input
               type="text"
               placeholder={`${t("newfeed.inputPost")} ${currentUser?.name}?`}
               onChange={handleDec}
               value={desc}
-            />
+            /> */}
+            <textarea
+              id="w3review"
+              name="w3review"
+              rows="2"
+              cols="50"
+              onChange={handleDec}
+              value={desc}
+            ></textarea>
           </div>
 
           <div className="right">

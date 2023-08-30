@@ -35,7 +35,8 @@
     "successPostNF": "Tạo bài thành công",
     "DeletePostNF": "Xóa bài thành công",
     "EditPostNF": "Chỉnh thành công",
-    "createPostNF": "Tạo thành công"
+    "createPostNF": "Tạo thành công",
+    "uncreatePostNF": "Tạo thất bại!"
   },
   "vacation": {
     "success": "Tạo thành công kì nghỉ mới",

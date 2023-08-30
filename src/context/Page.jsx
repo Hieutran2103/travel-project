@@ -4,6 +4,7 @@ const PageContext = createContext();
 
 const PageProvider = ({ children }) => {
   const [imagePost, setImagePost] = useState([]);
+  const [contextPost, setContextPost] = useState([]);
   const [comment, setComment] = useState(1);
   const [page, setPage] = useState(1);
   const [limit, setLimit] = useState(5);
@@ -24,6 +25,8 @@ const PageProvider = ({ children }) => {
     <PageContext.Provider
       value={{
         imagePost,
+        contextPost,
+        setContextPost,
         setImagePost,
         setComment,
         comment,

@@ -207,7 +207,7 @@ const PostVC = ({ post }) => {
         <div className="content">
           <p>{content}</p>
           <div className="slider-container">
-            {medias.map((z, indexx) => {
+            {medias?.map((z, indexx) => {
               return (
                 <div
                   className="slide"
@@ -220,7 +220,7 @@ const PostVC = ({ post }) => {
                 </div>
               );
             })}
-            {medias.length > 1 ? (
+            {medias?.length > 1 ? (
               <>
                 <button type="button" className="prev" onClick={prevSlide}>
                   {" "}

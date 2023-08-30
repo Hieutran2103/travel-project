@@ -47,7 +47,6 @@ const PostsVacation = ({ dataVacation }) => {
         dataLength={reponse.length}
         next={moreData}
         hasMore={hasMore}
-        loader={<p style={{ textAlign: "center" }}> Loading...</p>}
         endMessage={
           <p style={{ textAlign: "center" }}> You read all posts today</p>
         }

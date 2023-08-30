@@ -12,6 +12,7 @@ $themes: (
     bgintro: #f6f3f3,
     itemintro: #fff,
     bt: #cecccc,
+    editVC: rgba(255, 255, 255, 0.8),
   ),
   dark: (
     textColorActive: #ffffff,
@@ -26,6 +27,7 @@ $themes: (
     bgintro: #111111,
     itemintro: #1a1a1a,
     bt: #808080,
+    editVC: rgba(150, 149, 149, 0.8),
   ),
 );
 @mixin themify($themes: $themes) {

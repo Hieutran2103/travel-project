@@ -26,8 +26,7 @@ const CreatePostVacation = ({ dataVacation }) => {
       toast.success(t("toast.successPostNF"));
     },
     onError: (error) => {
-      console.log(error);
-      toast.error("error");
+      toast.success(t("toast.unsuccessPostNF"));
     },
   });
 
@@ -83,12 +82,21 @@ const CreatePostVacation = ({ dataVacation }) => {
               alt=""
             />
 
-            <input
+            {/* <input
               type="text"
               placeholder={`${t("newfeed.inputPost")} ${currentUser?.name}?`}
               onChange={handleDec}
               value={desc}
-            />
+            /> */}
+            <textarea
+              id="w3review"
+              name="w3review"
+              rows="2"
+              cols="50"
+              onChange={handleDec}
+              value={desc}
+              placeholder={`${t("newfeed.inputPost")} ${currentUser?.name}?`}
+            ></textarea>
           </div>
 
           <div className="right">

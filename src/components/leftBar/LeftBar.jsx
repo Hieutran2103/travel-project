@@ -7,25 +7,25 @@ import LogoutOutlinedIcon from "@mui/icons-material/LogoutOutlined";
 import logoNewfeed from "../../assets/logonewfeed.svg";
 import DarkModeOutlinedIcon from "@mui/icons-material/DarkModeOutlined";
 import WbSunnyOutlinedIcon from "@mui/icons-material/WbSunnyOutlined";
-import { useGlobalContextDarkMode } from "../../context/darkModeContext";
+import {useGlobalContextDarkMode} from "../../context/darkModeContext";
 import GTranslateOutlinedIcon from "@mui/icons-material/GTranslateOutlined";
-import { Link, useNavigate } from "react-router-dom";
-import { useGlobalContextAuth } from "../../context/AuthContext";
+import {Link, useNavigate} from "react-router-dom";
+import {useGlobalContextAuth} from "../../context/AuthContext";
 import Search from "../search/Search";
-import { useGlobalSearch } from "../../context/Search&Notification";
-import { useTranslation } from "react-i18next";
-import { useState } from "react";
+import {useGlobalSearch} from "../../context/Search&Notification";
+import {useTranslation} from "react-i18next";
+import {useState} from "react";
 import Notification from "../Notification/Notification";
 import customFetch from "../../utils/url";
-import { useMutation } from "@tanstack/react-query";
+import {useMutation} from "@tanstack/react-query";
 
 const LeftBar = () => {
-  const { toggle, darkMode } = useGlobalContextDarkMode();
-  const { setCurrentUser } = useGlobalContextAuth();
-  const { openSearch, openNotifi } = useGlobalSearch();
+  const {toggle, darkMode} = useGlobalContextDarkMode();
+  const {setCurrentUser} = useGlobalContextAuth();
+  const {openSearch, openNotifi} = useGlobalSearch();
   const [t, i18] = useTranslation("global");
   const [isLanguageViet, setIsLanguageViet] = useState(false);
-  const { currentUser } = useGlobalContextAuth();
+  const {currentUser} = useGlobalContextAuth();
   const navigate = useNavigate();
 
   const handleChangeViet = () => {
@@ -36,7 +36,7 @@ const LeftBar = () => {
     i18.changeLanguage("en");
     setIsLanguageViet(false);
   };
-  
+
   const logoutMutation = useMutation({
     mutationFn: () =>
       customFetch.post("/users/logout", {
@@ -47,7 +47,7 @@ const LeftBar = () => {
       localStorage.removeItem("refresh_token");
       localStorage.removeItem("user");
       setCurrentUser(null);
-      console.log(data)
+      console.log(data);
       navigate("/login");
     },
   });
@@ -56,14 +56,13 @@ const LeftBar = () => {
     logoutMutation.mutate();
   };
 
-
   return (
     <>
       <div className="leftBar">
         <div className="container">
           <div className="menu">
             <div className="logo">
-              <Link style={{ textDecoration: "none", color: "inherit" }} to="/">
+              <Link style={{textDecoration: "none", color: "inherit"}} to="/">
                 <img src={logoNewfeed} alt="" />
               </Link>
             </div>
@@ -71,15 +70,15 @@ const LeftBar = () => {
             <div className="items">
               <div className="icon">
                 {" "}
-                <HomeOutlinedIcon style={{ height: "30px", width: "30px" }} />
+                <HomeOutlinedIcon style={{height: "30px", width: "30px"}} />
               </div>
-              <Link style={{ textDecoration: "none", color: "inherit" }} to="/">
+              <Link style={{textDecoration: "none", color: "inherit"}} to="/">
                 <span>{t("leftBar.home")}</span>
               </Link>
             </div>
             <div className="items" onClick={openSearch}>
               <div className="icon">
-                <SearchOutlinedIcon style={{ height: "30px", width: "30px" }} />
+                <SearchOutlinedIcon style={{height: "30px", width: "30px"}} />
               </div>
               <span>{t("leftBar.search")}</span>
             </div>
@@ -87,7 +86,7 @@ const LeftBar = () => {
               <div className="icon">
                 {" "}
                 <FavoriteBorderOutlinedIcon
-                  style={{ height: "30px", width: "30px" }}
+                  style={{height: "30px", width: "30px"}}
                 />
               </div>
 
@@ -97,11 +96,11 @@ const LeftBar = () => {
               <div className="icon">
                 {!darkMode ? (
                   <DarkModeOutlinedIcon
-                    style={{ height: "30px", width: "30px" }}
+                    style={{height: "30px", width: "30px"}}
                   />
                 ) : (
                   <WbSunnyOutlinedIcon
-                    style={{ height: "30px", width: "30px" }}
+                    style={{height: "30px", width: "30px"}}
                   />
                 )}
               </div>
@@ -119,7 +118,7 @@ const LeftBar = () => {
               <div className="icon">
                 {" "}
                 <GTranslateOutlinedIcon
-                  style={{ height: "30px", width: "30px" }}
+                  style={{height: "30px", width: "30px"}}
                 />
               </div>
 
@@ -134,10 +133,10 @@ const LeftBar = () => {
                 }
                 alt=""
               />
-      
+
               <Link
-                style={{ textDecoration: "none", color: "inherit" }}
-                to={`/profile/${currentUser.id}`}
+                style={{textDecoration: "none", color: "inherit"}}
+                to={`/profile/${currentUser.id}/posts`}
               >
                 <span>{t("leftBar.profile")}</span>
               </Link>
@@ -145,10 +144,10 @@ const LeftBar = () => {
 
             <div className="logout ">
               <div className="icon">
-                <LogoutOutlinedIcon style={{ height: "30px", width: "30px" }} />
+                <LogoutOutlinedIcon style={{height: "30px", width: "30px"}} />
               </div>
               <Link
-                style={{ textDecoration: "none", color: "inherit" }}
+                style={{textDecoration: "none", color: "inherit"}}
                 to="/login"
               >
                 <span onClick={logout}>{t("leftBar.logout")}</span>

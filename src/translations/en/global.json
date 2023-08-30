@@ -54,6 +54,7 @@
     "following": "Following",
     "album": "Album",
     "vacation": "Vacation",
-    "comment": "Add a comment..."
+    "comment": "Add a comment...",
+    "dm": "Message"
   }
 }

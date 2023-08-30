@@ -130,14 +130,7 @@ function AlbumDetail() {
   }
 
   if (isAlbumDetailError) {
-    return (
-      <div className="lds-ring">
-        <div></div>
-        <div></div>
-        <div></div>
-        <div></div>
-      </div>
-    );
+    return;
   }
 
   const mediaItems = albumDataDetail.data.medias;

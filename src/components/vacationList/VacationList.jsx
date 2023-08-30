@@ -12,6 +12,9 @@ const itemData = [
 ];
 
 function VacationList() {
+  const url = window.location.pathname.split("/");
+  const userID = url[url.length - 2];
+
   return (
     <div className="vacationContainer">
       {itemData.map((item) => (

@@ -1,17 +1,18 @@
-import "./posts.scss";
+import React, {useState} from "react";
 import Post from "../post/Post";
-import {useState} from "react";
 import {useGlobalPage} from "../../context/Page";
 import {useQuery} from "@tanstack/react-query";
 import customFetch from "../../utils/url";
 import Button from "../buttonNextPage/Button";
 import InfiniteScroll from "react-infinite-scroll-component";
+import {usePostsData} from "../../context/PostsDataContext";
 
 const Posts = () => {
   const [hasMore, setHasMore] = useState(true);
   const {page, limit, handleNextLimit} = useGlobalPage();
+  const {postsData, setPostsData} = usePostsData();
   const moreData = () => {
-    if (reponse.length < 50) {
+    if (response.length < 50) {
       setTimeout(() => {
         handleNextLimit();
       }, 2000);
@@ -27,17 +28,21 @@ const Posts = () => {
     return null;
   }
 
-  const reponse = data.data.result.posts;
+  const response = data.data.result.posts;
 
   if (isLoading) {
     return <Button />;
+  }
+
+  if (postsData === null) {
+    null;
   }
 
   return (
     <>
       <InfiniteScroll
         style={{background: "transparent"}}
-        dataLength={reponse.length}
+        dataLength={response.length}
         next={moreData}
         hasMore={hasMore}
         loader={<p style={{textAlign: "center"}}> Loading...</p>}
@@ -47,8 +52,8 @@ const Posts = () => {
       >
         {" "}
         <div className="posts">
-          {reponse &&
-            reponse.map((post, index) => {
+          {response &&
+            response.map((post, index) => {
               return <Post key={index} post={post} />;
             })}
         </div>

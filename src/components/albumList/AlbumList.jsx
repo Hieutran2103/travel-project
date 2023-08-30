@@ -1,4 +1,4 @@
-import React, {useEffect, useRef} from "react";
+import React from "react";
 import {Link} from "react-router-dom";
 import ImageList from "@mui/material/ImageList";
 import ImageListItem from "@mui/material/ImageListItem";
@@ -12,15 +12,15 @@ import "./albumList.scss";
 
 function AlbumList() {
   const {currentUser} = useGlobalContextAuth();
-  const {page, limit, handleNextLimit} = useGlobalPage();
-  const containerRef = useRef(null);
+  const {page, limit} = useGlobalPage();
   const createAlbumItem = {
     title: "Create Album",
     num: 0,
     isCreateAlbum: true,
   };
 
-  const userID = currentUser.id;
+  const url = window.location.pathname.split("/");
+  const userID = url[url.length - 2];
   const apiUrlAlbum = `albums/user/${userID}?limit=${limit}&page=${page}`;
 
   const fetchAlbumInfo = async () => {
@@ -38,48 +38,27 @@ function AlbumList() {
     isError: isAlbumError,
   } = useQuery(["albumData", apiUrlAlbum], fetchAlbumInfo);
 
-  useEffect(() => {
-    function handleScroll() {
-      const container = containerRef.current;
-      if (
-        container &&
-        container.scrollTop + container.clientHeight >= container.scrollHeight
-      ) {
-        handleNextLimit();
-      }
-    }
-
-    const container = containerRef.current;
-    if (container) {
-      container.addEventListener("scroll", handleScroll);
-      return () => {
-        container.removeEventListener("scroll", handleScroll);
-      };
-    }
-  }, [handleNextLimit, page, limit]);
-
   if (isAlbumLoading) {
     return;
   }
 
   if (isAlbumError) {
+    return;
+  }
+
+  const albums = albumData.data;
+  const modifiedItemData = [createAlbumItem, ...(albums || [])];
+
+  if (albums.length === 0) {
     return (
-      <div className="lds-ring">
-        <div></div>
-        <div></div>
-        <div></div>
-        <div></div>
+      <div className="albumList">
+        <p className="noAlbumsMessage">No albums to show</p>
       </div>
     );
   }
 
-  const albums = albumData.data;
-
-  const modifiedItemData = [createAlbumItem, ...(albums || [])];
-
-  console.log(albums);
   return (
-    <div className="albumList" ref={containerRef}>
+    <div className="albumList">
       <ImageList
         cols={4}
         className="noGapImageList"
@@ -92,7 +71,7 @@ function AlbumList() {
             }`}
             key={item._id || "createAlbum"}
           >
-            {item.isCreateAlbum ? (
+            {item.isCreateAlbum && currentUser.id === userID ? (
               <Link
                 to="/profile/createAlbum"
                 style={{
@@ -128,8 +107,8 @@ function AlbumList() {
               >
                 <img
                   className="imagePost"
-                  src={item.medias[0]?.url || "default_image_url"}
-                  alt={item.album_name}
+                  src={item.medias?.[0]?.url || "default_image_url"}
+                  alt={item.album_name || "Album Name"}
                   loading="lazy"
                 />
                 <ImageListItemBar
@@ -141,10 +120,10 @@ function AlbumList() {
                         margin: "100px 0px",
                       }}
                     >
-                      {item.album_name}
+                      {item.album_name || "Unknown Album"}
                     </span>
                   }
-                  subtitle={<span>{item.album_description}</span>}
+                  subtitle={<span>{item.album_description || ""}</span>}
                   position="below"
                 />
               </Link>

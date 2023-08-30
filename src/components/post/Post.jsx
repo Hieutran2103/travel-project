@@ -163,8 +163,13 @@ const Post = ({ post }) => {
             />
             <div className="details">
               <Link
-                to={`/profile/${user._id}`}
-                style={{ textDecoration: "none", color: "inherit" }}
+
+                
+                
+
+                to={`/profile/${user._id}/posts`}
+                style={{textDecoration: "none", color: "inherit"}}
+
               >
                 <span className="name"> {user.name}</span>
               </Link>

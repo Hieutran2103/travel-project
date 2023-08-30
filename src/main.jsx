@@ -9,13 +9,14 @@ import PageProvider from "./context/Page.jsx";
 import global_en from "./translations/en/global.json";
 import global_vi from "./translations/vi/global.json";
 import i18next from "i18next";
-import { I18nextProvider } from "react-i18next";
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
+import {I18nextProvider} from "react-i18next";
+import {QueryClient, QueryClientProvider} from "@tanstack/react-query";
+import {ReactQueryDevtools} from "@tanstack/react-query-devtools";
+import {PostsDataProvider} from "./context/PostsDataContext.jsx";
 
 const queryClient = new QueryClient();
 i18next.init({
-  interpolation: { escapeValue: false },
+  interpolation: {escapeValue: false},
   lng: "en",
   resources: {
     en: {
@@ -32,14 +33,16 @@ ReactDOM.createRoot(document.getElementById("root")).render(
     <DarkMode>
       <Auth>
         <Search>
-          <PageProvider>
-            <I18nextProvider i18n={i18next}>
-              <QueryClientProvider client={queryClient}>
-                <App />
-                <ReactQueryDevtools initialIsOpen={false} />
-              </QueryClientProvider>
-            </I18nextProvider>
-          </PageProvider>
+          <PostsDataProvider>
+            <PageProvider>
+              <I18nextProvider i18n={i18next}>
+                <QueryClientProvider client={queryClient}>
+                  <App />
+                  <ReactQueryDevtools initialIsOpen={false} />
+                </QueryClientProvider>
+              </I18nextProvider>
+            </PageProvider>
+          </PostsDataProvider>
         </Search>
       </Auth>
     </DarkMode>

@@ -1,10 +1,10 @@
-import { useTranslation } from "react-i18next";
-import { useGlobalContextAuth } from "../../context/AuthContext";
+import {useTranslation} from "react-i18next";
+import {useGlobalContextAuth} from "../../context/AuthContext";
 import "./rightBar.scss";
 import MoreVertOutlinedIcon from "@mui/icons-material/MoreVertOutlined";
-import { Link } from "react-router-dom";
+import {Link} from "react-router-dom";
 const RightBar = () => {
-  const { currentUser } = useGlobalContextAuth();
+  const {currentUser} = useGlobalContextAuth();
   const [t, i18] = useTranslation("global");
 
   return (
@@ -12,7 +12,7 @@ const RightBar = () => {
       <div className="container">
         <div className="menu">
           <div className="myself">
-          <img
+            <img
               src={
                 !currentUser?.avatar
                   ? "https://antimatter.vn/wp-content/uploads/2022/11/anh-avatar-trang-fb-mac-dinh.jpg"

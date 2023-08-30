@@ -9,7 +9,6 @@ import customFetch from "../../utils/url";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { toast } from "react-toastify";
 import { useGlobalPage } from "../../context/Page";
-import TinyMCEEditor from "../Tinymce/TinyMCEEditor ";
 
 const CreatePost = () => {
   const { currentUser } = useGlobalContextAuth();

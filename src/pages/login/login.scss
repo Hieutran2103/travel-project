@@ -182,7 +182,8 @@
       }
       .btnGG{
                   background: #fff;
-                  width: 100%;
+                //   width: 100%;
+                  padding: 13px 100px;
                   height: 45px;
                   outline: none;
                   border: none;
@@ -192,12 +193,13 @@
                   font-size: 16px;
                   color: #fff;
                   box-shadow: rgba(0,0,0,0.4);
+                  text-decoration: none;
       }
       .remember-password{
                   font-size: 14px;
                   font-weight: 500;
                   margin:  15px 0 0 110px;
-                  
+                  padding: 15px 0;
                   label{
                       input{
                           accent-color: #fff;
@@ -209,7 +211,7 @@
                       color: #fff;
                       text-decoration: none;
                       position: relative;
-                      left: 27px;
+                      left: 15px;
                   }
                   a:hover{
                       text-decoration: underline;

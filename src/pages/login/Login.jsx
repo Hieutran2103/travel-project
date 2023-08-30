@@ -23,6 +23,7 @@ const Login = () => {
     handleSubmit,
     register,
     formState: { errors },
+    setError
   } = useForm({
     resolver: yupResolver(schemaEmail),
     defaultValues: { email: "", password: "" },
@@ -43,10 +44,42 @@ const Login = () => {
         window.location.reload();
       }, 500);
     },
+    onError: (error) => {
+      if(error.response.status === 422){
+        const formError = error.response?.data.errors;
+        if (formError?.password) {
+          setError('password', {
+            message: formError.password.msg,
+            type: 'Server'
+          })
+        }
+      }
+    }
   });
   const formSubmit = (data) => {
     loginMutation.mutate(data);
   };
+
+  const getGoogleAuthUrl = () => {
+    const {VITE_GOOGLE_CLIENT_ID, VITE_REDIRECT_URI} = import.meta.env
+    const url = `https://accounts.google.com/o/oauth2/auth`
+    const query = {
+        client_id: VITE_GOOGLE_CLIENT_ID,
+        redirect_uri: VITE_REDIRECT_URI,
+        response_type: 'code',
+        scope: [
+            'https://www.googleapis.com/auth/userinfo.profile',
+            'https://www.googleapis.com/auth/userinfo.email'
+        ].join(' '),
+        prompt: 'consent',
+        access_type: 'offline'
+    }
+    const queryString = new URLSearchParams(query).toString()
+    return `${url}?${queryString}`
+}
+
+const googleOAuthUrl = getGoogleAuthUrl()
+
   return (
     <div className="loginForm">
       <ToastContainer
@@ -141,13 +174,13 @@ const Login = () => {
               </div>
             </form>
 
-            <button className="btnGG">
+            <Link className="btnGG" to={googleOAuthUrl}>
               Login With Google <i className="bx bxl-google" />
-            </button>
+            </Link>
             <div className="remember-password">
               <Link to="/user-forgot-password" className="forgot-pass">
                 {" "}
-                Forget pass
+                Forget password?
               </Link>
             </div>
             <div className="create-account">

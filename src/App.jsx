@@ -27,6 +27,7 @@ import AlbumList from "./components/albumList/AlbumList";
 import AlbumDetail from "./components/albumDetail/AlbumDetail";
 import "./style.scss";
 import VerifyEmail from "./pages/VerifyEmail/VerifyEmail";
+import LoginGoogle from "./pages/LoginGoogle/LoginGoogle";
 
 function App() {
   const {currentUser, authenticate} = useGlobalContextAuth();
@@ -140,6 +141,10 @@ function App() {
     {
       path: "/verify-email",
       element: <VerifyEmail />,
+    },
+    {
+      path: "/login-google",
+      element: <LoginGoogle />,
     },
     {
       path: "/register",

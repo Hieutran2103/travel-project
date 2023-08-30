@@ -20,6 +20,7 @@ export default function RegisterForm() {
     handleSubmit,
     register,
     formState: { errors },
+    setError
   } = useForm({
     resolver: yupResolver(schema),
   });
@@ -37,6 +38,17 @@ export default function RegisterForm() {
       localStorage.setItem("refresh_token", data.data.data.refresh_token);
       navigate("/verify-email");
     },
+    onError: (error) => {
+      if(error.response.status === 422){
+        const formError = error.response?.data.errors;
+        if (formError?.email) {
+          setError('email', {
+            message: formError.email.msg,
+            type: 'Server'
+          })
+        }
+      }
+    }
   });
 
   const formSubmit = (data) => {

@@ -27,7 +27,16 @@
             border-radius: 50%;
             object-fit: cover;
           }
-          input {
+          // input {
+          //   border: none;
+          //   outline: none;
+          //   padding: 20px 10px;
+          //   background-color: transparent;
+          //   color: themed("textColorActive");
+          //   width: 450px;
+          // }
+          textarea {
+            margin-left: 10px;
             border: none;
             outline: none;
             padding: 20px 10px;

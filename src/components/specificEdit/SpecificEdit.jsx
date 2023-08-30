@@ -11,7 +11,7 @@ import { useTranslation } from "react-i18next";
 
 const SpecificEdit = ({ setAnchorEl, infoUser }) => {
   const [t, i18] = useTranslation("global");
-  const [desc, setDesc] = useState("");
+
   const [imageEdit, setImageEdit] = useState(0);
   const { editSpecific, closeEditSpecific } = useGlobalSearch();
   const { imagePost } = useGlobalPage();
@@ -21,6 +21,7 @@ const SpecificEdit = ({ setAnchorEl, infoUser }) => {
   const { mutate: EditPost } = useMutation({
     mutationFn: (posts) => customFetch.put(`/posts/${idEdit}`, posts),
     onSuccess: (data) => {
+      queryClient.invalidateQueries({ queryKey: ["postsNF"] });
       queryClient.invalidateQueries({ queryKey: ["postsVacation"] });
       setDesc("");
       setAnchorEl(null);
@@ -35,8 +36,8 @@ const SpecificEdit = ({ setAnchorEl, infoUser }) => {
     return null;
   }
   const rs = imagePost?.data?.data?.medias;
-  // const z = imagePost?.data?.data?.user_id;
-
+  const contentPost = imagePost?.data?.data?.content;
+  const [desc, setDesc] = useState(contentPost);
   const idEdit = imagePost?.data?.data?._id;
   if (!idEdit) {
     return null;
@@ -47,7 +48,7 @@ const SpecificEdit = ({ setAnchorEl, infoUser }) => {
   if (!infoUser) {
     return null;
   }
-  console.log(infoUser?.username);
+
   const handleDec = (event) => {
     const newValue = event.target.value;
     // Nếu chưa nhập lần đầu và giá trị nhập vào có chứa khoảng trắng, loại bỏ khoảng trắng
@@ -156,7 +157,25 @@ const SpecificEdit = ({ setAnchorEl, infoUser }) => {
                 />
                 <div className="nameUser">{infoUser?.name}</div>
               </div>
-              <input
+              <textarea
+                id="w3review"
+                name="w3review"
+                rows="20"
+                cols="50"
+                onChange={handleDec}
+                value={desc}
+                style={{
+                  width: "90%",
+                  outline: "transparent",
+                  border: "transparent",
+                  margin: "0 16px",
+                  wordWrap: "break-word",
+                }}
+                placeholder="Write a caption..."
+              >
+                {contentPost}
+              </textarea>
+              {/* <input
                 type="text"
                 style={{
                   width: "90%",
@@ -168,7 +187,7 @@ const SpecificEdit = ({ setAnchorEl, infoUser }) => {
                 onChange={handleDec}
                 placeholder="Write a caption..."
                 value={desc}
-              />
+              /> */}
             </div>
           </div>
         </form>{" "}

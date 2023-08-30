@@ -97,7 +97,6 @@ const Vacation = () => {
     onSuccess: (data) => {
       queryClient.invalidateQueries({ queryKey: ["vacation"] });
       navigate("/");
-      console.log(data);
     },
     onError: (error) => {
       console.log(error.message);

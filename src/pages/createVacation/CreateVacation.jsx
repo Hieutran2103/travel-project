@@ -2,12 +2,12 @@ import { useRef, useState } from "react";
 import LeftVacation from "./LeftVacation";
 import RightVacation from "./RightVacation";
 import "./createVacation.scss";
-
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import customFetch from "../../utils/url";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useNavigate } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 const CreateVacation = () => {
   const inputRef = useRef(null);
   const [isPublic, setIsPublic] = useState("Công khai");
@@ -18,6 +18,7 @@ const CreateVacation = () => {
   const [items, setItems] = useState([]);
   const [idUser, IdUser] = useState([]);
   const navigate = useNavigate();
+  const [t, i18] = useTranslation("global");
 
   const [information, setInfomation] = useState({
     name: "",
@@ -49,6 +50,7 @@ const CreateVacation = () => {
     const formData = new FormData();
     formData.append("image", file);
     let res = await customFetch.post("/medias/upload-single-image", formData);
+
     setInfomation({
       ...information,
       [e.target.name]: res.data.result,
@@ -95,6 +97,7 @@ const CreateVacation = () => {
       toast.success(t("vacation.success"));
       setTimeout(() => {
         navigate(`/vacation/${data.data.data._id}`);
+        window.location.reload();
       }, 1000);
     },
     onError: (error) => {

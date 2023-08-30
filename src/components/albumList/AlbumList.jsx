@@ -22,10 +22,12 @@ function AlbumList() {
   const url = window.location.pathname.split("/");
   const userID = url[url.length - 2];
   const apiUrlAlbum = `albums/user/${userID}?limit=${limit}&page=${page}`;
-
-  const fetchAlbumInfo = async () => {
+  console.log(userID);
+  const fetchAlbumInfo = async (userID) => {
     try {
-      const response = await customFetch.get(apiUrlAlbum);
+      const response = await customFetch.get(
+        `albums/user/${userID}?limit=${limit}&page=${page}`
+      );
       return response.data;
     } catch (error) {
       throw new Error("Error fetching album data");
@@ -36,7 +38,7 @@ function AlbumList() {
     data: albumData,
     isLoading: isAlbumLoading,
     isError: isAlbumError,
-  } = useQuery(["albumData", apiUrlAlbum], fetchAlbumInfo);
+  } = useQuery(["albumData", userID], () => fetchAlbumInfo(userID));
 
   if (isAlbumLoading) {
     return;
@@ -47,7 +49,10 @@ function AlbumList() {
   }
 
   const albums = albumData.data;
-  const modifiedItemData = [createAlbumItem, ...(albums || [])];
+  const modifiedItemData =
+    currentUser.id === userID
+      ? [createAlbumItem, ...(albums || [])]
+      : [...(albums || [])];
 
   if (albums.length === 0) {
     return (
@@ -71,35 +76,41 @@ function AlbumList() {
             }`}
             key={item._id || "createAlbum"}
           >
-            {item.isCreateAlbum && currentUser.id === userID ? (
-              <Link
-                to="/profile/createAlbum"
-                style={{
-                  textDecoration: "none",
-                  color: "inherit",
-                }}
-              >
-                <div style={{position: "relative"}}>
-                  <div className="createAlbumContent">
-                    <AddIcon
+            {item.isCreateAlbum ? (
+              currentUser.id === userID ? (
+                <Link
+                  to="/profile/createAlbum"
+                  style={{
+                    textDecoration: "none",
+                    color: "inherit",
+                  }}
+                >
+                  <div style={{position: "relative"}}>
+                    <div className="createAlbumContent">
+                      <AddIcon
+                        style={{
+                          fontSize: 50,
+                        }}
+                      />
+                    </div>
+                    <span
                       style={{
-                        fontSize: 50,
+                        fontSize: "20px",
+                        marginTop: "10px",
                       }}
-                    />
+                    >
+                      {item.title}
+                    </span>
                   </div>
-                  <span
-                    style={{
-                      fontSize: "20px",
-                      marginTop: "10px",
-                    }}
-                  >
-                    {item.title}
-                  </span>
+                </Link>
+              ) : (
+                <div className="albumList">
+                  <p className="noAlbumsMessage">No albums to show</p>
                 </div>
-              </Link>
+              )
             ) : (
               <Link
-                to={`/profile/${userID}/albums/${item._id}`}
+                to={`/profile/${userID}/${item._id}`}
                 style={{
                   textDecoration: "none",
                   color: "inherit",

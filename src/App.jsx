@@ -110,7 +110,7 @@ function App() {
             {path: "vacations", element: <VacationList />},
             {path: "albums", element: <AlbumList />},
             {
-              path: "albums/:albumname",
+              path: ":albumid",
               element: <AlbumDetail />,
             },
           ],

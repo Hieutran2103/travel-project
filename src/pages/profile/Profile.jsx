@@ -17,7 +17,7 @@ function Profile() {
         <Route path="/posts" element={<PostList />} />
         <Route path="/vacations" element={<VacationList />} />
         <Route path="/albums" element={<AlbumList />} />
-        <Route path="/albums/:albumname" element={<AlbumDetail />} />
+        <Route path="/:albumid" element={<AlbumDetail />} />
       </Routes>
     </div>
   );

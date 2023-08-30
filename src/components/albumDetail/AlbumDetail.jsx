@@ -72,8 +72,8 @@ function AlbumDetail() {
 
   const url = window.location.pathname.split("/");
   const albumId = url[url.length - 1];
-  const userID = currentUser.id;
-
+  const userID = url[url.length - 2];
+  console.log(userID);
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
   };
@@ -170,26 +170,28 @@ function AlbumDetail() {
         >
           {mediaName}
         </div>
-        <Button
-          id="demo-customized-button"
-          aria-controls={open ? "demo-customized-menu" : undefined}
-          aria-haspopup="true"
-          aria-expanded={open ? "true" : undefined}
-          variant="contained"
-          disableElevation
-          onClick={handleClick}
-          endIcon={<KeyboardArrowDownIcon />}
-          sx={{
-            backgroundColor: "#EFEFEF",
-            color: "black",
-            fontWeight: 600,
-            "&:hover": {
-              backgroundColor: "#d6d6d6",
-            },
-          }}
-        >
-          Action
-        </Button>
+        {currentUser.id === userID && (
+          <Button
+            id="demo-customized-button"
+            aria-controls={open ? "demo-customized-menu" : undefined}
+            aria-haspopup="true"
+            aria-expanded={open ? "true" : undefined}
+            variant="contained"
+            disableElevation
+            onClick={handleClick}
+            endIcon={<KeyboardArrowDownIcon />}
+            sx={{
+              backgroundColor: "#EFEFEF",
+              color: "black",
+              fontWeight: 600,
+              "&:hover": {
+                backgroundColor: "#d6d6d6",
+              },
+            }}
+          >
+            Action
+          </Button>
+        )}
         <StyledMenu
           id="demo-customized-menu"
           MenuListProps={{

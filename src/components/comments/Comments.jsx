@@ -1,26 +1,26 @@
-import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import {useMutation, useQuery, useQueryClient} from "@tanstack/react-query";
 
-import { useGlobalContextAuth } from "../../context/AuthContext";
+import {useGlobalContextAuth} from "../../context/AuthContext";
 import "./comments.scss";
 import SendIcon from "@mui/icons-material/Send";
 import customFetch from "../../utils/url";
-import { useGlobalPage } from "../../context/Page";
+import {useGlobalPage} from "../../context/Page";
 import moment from "moment";
-import { Link } from "react-router-dom";
-import { useState } from "react";
-import { toast } from "react-toastify";
+import {Link} from "react-router-dom";
+import {useState} from "react";
+import {toast} from "react-toastify";
 
-const Comments = ({ postID, user }) => {
-  const { currentUser } = useGlobalContextAuth();
-  const { pageComment, limitComment, setComment, comment } = useGlobalPage();
+const Comments = ({postID, user}) => {
+  const {currentUser} = useGlobalContextAuth();
+  const {pageComment, limitComment, setComment, comment} = useGlobalPage();
   const [descomment, setDescomment] = useState("");
   const [hasEnteredFirstValue, setHasEnteredFirstValue] = useState(false);
 
   const queryClient = useQueryClient();
-  const { mutate: createComment } = useMutation({
+  const {mutate: createComment} = useMutation({
     mutationFn: (comment) => customFetch.post("/comments", comment),
     onSuccess: (data) => {
-      queryClient.invalidateQueries({ queryKey: ["comments"] });
+      queryClient.invalidateQueries({queryKey: ["comments"]});
       setComment(comment + 1);
       setDescomment("");
     },
@@ -33,7 +33,7 @@ const Comments = ({ postID, user }) => {
   //     return res.data;
   //   })
   // );
-  const { data, isLoading } = useQuery({
+  const {data, isLoading} = useQuery({
     queryKey: ["comments"],
     queryFn: () =>
       customFetch.get(
@@ -81,7 +81,7 @@ const Comments = ({ postID, user }) => {
           onChange={handleInputChange}
         />
         <span onClick={handleComment}>
-          <SendIcon style={{ fontSize: "20px" }} />
+          <SendIcon style={{fontSize: "20px"}} />
         </span>
       </div>
       {reponse.map((comment, index) => {
@@ -97,8 +97,8 @@ const Comments = ({ postID, user }) => {
             />
             <div className="info">
               <Link
-                to={`/profile/${comment.user_id}`}
-                style={{ textDecoration: "none", color: "inherit" }}
+                to={`/profile/${comment.user_id}/posts`}
+                style={{textDecoration: "none", color: "inherit"}}
               >
                 <span>{comment.user.name}</span>
               </Link>

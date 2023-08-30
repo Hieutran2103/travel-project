@@ -112,11 +112,8 @@ function ProfileInfo() {
     : [];
 
   const followingInfo = followingData
-    ? followingData.data.map((following) => following.following_info)
+    ? followingData.data.map((following) => following.followed_info)
     : [];
-
-  // console.log("followerData:", followerInfo);
-  // console.log("followingData:", followingData.data);
 
   const toggleModalFollower = () => {
     setFollowerModal(!followerModal);
@@ -137,7 +134,7 @@ function ProfileInfo() {
       toggleModalFollowing();
     }
   };
-
+  console.log(userID);
   return (
     <div className="profileInfo">
       <div className="leftProfile">
@@ -229,8 +226,8 @@ function ProfileInfo() {
                 <div className="modalTitle"> {t("profile.following")}</div>
                 {followingInfo.map((followingsArray, index) => (
                   <div className="modalContent" key={index}>
-                    {followingsArray.map((following) => (
-                      <div className="followingUser" key={following._id}>
+                    {followingsArray?.map((following) => (
+                      <div className="followerUser" key={following._id}>
                         <div className="modalContainer">
                           <img
                             className="avaU"

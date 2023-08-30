@@ -79,7 +79,7 @@ function PostList() {
     setSelectedImage(null);
     setModalOpen(false);
   };
-  // console.log(post);
+  console.log(userID);
   return (
     <div className="postList">
       <ImageList cols={3} rowHeight={250} className="noGapImageList">
@@ -88,12 +88,19 @@ function PostList() {
             className="imageList"
             key={item._id}
             onClick={() => openModal(item)}
+            style={{
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+            }}
           >
             <img
               className="imagePost"
-              src={item.medias[0]?.url || "default_image_url"}
+              src={`${item.medias[0]?.url}?w=250&h=250&fit=crop&auto=format`}
+              srcSet={`${item.medias[0]?.url}?w=250&h=250&fit=crop&auto=format&dpr=2 2x`}
               alt="Error"
               loading="lazy"
+              style={{objectFit: "cover", width: "100%", height: "100%"}}
             />
             <div className="info">
               <div className="icon">

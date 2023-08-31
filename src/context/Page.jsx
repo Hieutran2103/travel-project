@@ -7,10 +7,11 @@ const PageProvider = ({ children }) => {
   const [contextPost, setContextPost] = useState([]);
   const [comment, setComment] = useState(1);
   const [page, setPage] = useState(1);
-  const [limit, setLimit] = useState(5);
+  const [limit, setLimit] = useState(10);
   const [pageComment, setPageComment] = useState(1);
   const [limitComment, setLimitComment] = useState(5);
   const [limitVC, setLimitVC] = useState(10);
+  const [founder, setFounder] = useState();
 
   const handleNextPage = () => {
     setPage(page + 1);
@@ -25,6 +26,8 @@ const PageProvider = ({ children }) => {
     <PageContext.Provider
       value={{
         imagePost,
+        founder,
+        setFounder,
         contextPost,
         setContextPost,
         setImagePost,

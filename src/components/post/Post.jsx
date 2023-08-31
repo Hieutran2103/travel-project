@@ -181,6 +181,7 @@ const Post = ({ post }) => {
             >
               <MoreHorizOutlinedIcon style={{ color: "#E84BE5" }} />
             </Button>
+
             {editFounder ? (
               <Menu
                 id="demo-positioned-menu"
@@ -204,6 +205,7 @@ const Post = ({ post }) => {
               ""
             )}
           </div>
+
           <SpecificEdit setAnchorEl={setAnchorEl} infoUser={infoUser} />
         </div>
         <div className="content">

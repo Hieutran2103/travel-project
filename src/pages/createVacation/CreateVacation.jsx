@@ -29,16 +29,25 @@ const CreateVacation = () => {
     userAdd: idUser,
   });
   const handleName = (e) => {
-    setName(e.target.value);
-    setInfomation({ ...information, [e.target.name]: e.target.value });
+    const newName = e.target.value;
+    if (newName.length <= 20) {
+      setName(newName);
+      setInfomation({ ...information, [e.target.name]: newName });
+    }
   };
   const handleSomething = (e) => {
-    setSomething(e.target.value);
-    setInfomation({ ...information, [e.target.name]: e.target.value });
+    const newSomething = e.target.value;
+    if (newSomething.length <= 300) {
+      setSomething(newSomething);
+      setInfomation({ ...information, [e.target.name]: newSomething });
+    }
   };
   const handleIntro = (e) => {
-    setIntro(e.target.value);
-    setInfomation({ ...information, [e.target.name]: e.target.value });
+    const newIntro = e.target.value;
+    if (newIntro.length <= 200) {
+      setIntro(newIntro);
+      setInfomation({ ...information, [e.target.name]: newIntro });
+    }
   };
 
   const handleImageClick = () => {

@@ -43,7 +43,9 @@
     "image": "Please provide image",
     "name": "Please provide name",
     "title": "Please provide title",
-    "intro": "Please provide intro"
+    "intro": "Please provide intro",
+    "editSuccess": "Successfully edited vacation",
+    "editerror": "Unsuccessfully edited vacation"
   },
   "profile": {
     "edit": "Edit Profile",

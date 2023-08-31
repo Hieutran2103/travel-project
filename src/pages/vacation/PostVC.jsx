@@ -30,7 +30,7 @@ const PostVC = ({ post }) => {
   const { currentUser } = useGlobalContextAuth();
 
   // const currentPost = index;
-  const { setImagePost } = useGlobalPage();
+  const { setImagePost, founder } = useGlobalPage();
   const { openEditSpecific } = useGlobalSearch();
   const [t, i18] = useTranslation("global");
   //State Comments
@@ -66,6 +66,7 @@ const PostVC = ({ post }) => {
   const [currentPerson, setCurrentPerson] = useState(0);
   const [infoUser, setInfoUser] = useState();
   const [editFounder, setEditFounder] = useState(true);
+  const [selectPost, setSelectPost] = useState(false);
 
   const queryClient = useQueryClient();
 
@@ -113,10 +114,18 @@ const PostVC = ({ post }) => {
 
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
+
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
     if (currentUser._id === user._id) {
-      return setEditFounder(true);
+      setEditFounder(true);
+      setSelectPost(true);
+      return;
+    }
+    if (currentUser._id === founder) {
+      setEditFounder(true);
+      setSelectPost(false);
+      return;
     }
     return setEditFounder(false);
   };
@@ -195,7 +204,9 @@ const PostVC = ({ post }) => {
                   horizontal: "left",
                 }}
               >
-                <MenuItem onClick={handleCloseOpenEdit}>Edit</MenuItem>
+                {selectPost ? (
+                  <MenuItem onClick={handleCloseOpenEdit}>Edit</MenuItem>
+                ) : null}
                 <MenuItem onClick={handleDeletePost}>Delete</MenuItem>{" "}
               </Menu>
             ) : (

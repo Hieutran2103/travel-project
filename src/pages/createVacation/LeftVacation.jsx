@@ -62,22 +62,24 @@ const LeftVacation = ({
           </div>
           <input
             type="text"
-            placeholder="Tên kỳ nghỉ"
+            placeholder="Tên kỳ nghỉ (20 ký tự...)"
             name="name"
+            maxLength={20}
             value={name}
             onChange={handleName}
           />
           <input
             type="text"
             name="something"
-            placeholder="Giới thiệu về kỳ nghỉ"
+            maxLength={300}
+            placeholder="Giới thiệu về kỳ nghỉ (300 ký tự...)"
             value={something}
             onChange={handleSomething}
           />
           <input
             type="text"
             name="intro"
-            placeholder="Giới thiệu về nhóm"
+            placeholder="Giới thiệu về nhóm (200 ký tự...)"
             value={intro}
             onChange={handleIntro}
           />

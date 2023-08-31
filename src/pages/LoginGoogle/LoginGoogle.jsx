@@ -22,5 +22,5 @@ export default function LoginGoogle() {
       window.location.reload();
     }, 500);
   }, [params, navigate]);
-  return <div>LoginGoogle</div>;
+  return <div style={{textAlign: "center"}}>Redirecting...</div>;
 }

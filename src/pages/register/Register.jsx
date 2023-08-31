@@ -10,11 +10,13 @@ import customFetch from "../../utils/url";
 import { useState } from "react";
 import { useGlobalContextAuth } from "../../context/AuthContext";
 import { ToastContainer, toast } from "react-toastify";
+import { useTranslation } from "react-i18next";
 
 export default function RegisterForm() {
   const navigate = useNavigate();
   const [isShowPassword, setIsShowPassword] = useState(false);
   const { setCurrentUser, setAuthenticate } = useGlobalContextAuth();
+  const [t, i18] = useTranslation("global");
 
   const {
     handleSubmit,
@@ -44,6 +46,18 @@ export default function RegisterForm() {
         if (formError?.email) {
           setError('email', {
             message: formError.email.msg,
+            type: 'Server'
+          })
+        }
+        if (formError?.password) {
+          setError('password', {
+            message: formError.password.msg,
+            type: 'Server'
+          })
+        }
+        if (formError?.confirm_password) {
+          setError('confirm_password', {
+            message: formError.confirm_password.msg,
             type: 'Server'
           })
         }
@@ -170,7 +184,7 @@ export default function RegisterForm() {
                 ></i>
               </div>
 
-              <button className="btn">Sign Up</button>
+              <button type="submit" className="btn">Sign Up</button>
               <div className="or">
                 <p>OR</p>
               </div>

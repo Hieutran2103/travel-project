@@ -47,9 +47,9 @@ const Login = () => {
     onError: (error) => {
       if(error.response.status === 422){
         const formError = error.response?.data.errors;
-        if (formError?.password) {
+        if (formError?.email) {
           setError('password', {
-            message: formError.password.msg,
+            message: formError.email.msg,
             type: 'Server'
           })
         }

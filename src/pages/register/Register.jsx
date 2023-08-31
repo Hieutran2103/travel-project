@@ -22,7 +22,7 @@ export default function RegisterForm() {
     handleSubmit,
     register,
     formState: { errors },
-    setError
+    setError,
   } = useForm({
     resolver: yupResolver(schema),
   });
@@ -41,13 +41,13 @@ export default function RegisterForm() {
       navigate("/verify-email");
     },
     onError: (error) => {
-      if(error.response.status === 422){
+      if (error.response.status === 422) {
         const formError = error.response?.data.errors;
         if (formError?.email) {
-          setError('email', {
+          setError("email", {
             message: formError.email.msg,
-            type: 'Server'
-          })
+            type: "Server",
+          });
         }
         if (formError?.password) {
           setError('password', {
@@ -62,7 +62,7 @@ export default function RegisterForm() {
           })
         }
       }
-    }
+    },
   });
 
   const formSubmit = (data) => {

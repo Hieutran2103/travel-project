@@ -118,41 +118,40 @@ const Introduces = ({ dataVacation }) => {
                   </span>
                 </div>
               </div>
+              <div className="memberVacationn">
+                <span>Thành viên </span>
+                <hr />
+                <div className="avaUsers">
+                  <div className="seeAva">
+                    {dataVacation.mentions.map((post, index) => {
+                      const { avatar } = post;
+                      return (
+                        <img
+                          src={
+                            !avatar
+                              ? "https://antimatter.vn/wp-content/uploads/2022/11/anh-avatar-trang-fb-mac-dinh.jpg"
+                              : avatar
+                          }
+                          alt={index}
+                          key={index}
+                        />
+                      );
+                    })}
+                  </div>
+                  {dataVacation.mentions.length >= 11 ? (
+                    <div className="morePeople">
+                      <MoreHorizOutlinedIcon style={{ fontSize: "15px" }} />
+                    </div>
+                  ) : (
+                    ""
+                  )}
+                </div>
+                <div className="seeAll" onClick={openUserVacation}>
+                  Xem tất cả
+                </div>
+              </div>
             </>
           )}
-        </div>
-
-        <div className="memberVacationn">
-          <span>Thành viên </span>
-          <hr />
-          <div className="avaUsers">
-            <div className="seeAva">
-              {dataVacation.mentions.map((post, index) => {
-                const { avatar } = post;
-                return (
-                  <img
-                    src={
-                      !avatar
-                        ? "https://antimatter.vn/wp-content/uploads/2022/11/anh-avatar-trang-fb-mac-dinh.jpg"
-                        : avatar
-                    }
-                    alt={index}
-                    key={index}
-                  />
-                );
-              })}
-            </div>
-            {dataVacation.mentions.length >= 11 ? (
-              <div className="morePeople">
-                <MoreHorizOutlinedIcon style={{ fontSize: "15px" }} />
-              </div>
-            ) : (
-              ""
-            )}
-          </div>
-          <div className="seeAll" onClick={openUserVacation}>
-            Xem tất cả
-          </div>
         </div>
       </div>
     </div>

@@ -18,23 +18,72 @@ import MenuItem from "@mui/material/MenuItem";
 import AutoFixNormalOutlinedIcon from "@mui/icons-material/AutoFixNormalOutlined";
 import { useState } from "react";
 import GroupAddOutlinedIcon from "@mui/icons-material/GroupAddOutlined";
+import { useGlobalContextAuth } from "../../context/AuthContext";
+import { useTranslation } from "react-i18next";
+import { useGlobalPage } from "../../context/Page";
+
 const Vacation = () => {
   const { openIntroduce } = useGlobalSearch();
   const z = useParams(); // id của vacation
   const idVacation = z.id; // id của vacation
   const [currentIdVacation, setCurrentIdVacation] = useState(null);
+  const [openEditName, setOpenEditName] = useState(false);
+  const [openSelect, setOpenSelect] = useState(true);
+  const [nameVC, setNameVC] = useState();
+  const [titleVC, setTitleVC] = useState();
+  const [t, i18] = useTranslation("global");
   const navigate = useNavigate();
-
+  const { currentUser } = useGlobalContextAuth();
+  const { setFounder } = useGlobalPage();
   const [anchorEl, setAnchorEl] = useState(null);
   const open = Boolean(anchorEl);
+
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
-    console.log(dataVacation._id);
     setCurrentIdVacation(dataVacation._id);
+    setNameVC(dataVacation.vacation_name);
+    setTitleVC(dataVacation.vacation_description);
+    setFounder(dataVacation.user._id);
+  };
+  const handleChangeName = (e) => {
+    const newName = e.target.value;
+    if (newName.length <= 300) {
+      setNameVC(newName);
+    }
+  };
+  const handleChangeTitle = (e) => {
+    const newTitle = e.target.value;
+    if (newTitle.length <= 300) {
+      setTitleVC(newTitle);
+    }
   };
   const handleClose = () => {
     setAnchorEl(null);
   };
+  const SelectEditName = () => {
+    setAnchorEl(null);
+    setOpenEditName(true);
+    setOpenSelect(false);
+  };
+  const CancelEdit = () => {
+    setAnchorEl(null);
+    setOpenEditName(false);
+    setOpenSelect(true);
+  };
+  const UpdateEdit = () => {
+    setAnchorEl(null);
+    setOpenEditName(false);
+    setOpenSelect(true);
+    EditNameVC({
+      audience: dataVacation.audience,
+      mentions: namesArray,
+      vacation_avatar: dataVacation.vacation_avatar,
+      vacation_description: titleVC,
+      vacation_intro: dataVacation.vacation_intro,
+      vacation_name: nameVC,
+    });
+  };
+
   const handleDele = () => {
     setAnchorEl(null);
     DeleteVC();
@@ -84,11 +133,21 @@ const Vacation = () => {
       customFetch.put(`/vacations/${currentIdVacation}`, posts),
     onSuccess: (data) => {
       queryClient.invalidateQueries({ queryKey: ["vacation"] });
-      toast.success("hehe");
-      console.log(data);
+      toast.success(t("vacation.editSuccess"));
     },
     onError: (error) => {
-      toast.error(error.message);
+      toast.error(t("vacation.editerror"));
+    },
+  });
+  const { mutate: EditNameVC } = useMutation({
+    mutationFn: (posts) =>
+      customFetch.put(`/vacations/${currentIdVacation}`, posts),
+    onSuccess: (data) => {
+      queryClient.invalidateQueries({ queryKey: ["vacation"] });
+      toast.success(t("vacation.editSuccess"));
+    },
+    onError: (error) => {
+      toast.error(t("vacation.editerror"));
     },
   });
   const { mutate: DeleteVC } = useMutation({
@@ -135,49 +194,88 @@ const Vacation = () => {
             <div className="something">{dataVacation.vacation_description}</div>
           </div>
         </div>
-        <div className="inviteUser">
-          <GroupAddOutlinedIcon /> INVITE
-        </div>
-        <div className="buttonEditVacation">
-          <Button
-            id="demo-positioned-button"
-            aria-controls={open ? "demo-positioned-menu" : undefined}
-            aria-haspopup="true"
-            aria-expanded={open ? "true" : undefined}
-            onClick={handleClick}
-            style={{ color: "black", fontSize: "16px", fontWeight: "500" }}
+        <div className={openEditName ? "show-editNameVC" : "editNameVC"}>
+          <div className="cancelEdit" onClick={CancelEdit}>
+            Cancel
+          </div>
+          <div className="ChooseEdit" onClick={UpdateEdit}>
+            Update
+          </div>
+          <textarea
+            value={nameVC}
+            className="nameVC"
+            name="nameVC"
+            cols="40"
+            rows="1"
+            maxLength={20}
+            onChange={handleChangeName}
           >
-            <AutoFixNormalOutlinedIcon /> Edit
-          </Button>
-          <Menu
-            id="demo-positioned-menu"
-            aria-labelledby="demo-positioned-button"
-            anchorEl={anchorEl}
-            open={open}
-            onClose={handleClose}
-            anchorOrigin={{
-              vertical: "top",
-              horizontal: "left",
-            }}
-            transformOrigin={{
-              vertical: "top",
-              horizontal: "left",
-            }}
+            {nameVC}
+          </textarea>
+          <textarea
+            value={titleVC}
+            className="underNameVC"
+            name="underNameVC"
+            cols="80"
+            rows="10"
+            maxLength={300}
+            onChange={handleChangeTitle}
           >
-            <MenuItem>
-              <input
-                type="file"
-                id="filez"
-                style={{ display: "none" }}
-                onChange={handleImg}
-              />
-              <label htmlFor="filez">
-                <div className="item">Upload Photo</div>
-              </label>
-            </MenuItem>
-            <MenuItem onClick={handleDele}>Detele Vacaion</MenuItem>
-          </Menu>
+            {titleVC}
+          </textarea>
         </div>
+        {currentUser._id === dataVacation.user._id ? (
+          <>
+            <div className={openSelect ? "show-inviteUser" : "inviteUser"}>
+              <GroupAddOutlinedIcon /> INVITE
+            </div>
+            <div
+              className={
+                openSelect ? "show-buttonEditVacation" : "buttonEditVacation"
+              }
+            >
+              <Button
+                id="demo-positioned-button"
+                aria-controls={open ? "demo-positioned-menu" : undefined}
+                aria-haspopup="true"
+                aria-expanded={open ? "true" : undefined}
+                onClick={handleClick}
+                style={{ color: "black", fontSize: "16px", fontWeight: "500" }}
+              >
+                <AutoFixNormalOutlinedIcon /> Edit
+              </Button>
+              <Menu
+                id="demo-positioned-menu"
+                aria-labelledby="demo-positioned-button"
+                anchorEl={anchorEl}
+                open={open}
+                onClose={handleClose}
+                anchorOrigin={{
+                  vertical: "top",
+                  horizontal: "left",
+                }}
+                transformOrigin={{
+                  vertical: "top",
+                  horizontal: "left",
+                }}
+              >
+                <MenuItem>
+                  <input
+                    type="file"
+                    id="filez"
+                    style={{ display: "none" }}
+                    onChange={handleImg}
+                  />
+                  <label htmlFor="filez">
+                    <div className="item">Upload Photo</div>
+                  </label>
+                </MenuItem>
+                <MenuItem onClick={SelectEditName}>Edit Name Vacaion</MenuItem>
+                <MenuItem onClick={handleDele}>Detele Vacaion</MenuItem>
+              </Menu>
+            </div>
+          </>
+        ) : null}
       </div>
       <div className="detailVacation">
         <div className="postVacation">

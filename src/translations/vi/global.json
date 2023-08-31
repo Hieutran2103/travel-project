@@ -43,7 +43,9 @@
     "image": "Hãy thêm ảnh cho kì nghỉ",
     "name": "Hãy thêm tên cho kì nghỉ",
     "title": "Hãy tiêu đề cho kì nghỉ",
-    "intro": "Hãy giới thiệu về nhóm"
+    "intro": "Hãy giới thiệu về nhóm",
+    "editSuccess": "Chỉnh thành công",
+    "editerror": "Chỉnh không thành công"
   },
   "profile": {
     "edit": "Chỉnh sửa trang cá nhân",

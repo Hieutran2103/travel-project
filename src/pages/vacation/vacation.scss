@@ -2,9 +2,7 @@
 .vacation {
   @include themify($themes) {
     background: themed("bgnewfeed");
-
     padding-bottom: 10px;
-
     .introduce {
       position: relative;
       width: 100%;
@@ -14,7 +12,6 @@
         position: absolute;
         top: 0;
         left: 0;
-
         background-color: themed("overlay");
         height: 90%;
         width: 92%;
@@ -70,7 +67,124 @@
           }
         }
       }
-      .inviteUser {
+      .show-editNameVC {
+        width: 100%;
+        height: 100%;
+        position: absolute;
+        z-index: 5;
+        .cancelEdit {
+          position: absolute;
+          left: 55px;
+          top: 10px;
+          background-color: rgba(150, 149, 149, 0.8);
+          border-radius: 10px;
+          font-size: 16px;
+          font-weight: 500;
+          color: black;
+          height: 36px;
+          width: 78px;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          gap: 5px;
+          background: themed("editVC");
+          cursor: pointer;
+          padding: 2px;
+        }
+        .ChooseEdit {
+          position: absolute;
+          right: 56px;
+          top: 10px;
+          background-color: rgba(150, 149, 149, 0.8);
+          border-radius: 10px;
+          font-size: 16px;
+          font-weight: 500;
+          color: black;
+          height: 36px;
+          width: 78px;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          gap: 5px;
+          background: themed("editVC");
+          cursor: pointer;
+          padding: 2px;
+        }
+        .nameVC {
+          position: absolute;
+          bottom: 242px;
+          right: 494px;
+          font-family: Arial, Helvetica, sans-serif;
+          text-align: center;
+
+          border: none;
+          outline: none;
+        }
+        .underNameVC {
+          position: absolute;
+          bottom: 62px;
+          right: 355px;
+          font-family: Arial, Helvetica, sans-serif;
+          border: none;
+          outline: none;
+          text-align: center;
+        }
+      }
+      .editNameVC {
+        width: 100%;
+        height: 100%;
+        position: absolute;
+        z-index: -1;
+        .cancelEdit {
+          position: absolute;
+          left: 55px;
+          top: 10px;
+          background-color: rgba(150, 149, 149, 0.8);
+          border-radius: 10px;
+          font-size: 16px;
+          font-weight: 500;
+          color: black;
+          height: 36px;
+          width: 78px;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          gap: 5px;
+          background: themed("editVC");
+          cursor: pointer;
+          padding: 2px;
+        }
+        .ChooseEdit {
+          position: absolute;
+          right: 56px;
+          top: 10px;
+          background-color: rgba(150, 149, 149, 0.8);
+          border-radius: 10px;
+          font-size: 16px;
+          font-weight: 500;
+          color: black;
+          height: 36px;
+          width: 78px;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          gap: 5px;
+          background: themed("editVC");
+          cursor: pointer;
+          padding: 2px;
+        }
+        .nameVC {
+          position: absolute;
+          bottom: 242px;
+          right: 494px;
+        }
+        .underNameVC {
+          position: absolute;
+          bottom: 72px;
+          right: 336px;
+        }
+      }
+      .show-inviteUser {
         position: absolute;
         bottom: 55px;
         right: 150px;
@@ -89,12 +203,38 @@
         cursor: pointer;
         padding: 2px;
       }
-
-      .buttonEditVacation {
+      .show-buttonEditVacation {
         position: absolute;
         bottom: 55px;
         right: 65px;
-
+        background: themed("editVC");
+        border-radius: 10px;
+      }
+      .inviteUser {
+        position: absolute;
+        z-index: -5;
+        bottom: 55px;
+        right: 150px;
+        background-color: rgba(150, 149, 149, 0.8);
+        border-radius: 10px;
+        font-size: 16px;
+        font-weight: 500;
+        color: black;
+        height: 36px;
+        width: 78px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 5px;
+        background: themed("editVC");
+        cursor: pointer;
+        padding: 2px;
+      }
+      .buttonEditVacation {
+        position: absolute;
+        z-index: -5;
+        bottom: 55px;
+        right: 65px;
         background: themed("editVC");
         border-radius: 10px;
       }

@@ -137,7 +137,9 @@ const LeftBar = () => {
       
               <Link
                 style={{ textDecoration: "none", color: "inherit" }}
-                to={`/profile/${currentUser.id}`}
+                to={"/setting/account"
+                  // `/profile/${currentUser.id}`
+                }
               >
                 <span>{t("leftBar.profile")}</span>
               </Link>

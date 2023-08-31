@@ -10,17 +10,19 @@ import customFetch from "../../utils/url";
 import { useState } from "react";
 import { useGlobalContextAuth } from "../../context/AuthContext";
 import { ToastContainer, toast } from "react-toastify";
+import { useTranslation } from "react-i18next";
 
 export default function RegisterForm() {
   const navigate = useNavigate();
   const [isShowPassword, setIsShowPassword] = useState(false);
   const { setCurrentUser, setAuthenticate } = useGlobalContextAuth();
+  const [t, i18] = useTranslation("global");
 
   const {
     handleSubmit,
     register,
     formState: { errors },
-    setError
+    setError,
   } = useForm({
     resolver: yupResolver(schema),
   });
@@ -39,16 +41,16 @@ export default function RegisterForm() {
       navigate("/verify-email");
     },
     onError: (error) => {
-      if(error.response.status === 422){
+      if (error.response.status === 422) {
         const formError = error.response?.data.errors;
         if (formError?.email) {
-          setError('email', {
+          setError("email", {
             message: formError.email.msg,
-            type: 'Server'
-          })
+            type: "Server",
+          });
         }
       }
-    }
+    },
   });
 
   const formSubmit = (data) => {

@@ -46,12 +46,14 @@ export const userSchema2 = yup.object({
     .required("username is required")
     .min(3, "Độ dài ký tự từ 3-100")
     .max(100, "Độ dài ký tự từ 3-100"),
-  telephone: yup
+  location: yup
     .string()
-    .required("telephone is required")
+    .required("location is required")
     .min(8, "Độ dài ký tự từ 8-12")
     .max(12, "Độ dài ký tự từ 8-12"),
-  address: yup.string().required("address is required"),
+  avatar: yup.string(),
+  website: yup.string().required("website is required"),
+  bio: yup.string().required("bio is required"),
   date: yup.string().required("date is required"),
 });
 

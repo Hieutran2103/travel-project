@@ -18,14 +18,15 @@ const Setting = () => {
     resolver: yupResolver(userSchema2),
     defaultValues: {
       username: "",
-      telephone: "",
-      address: "",
+      bio: "",
+      location: "",
+      website: "",
       date: "",
     },
   });
 
   const settingAccount = useMutation({
-    mutationFn:  (data) =>
+    mutationFn: (data) =>
       customFetch.post("/users/update-user-infor", {
         name: data.name,
         telephone: data.telephone,
@@ -70,21 +71,30 @@ const Setting = () => {
                     errormessage={errors.username?.message}
                   />
                   <InputUser
-                    spanName="Telephone"
-                    placeholder="enter your phone number..."
-                    name="telephone"
+                    spanName="Bio"
+                    placeholder="enter your bio..."
+                    name="bio"
                     type="text"
-                    register={{ ...register("telephone") }}
-                    errormessage={errors.telephone?.message}
+                    register={{ ...register("bio") }}
+                    errormessage={errors.bio?.message}
                   />
                   <InputUser
-                    spanName="Address"
-                    placeholder="enter your address..."
-                    name="address"
+                    spanName="Location"
+                    placeholder="enter your location..."
+                    name="location"
                     type="text"
-                    register={{ ...register("address") }}
-                    errormessage={errors.address?.message}
+                    register={{ ...register("location") }}
+                    errormessage={errors.location?.message}
                   />
+                  <InputUser
+                    spanName="Website"
+                    placeholder="enter your website..."
+                    name="website"
+                    type="text"
+                    register={{ ...register("website") }}
+                    errormessage={errors.website?.message}
+                  />
+
                   <InputUser
                     spanName="Date"
                     // placeholder="enter your name..."

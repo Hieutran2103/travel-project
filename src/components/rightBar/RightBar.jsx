@@ -11,7 +11,9 @@ const RightBar = () => {
     <div className="rightBar">
       <div className="container">
         <div className="menu">
+      
           <div className="myself">
+            
             <img
               src={
                 !currentUser?.avatar
@@ -20,15 +22,18 @@ const RightBar = () => {
               }
               alt=""
             />
+            
             <div className="info">
               <div className="name">{currentUser?.name}</div>
               <div className="email">{currentUser?.email}</div>
             </div>
-
+            <Link to="/setting/account">
             <div className="switch">
               <MoreVertOutlinedIcon />
             </div>
+            </Link>
           </div>
+         
 
           <p className="suggest"> {t("rightBar.suggest")} </p>
 

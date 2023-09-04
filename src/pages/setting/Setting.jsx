@@ -27,10 +27,11 @@ const Setting = () => {
 
   const settingAccount = useMutation({
     mutationFn: (data) =>
-      customFetch.post("/users/update-user-infor", {
-        name: data.name,
-        telephone: data.telephone,
-        address: data.address,
+      customFetch.patch("/users/update-user-infor", {
+        username: data.name,
+        location: data.location,
+        website : data.website,
+        bio:data.bio,
         date: data.date,
         //Hoi Thawng token phan user account information
       }),
@@ -56,6 +57,12 @@ const Setting = () => {
                 Password
               </Link>
             </button>
+            <button>
+              <Link to="/setting/setavar" className="link-setting">
+                Avatar
+              </Link>
+            </button>
+
           </div>
           <div className="menu-detail">
             <div className="left">
@@ -114,7 +121,7 @@ const Setting = () => {
                 alt=""
               />
 
-              <button>Set avatar</button>
+             
             </div>
           </div>
         </div>

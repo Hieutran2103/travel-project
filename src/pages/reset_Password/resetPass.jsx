@@ -33,7 +33,7 @@ export default function ResetPass() {
       forgot_password_token: location.state.forgot_password_token
     }),
     onSuccess: (data) => {
-       alert(data.data.message)
+      toast.success(t("auth.Login"));
     }
   })
 

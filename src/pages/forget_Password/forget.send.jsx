@@ -124,7 +124,7 @@ const ForgetSend = () => {
               autoClose={8000}
               transition={Zoom}
               />
-              <button className="btn" onclick={showToastSuccess}  >Send</button>
+              <button className="btn" onClick={showToastSuccess}  >Send</button>
             </form>
 
             <div className="create-account">

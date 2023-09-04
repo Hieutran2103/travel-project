@@ -75,6 +75,11 @@ const SettingPass = () => {
               </Link>
             </button>
             <button>Password</button>
+            <button>
+              <Link to="/setting/setavar" className="link-setting">
+                Avatar
+              </Link>
+            </button>
           </div>
           <div className="menu-detail">
             <div className="form">

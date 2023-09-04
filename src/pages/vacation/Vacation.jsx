@@ -122,7 +122,7 @@ const Vacation = () => {
     }
   };
 
-  const { data } = useQuery({
+  const { data, isLoading } = useQuery({
     queryKey: ["vacation"],
     queryFn: () => customFetch.get(`/vacations/${idVacation}`),
   });
@@ -163,9 +163,14 @@ const Vacation = () => {
     },
   });
 
+  // if (isLoading) {
+  //   return <div className="abc">Loading...</div>;
+  // }
+
   if (!data) {
     return null;
   }
+
   const idUser = data.data.data[0].mentions;
   const namesArray = idUser.map((item) => item._id);
   const dataVacation = data.data.data[0];
@@ -226,9 +231,6 @@ const Vacation = () => {
         </div>
         {currentUser._id === dataVacation.user._id ? (
           <>
-            <div className={openSelect ? "show-inviteUser" : "inviteUser"}>
-              <GroupAddOutlinedIcon /> INVITE
-            </div>
             <div
               className={
                 openSelect ? "show-buttonEditVacation" : "buttonEditVacation"

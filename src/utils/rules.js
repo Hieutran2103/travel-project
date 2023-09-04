@@ -41,7 +41,7 @@ export const userSchema = yup.object({
 });
 
 export const userSchema2 = yup.object({
-  username: yup
+  name: yup
     .string()
     .required("username is required")
     .min(3, "Độ dài ký tự từ 3-100")
@@ -59,7 +59,7 @@ export const userSchema2 = yup.object({
 
 export const schemaEmail = yup.object({
   email: schema.fields["email"],
-  password: schema.fields["password"],
+  // password: schema.fields["password"],
   // linh mới them pasword vào đây ae nhé
 });
 

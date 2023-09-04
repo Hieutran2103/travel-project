@@ -28,7 +28,7 @@ import AlbumDetail from "./components/albumDetail/AlbumDetail";
 import "./style.scss";
 import VerifyEmail from "./pages/VerifyEmail/VerifyEmail";
 import LoginGoogle from "./pages/LoginGoogle/LoginGoogle";
-import SetAvar from "./pages/setting/SetAvar";
+
 
 function App() {
   const {currentUser, authenticate} = useGlobalContextAuth();
@@ -104,11 +104,7 @@ function App() {
           path: "/setting/password",
           element: <SettingPass />,
         },
-        {
-          path: "/setting/setavar",
-          element: <SetAvar />,
-
-        },
+       
 
         {
           path: "/profile/:id",

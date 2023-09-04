@@ -28,17 +28,17 @@ const Setting = () => {
   const settingAccount = useMutation({
     mutationFn: (data) =>
       customFetch.patch("/users/update-user-infor", {
-        username: data.name,
+        name: data.name,
         location: data.location,
         website : data.website,
         bio:data.bio,
         date: data.date,
-        //Hoi Thawng token phan user account information
       }),
     onSuccess: (data) => {
       console.log(data);
     },
   });
+
   const formSubmit = (data) => {
     settingAccount.mutate(data);
   };
@@ -57,11 +57,7 @@ const Setting = () => {
                 Password
               </Link>
             </button>
-            <button>
-              <Link to="/setting/setavar" className="link-setting">
-                Avatar
-              </Link>
-            </button>
+         
 
           </div>
           <div className="menu-detail">
@@ -120,6 +116,7 @@ const Setting = () => {
                 src="https://toigingiuvedep.vn/wp-content/uploads/2022/01/anh-meo-cute.jpg"
                 alt=""
               />
+                <button>Set avatar</button>
 
              
             </div>

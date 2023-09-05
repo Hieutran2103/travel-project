@@ -55,7 +55,9 @@ export const userSchema2 = yup.object({
 });
 
 export const schemaEmail = yup.object({
+
   email: schema.fields["email"]
+
 });
 
 export const resetPasswordSchema = yup.object({

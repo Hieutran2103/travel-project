@@ -1,71 +1,39 @@
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import "./forget.send.scss";
 import Logo from "../../assets/logonewfeed2.svg";
 // import { useGlobalContextAuth } from "../../context/AuthContext";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useForm } from "react-hook-form";
-import { schema, schemaEmail } from "../../utils/rules";
+import { schemaEmail } from "../../utils/rules";
 import InputForm from "../../components/input/inputForm";
-import axios from "axios";
-import { useMutation, useQuery } from "@tanstack/react-query";
-import { useEffect, useState } from "react";
-import { omit } from "lodash";
+import { useMutation } from "@tanstack/react-query";
 import customFetch from "../../utils/url";
-import { ToastContainer , Zoom, toast} from "react-toastify";
-import 'react-toastify/dist/ReactToastify.css';
-
-// const schemaEmail = omit(schema, ['password', 'confirm_password', 'username'])
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const ForgetSend = () => {
-  const navigate = useNavigate()
-  //   const { login } = useGlobalContextAuth();
-  // const fetchApi = async () => {
-  //   const response = await axios.get(
-  //     ``
-  //   );
-  //   setForgetToken(response.data)
-  // };
-
-  // const [forgetToken,setForgetToken] = useState([]);
-  // const query = useQuery([`posts`, fetchApi]);
-  // console.log('query', query);
-
-  // useEffect(() => {
-  //   fetchApi()
-  // }, [])
-
   const {
     handleSubmit,
     register,
     formState: { errors },
-    reset
+    reset,
   } = useForm({
     resolver: yupResolver(schemaEmail),
     defaultValues: {
       email: " ",
     },
   });
-
   const forgotPasswordMutation = useMutation({
     mutationFn: (data) => customFetch.post("/users/forgot-password", data),
     onSuccess: (data) => {
-      alert(data.data.message);
-     
-    }
-  })
-
-  const formSubmit = handleSubmit((data) => {
-    forgotPasswordMutation.mutate(data)
-    reset()
+      toast.success(data.data.message);
+    },
   });
 
-  const showToastSuccess = () =>{
-    toast.success('verify thanh cong!!' , {
-      position: toast.POSITION.TOP_RIGHT,
-      draggble:true,
-      className: "custom-toast",
-    })
-  }
+  const formSubmit = handleSubmit((data) => {
+    forgotPasswordMutation.mutate(data);
+    reset();
+  });
 
   return (
     <div className="forgetForm">
@@ -74,30 +42,6 @@ const ForgetSend = () => {
           <div className="logo">
             <img src={Logo} alt="logo" />
           </div>
-          {/* <div className="text-item">
-            <h2>
-              Welcome! <br />
-              <span>To Our Web</span>
-            </h2>
-            <p>
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. Odit,
-              repellendus?
-            </p>
-            <div className="social-icon">
-              <a href="#">
-                <i className="bx bxl-facebook" id="facebook" />
-              </a>
-              <a href="#">
-                <i className="bx bxl-google" id="google" />
-              </a>
-              <a href="#">
-                <i className="bx bxl-instagram" id="ig" />
-              </a>
-              <a href="#">
-                <i className="bx bxl-linkedin" id="linkedin" />
-              </a>
-            </div>
-          </div> */}
         </div>
         <div className="forget-section">
           <div className="form-box login">
@@ -120,11 +64,21 @@ const ForgetSend = () => {
                 register={{ ...register("email") }}
               />
               <ToastContainer
-              draggable={false}
-              autoClose={8000}
-              transition={Zoom}
+                position="top-center"
+                autoClose={5000}
+                hideProgressBar={false}
+                newestOnTop={false}
+                closeOnClick
+                rtl={false}
+                pauseOnFocusLoss
+                draggable
+                pauseOnHover
+                theme="light"
               />
-              <button className="btn" onclick={showToastSuccess}  >Send</button>
+
+              <button className="btn" type="submit">
+                Send
+              </button>
             </form>
 
             <div className="create-account">

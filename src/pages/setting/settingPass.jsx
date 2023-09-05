@@ -75,6 +75,7 @@ const SettingPass = () => {
               </Link>
             </button>
             <button>Password</button>
+           
           </div>
           <div className="menu-detail">
             <div className="form">

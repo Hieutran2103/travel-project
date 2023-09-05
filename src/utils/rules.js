@@ -41,26 +41,23 @@ export const userSchema = yup.object({
 });
 
 export const userSchema2 = yup.object({
-  username: yup
+  name: yup
     .string()
-    .required("username is required")
     .min(3, "Độ dài ký tự từ 3-100")
     .max(100, "Độ dài ký tự từ 3-100"),
   location: yup
-    .string()
-    .required("location is required")
-    .min(8, "Độ dài ký tự từ 8-12")
-    .max(12, "Độ dài ký tự từ 8-12"),
+    .string(),
   avatar: yup.string(),
-  website: yup.string().required("website is required"),
-  bio: yup.string().required("bio is required"),
-  date: yup.string().required("date is required"),
+  website: yup.string(),
+  bio: yup.string(),
+  date_of_birth: yup.date(),
+  username: yup.string(),
 });
 
 export const schemaEmail = yup.object({
-  email: schema.fields["email"],
-  // password: schema.fields["password"],
-  // linh mới them pasword vào đây ae nhé
+
+  email: schema.fields["email"]
+
 });
 
 export const resetPasswordSchema = yup.object({

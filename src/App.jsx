@@ -29,6 +29,7 @@ import "./style.scss";
 import VerifyEmail from "./pages/VerifyEmail/VerifyEmail";
 import LoginGoogle from "./pages/LoginGoogle/LoginGoogle";
 
+
 function App() {
   const {currentUser, authenticate} = useGlobalContextAuth();
   const {darkMode} = useGlobalContextDarkMode();
@@ -103,6 +104,8 @@ function App() {
           path: "/setting/password",
           element: <SettingPass />,
         },
+       
+
         {
           path: "/profile/:id",
           element: <Profile />,

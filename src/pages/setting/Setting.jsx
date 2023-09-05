@@ -1,46 +1,114 @@
-import { Link, useLocation } from "react-router-dom";
+import { Link } from "react-router-dom";
 import "./setting.scss";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useForm } from "react-hook-form";
 import InputUser from "../../components/input/inputUsers";
 import { userSchema2 } from "../../utils/rules";
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, useQuery } from "@tanstack/react-query";
 import customFetch from "../../utils/url";
+import { useEffect, useRef } from "react";
+import { useState } from "react";
+import { useMemo } from "react";
+import { useGlobalContextAuth } from "../../context/AuthContext";
 
 const Setting = () => {
-  const location = useLocation();
-  console.log(location.state);
+  const inputRef = useRef(null);
+  const { currentUser, setCurrentUser } = useGlobalContextAuth();
+
+  const [image, setImage] = useState(currentUser?.avatar);
+
+  const previewImage = useMemo(() => {
+    return image
+      ? image
+      : '';
+  }, [image]);
+
   const {
     register,
     handleSubmit,
     formState: { errors },
+    setValue,
   } = useForm({
     resolver: yupResolver(userSchema2),
     defaultValues: {
-      username: "",
+      name: "",
       bio: "",
       location: "",
       website: "",
-      date: "",
+      date_of_birth: new Date(1990, 1, 1),
+      username: "",
+      // avatar: "",
     },
   });
 
+  const handleImageClick = () => {
+    inputRef.current.click();
+  };
+
+  const handleImageChange = async (e) => {
+    const file = e.target.files[0];
+
+    const formData = new FormData();
+    formData.append("image", file);
+    let res = await customFetch.post("/medias/upload-single-image", formData);
+
+    // setValue('avatar', res.data.result)
+    // console.log(res);
+    setImage(res.data.result);
+  };
+
   const settingAccount = useMutation({
     mutationFn: (data) =>
-      customFetch.post("/users/update-user-infor", {
+      customFetch.patch("/users/update-user-infor", {
         name: data.name,
-        telephone: data.telephone,
-        address: data.address,
-        date: data.date,
-        //Hoi Thawng token phan user account information
+        location: data.location,
+        website: data.website,
+        bio: data.bio,
+        date_of_birth: data.date_of_birth?.toISOString(),
+        username: data.username,
+        avatar: image,
       }),
     onSuccess: (data) => {
       console.log(data);
+      setCurrentUser(
+        localStorage.setItem("user", JSON.stringify(data.data.data))
+      );
+      refetch()
+      setTimeout(() => {
+        window.location.reload();
+      }, 500);
     },
   });
-  const formSubmit = (data) => {
+
+  const formSubmit = handleSubmit((data) => {
     settingAccount.mutate(data);
-  };
+
+    // console.log(data)
+  });
+
+  const { data, refetch } = useQuery({
+    queryKey: ['profile'],
+    queryFn: () => customFetch.get("/users/get-profile")
+  })
+
+  const profile = data?.data.user
+
+  useEffect(() => {
+    if (profile) {
+      setValue('name', profile.name)
+      setValue('location', profile.location)
+      setValue('website', profile.website)
+      setValue('date_of_birth', profile.date_of_birth ? new Date(profile.date_of_birth) : new Date(1990, 0, 1))
+      // setValue('avatar', profile.avatar)
+      setValue('bio', profile.bio)
+      setValue('username', profile.username)
+    }
+  }, [profile, setValue])
+
+  const getAvtUser = () => {
+    return currentUser?.avatar? currentUser?.avatar : "https://antimatter.vn/wp-content/uploads/2022/11/anh-avatar-trang-fb-mac-dinh.jpg"
+  }
+
   return (
     <>
       <div className="container-set">
@@ -60,11 +128,19 @@ const Setting = () => {
           <div className="menu-detail">
             <div className="left">
               <div className="form">
-                <form noValidate onSubmit={handleSubmit(formSubmit)}>
+                <form noValidate onSubmit={formSubmit}>
                   <h2>Account infor</h2>
                   <InputUser
-                    spanName="Username"
+                    spanName="Name"
                     placeholder="enter your name..."
+                    name="name"
+                    type="text"
+                    register={{ ...register("name") }}
+                    errormessage={errors.username?.message}
+                  />
+                  <InputUser
+                    spanName="Username"
+                    placeholder="enter your username..."
                     name="username"
                     type="text"
                     register={{ ...register("username") }}
@@ -98,23 +174,35 @@ const Setting = () => {
                   <InputUser
                     spanName="Date"
                     // placeholder="enter your name..."
-                    name="date"
+                    name="date_of_birth"
                     type="date"
-                    register={{ ...register("date") }}
+                    register={{ ...register("date_of_birth") }}
                     errormessage={errors.date?.message}
                   />
 
-                  <button>Save</button>
+                  <button type="submit">Save</button>
                 </form>
               </div>
             </div>
             <div className="right">
               <img
-                src="https://toigingiuvedep.vn/wp-content/uploads/2022/01/anh-meo-cute.jpg"
+                src={previewImage || getAvtUser()}
+                // src={
+                //   !image ? currentUser?.avatar : previewImage 
+                // }
                 alt=""
               />
-
-              <button>Set avatar</button>
+              {/* <button>Set avatar</button> */}
+              <div className="uploadImage" onClick={handleImageClick}>
+                Set avatar
+                <input
+                  type="file"
+                  ref={inputRef}
+                  onChange={handleImageChange}
+                  style={{ display: "none" }}
+                  name="image"
+                />
+              </div>
             </div>
           </div>
         </div>

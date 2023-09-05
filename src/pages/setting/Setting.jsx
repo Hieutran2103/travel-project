@@ -10,12 +10,15 @@ import { useEffect, useRef } from "react";
 import { useState } from "react";
 import { useMemo } from "react";
 import { useGlobalContextAuth } from "../../context/AuthContext";
+import { ToastContainer, toast } from "react-toastify";
+import { useTranslation } from "react-i18next";
 
 const Setting = () => {
   const inputRef = useRef(null);
   const { currentUser, setCurrentUser } = useGlobalContextAuth();
-
   const [image, setImage] = useState(currentUser?.avatar);
+  // const [t, i18] = useTranslation("global");
+  
 
   const previewImage = useMemo(() => {
     return image
@@ -70,6 +73,8 @@ const Setting = () => {
       }),
     onSuccess: (data) => {
       console.log(data);
+      // toast.success(t("auth.success"));
+      
       setCurrentUser(
         localStorage.setItem("user", JSON.stringify(data.data.data))
       );
@@ -112,6 +117,7 @@ const Setting = () => {
   return (
     <>
       <div className="container-set">
+      
         <h1>Settings</h1>
         <div className="form-box">
           <div className="nav">

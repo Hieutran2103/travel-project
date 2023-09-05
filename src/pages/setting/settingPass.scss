@@ -12,8 +12,9 @@
         background-color: rgb(240, 237, 237);
         width: 75%;
         margin-left: 12rem;
+        margin-bottom:10rem;
         display: flex;
-        height: 600px;
+        height: 700px;
         .nav{
             display: flex;
             flex-direction: column;
@@ -21,7 +22,7 @@
             border-right: 1px solid rgb(135, 134, 134);
             // padding-top: ;
             padding:200px 15px;
-            height: 200px;
+            height: 300px;
             .icon{
                 font-size: 70px;
                 position: relative;
@@ -30,7 +31,7 @@
             }
             button{
                 position: relative;
-                bottom: 60px;
+                bottom: 40px;
                 margin: 12px;
                 padding: 10px;
                 border: none;

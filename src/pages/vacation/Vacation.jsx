@@ -122,11 +122,6 @@ const Vacation = () => {
     }
   };
 
-  const { data, isLoading } = useQuery({
-    queryKey: ["vacation"],
-    queryFn: () => customFetch.get(`/vacations/${idVacation}`),
-  });
-
   const queryClient = useQueryClient();
   const { mutate: EditVC } = useMutation({
     mutationFn: (posts) =>
@@ -167,14 +162,28 @@ const Vacation = () => {
   //   return <div className="abc">Loading...</div>;
   // }
 
+  const { data } = useQuery({
+    queryKey: ["vacation"],
+    queryFn: () => customFetch.get(`/vacations/${idVacation}`),
+    onError: (error) => {
+      if (error.response.status === 403) {
+        const formError = error.response?.data.message;
+        navigate("/error-vacation", {
+          state: formError,
+        });
+      }
+    },
+    refetchOnReconnect: false,
+    refetchOnWindowFocus: false,
+  });
+
   if (!data) {
     return null;
   }
 
+  const dataVacation = data.data.data[0];
   const idUser = data.data.data[0].mentions;
   const namesArray = idUser.map((item) => item._id);
-  const dataVacation = data.data.data[0];
-
   return (
     <div className="vacation">
       <ToastContainer
@@ -242,7 +251,11 @@ const Vacation = () => {
                 aria-haspopup="true"
                 aria-expanded={open ? "true" : undefined}
                 onClick={handleClick}
-                style={{ color: "black", fontSize: "16px", fontWeight: "500" }}
+                style={{
+                  color: "black",
+                  fontSize: "16px",
+                  fontWeight: "500",
+                }}
               >
                 <AutoFixNormalOutlinedIcon /> Edit
               </Button>

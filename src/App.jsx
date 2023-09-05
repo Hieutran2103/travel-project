@@ -9,8 +9,8 @@ import Register from "./pages/register/Register";
 import LeftBar from "./components/leftBar/LeftBar";
 import RightBar from "./components/rightBar/RightBar";
 import Home from "./pages/home/Home";
-import {useGlobalContextDarkMode} from "./context/darkModeContext";
-import {useGlobalContextAuth} from "./context/AuthContext";
+import { useGlobalContextDarkMode } from "./context/darkModeContext";
+import { useGlobalContextAuth } from "./context/AuthContext";
 import Vacation from "./pages/vacation/Vacation";
 import Setting from "./pages/setting/Setting";
 import SettingPass from "./pages/setting/settingPass";
@@ -28,13 +28,13 @@ import AlbumDetail from "./components/albumDetail/AlbumDetail";
 import "./style.scss";
 import VerifyEmail from "./pages/VerifyEmail/VerifyEmail";
 import LoginGoogle from "./pages/LoginGoogle/LoginGoogle";
-
+import ErrorVacation from "./pages/vacation/ErrorVacation";
 
 function App() {
-  const {currentUser, authenticate} = useGlobalContextAuth();
-  const {darkMode} = useGlobalContextDarkMode();
+  const { currentUser, authenticate } = useGlobalContextAuth();
+  const { darkMode } = useGlobalContextDarkMode();
 
-  const ProtectedRouter = ({children}) => {
+  const ProtectedRouter = ({ children }) => {
     if (!authenticate) {
       return <Navigate to="/login" />;
     }
@@ -44,9 +44,9 @@ function App() {
   const LayoutHome = () => {
     return (
       <div className={`theme-${darkMode ? "dark" : "light"}`}>
-        <div style={{display: "flex"}}>
+        <div style={{ display: "flex" }}>
           <LeftBar />
-          <div style={{flex: 7}}>
+          <div style={{ flex: 7 }}>
             <Outlet />
           </div>
           <RightBar />
@@ -58,9 +58,9 @@ function App() {
   const Layout = () => {
     return (
       <div className={`theme-${darkMode ? "dark" : "light"}`}>
-        <div style={{display: "flex"}}>
+        <div style={{ display: "flex" }}>
           <LeftBar />
-          <div style={{flex: 10}}>
+          <div style={{ flex: 10 }}>
             <Outlet />
           </div>
         </div>
@@ -104,15 +104,17 @@ function App() {
           path: "/setting/password",
           element: <SettingPass />,
         },
-       
-
+        {
+          path: "/error-vacation",
+          element: <ErrorVacation />,
+        },
         {
           path: "/profile/:id",
           element: <Profile />,
           children: [
-            {path: "posts", element: <PostList />},
-            {path: "vacations", element: <VacationList />},
-            {path: "albums", element: <AlbumList />},
+            { path: "posts", element: <PostList /> },
+            { path: "vacations", element: <VacationList /> },
+            { path: "albums", element: <AlbumList /> },
             {
               path: ":albumid",
               element: <AlbumDetail />,

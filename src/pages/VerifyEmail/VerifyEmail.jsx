@@ -29,5 +29,5 @@ export default function VerifyEmail() {
         VerifyEmailMutation.mutate(token);
     }
   }, [token]);
-  return <div style={{display: "flex", alignItems:"center", justifyContent:"center"}}>{message ? message : "Please check your email for verification and to access all features of Travel."}</div>;
+  return <div style={{display: "flex", justifyContent:"center", alignItems: "center", height: "100vh", fontSize: 25}}>{message ? message : "Please check your email for verification and to access all features of Travel."}</div>;
 }

@@ -8,7 +8,7 @@ import Introduces from "../../components/introduces/Introduce";
 import MemberVacation from "./MemberVacation";
 import { useNavigate, useParams } from "react-router-dom";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import customFetch from "../../utils/url";
+import customFetch, { controller } from "../../utils/url";
 import PostsVacation from "./PostsVacation";
 import { ToastContainer, toast } from "react-toastify";
 import * as React from "react";
@@ -163,7 +163,7 @@ const Vacation = () => {
   // }
 
   const { data } = useQuery({
-    queryKey: ["vacation"],
+    queryKey: ["vacation", idVacation],
     queryFn: () => customFetch.get(`/vacations/${idVacation}`),
     onError: (error) => {
       if (error.response.status === 403) {
@@ -174,10 +174,13 @@ const Vacation = () => {
       }
     },
     refetchOnReconnect: false,
-    refetchOnWindowFocus: false,
+    // refetchOnWindowFocus: false,
   });
 
+  
+
   if (!data) {
+    // controller.abort()
     return null;
   }
 
@@ -186,190 +189,198 @@ const Vacation = () => {
   const namesArray = idUser.map((item) => item._id);
   return (
     <div className="vacation">
-      <ToastContainer
-        position="top-center"
-        autoClose={5000}
-        hideProgressBar={false}
-        newestOnTop={false}
-        closeOnClick
-        rtl={false}
-        pauseOnFocusLoss
-        draggable
-        pauseOnHover
-        theme="light"
-      />
-      <div className="introduce">
-        <img src={dataVacation.vacation_avatar} alt="123" />
-        <div className="overlay"></div>
-        <div className="detail">
-          <img src={dataVacation.vacation_avatar} alt="123" />
-          <div className="topic">
-            <div className="name">{dataVacation.vacation_name}</div>
-            <div className="something">{dataVacation.vacation_description}</div>
-          </div>
-        </div>
-        <div className={openEditName ? "show-editNameVC" : "editNameVC"}>
-          <div className="cancelEdit" onClick={CancelEdit}>
-            Cancel
-          </div>
-          <div className="ChooseEdit" onClick={UpdateEdit}>
-            Update
-          </div>
-          <textarea
-            value={nameVC}
-            className="nameVC"
-            name="nameVC"
-            cols="40"
-            rows="1"
-            maxLength={20}
-            onChange={handleChangeName}
-          >
-            {nameVC}
-          </textarea>
-          <textarea
-            value={titleVC}
-            className="underNameVC"
-            name="underNameVC"
-            cols="80"
-            rows="10"
-            maxLength={300}
-            onChange={handleChangeTitle}
-          >
-            {titleVC}
-          </textarea>
-        </div>
-        {currentUser._id === dataVacation.user._id ? (
-          <>
-            <div
-              className={
-                openSelect ? "show-buttonEditVacation" : "buttonEditVacation"
-              }
-            >
-              <Button
-                id="demo-positioned-button"
-                aria-controls={open ? "demo-positioned-menu" : undefined}
-                aria-haspopup="true"
-                aria-expanded={open ? "true" : undefined}
-                onClick={handleClick}
-                style={{
-                  color: "black",
-                  fontSize: "16px",
-                  fontWeight: "500",
-                }}
+        <div>
+          <ToastContainer
+            position="top-center"
+            autoClose={5000}
+            hideProgressBar={false}
+            newestOnTop={false}
+            closeOnClick
+            rtl={false}
+            pauseOnFocusLoss
+            draggable
+            pauseOnHover
+            theme="light"
+          />
+          <div className="introduce">
+            <img src={dataVacation.vacation_avatar} alt="123" />
+            <div className="overlay"></div>
+            <div className="detail">
+              <img src={dataVacation.vacation_avatar} alt="123" />
+              <div className="topic">
+                <div className="name">{dataVacation.vacation_name}</div>
+                <div className="something">
+                  {dataVacation.vacation_description}
+                </div>
+              </div>
+            </div>
+            <div className={openEditName ? "show-editNameVC" : "editNameVC"}>
+              <div className="cancelEdit" onClick={CancelEdit}>
+                Cancel
+              </div>
+              <div className="ChooseEdit" onClick={UpdateEdit}>
+                Update
+              </div>
+              <textarea
+                value={nameVC}
+                className="nameVC"
+                name="nameVC"
+                cols="40"
+                rows="1"
+                maxLength={20}
+                onChange={handleChangeName}
               >
-                <AutoFixNormalOutlinedIcon /> Edit
-              </Button>
-              <Menu
-                id="demo-positioned-menu"
-                aria-labelledby="demo-positioned-button"
-                anchorEl={anchorEl}
-                open={open}
-                onClose={handleClose}
-                anchorOrigin={{
-                  vertical: "top",
-                  horizontal: "left",
-                }}
-                transformOrigin={{
-                  vertical: "top",
-                  horizontal: "left",
-                }}
+                {nameVC}
+              </textarea>
+              <textarea
+                value={titleVC}
+                className="underNameVC"
+                name="underNameVC"
+                cols="80"
+                rows="10"
+                maxLength={300}
+                onChange={handleChangeTitle}
               >
-                <MenuItem>
-                  <input
-                    type="file"
-                    id="filez"
-                    style={{ display: "none" }}
-                    onChange={handleImg}
-                  />
-                  <label htmlFor="filez">
-                    <div className="item">Upload Photo</div>
-                  </label>
-                </MenuItem>
-                <MenuItem onClick={SelectEditName}>Edit Name Vacaion</MenuItem>
-                <MenuItem onClick={handleDele}>Detele Vacaion</MenuItem>
-              </Menu>
+                {titleVC}
+              </textarea>
             </div>
-          </>
-        ) : null}
-      </div>
-      <div className="detailVacation">
-        <div className="postVacation">
-          <CreatePostVacation dataVacation={dataVacation} />
-          <PostsVacation dataVacation={dataVacation} />
-          <Introduces dataVacation={dataVacation} />
-          <MemberVacation dataVacation={dataVacation} />
-        </div>
-        <div className="rightVacation">
-          <div className="member">
-            <div className="topDetail">
-              <span className="title">Giới thiệu</span>
-              <span className="detail">{dataVacation.vacation_intro}</span>
+            {currentUser._id === dataVacation.user._id ? (
+              <>
+                <div
+                  className={
+                    openSelect
+                      ? "show-buttonEditVacation"
+                      : "buttonEditVacation"
+                  }
+                >
+                  <Button
+                    id="demo-positioned-button"
+                    aria-controls={open ? "demo-positioned-menu" : undefined}
+                    aria-haspopup="true"
+                    aria-expanded={open ? "true" : undefined}
+                    onClick={handleClick}
+                    style={{
+                      color: "black",
+                      fontSize: "16px",
+                      fontWeight: "500",
+                    }}
+                  >
+                    <AutoFixNormalOutlinedIcon /> Edit
+                  </Button>
+                  <Menu
+                    id="demo-positioned-menu"
+                    aria-labelledby="demo-positioned-button"
+                    anchorEl={anchorEl}
+                    open={open}
+                    onClose={handleClose}
+                    anchorOrigin={{
+                      vertical: "top",
+                      horizontal: "left",
+                    }}
+                    transformOrigin={{
+                      vertical: "top",
+                      horizontal: "left",
+                    }}
+                  >
+                    <MenuItem>
+                      <input
+                        type="file"
+                        id="filez"
+                        style={{ display: "none" }}
+                        onChange={handleImg}
+                      />
+                      <label htmlFor="filez">
+                        <div className="item">Upload Photo</div>
+                      </label>
+                    </MenuItem>
+                    <MenuItem onClick={SelectEditName}>
+                      Edit Name Vacaion
+                    </MenuItem>
+                    <MenuItem onClick={handleDele}>Detele Vacaion</MenuItem>
+                  </Menu>
+                </div>
+              </>
+            ) : null}
+          </div>
+          <div className="detailVacation">
+            <div className="postVacation">
+              <CreatePostVacation dataVacation={dataVacation} />
+              <PostsVacation dataVacation={dataVacation} />
+              <Introduces dataVacation={dataVacation} />
+              <MemberVacation dataVacation={dataVacation} />
             </div>
-            <div className="bottonDetail">
-              {dataVacation.audience == 0 ? (
-                <>
-                  {" "}
-                  <div className="item">
-                    <div className="icon">
-                      <PublicOutlinedIcon />
-                    </div>
-                    <div className="detail">
-                      <span className="title"> Công khai</span>
-                      <span className="nd">
-                        Bất kì ai cũng có thể thấy mọi người trong nhóm và những
-                        bài đăng
-                      </span>
-                    </div>
-                  </div>
-                  <div className="item">
-                    <div className="icon">
-                      <VisibilityOutlinedIcon />
-                    </div>
+            <div className="rightVacation">
+              <div className="member">
+                <div className="topDetail">
+                  <span className="title">Giới thiệu</span>
+                  <span className="detail">{dataVacation.vacation_intro}</span>
+                </div>
+                <div className="bottonDetail">
+                  {dataVacation.audience == 0 ? (
+                    <>
+                      {" "}
+                      <div className="item">
+                        <div className="icon">
+                          <PublicOutlinedIcon />
+                        </div>
+                        <div className="detail">
+                          <span className="title"> Công khai</span>
+                          <span className="nd">
+                            Bất kì ai cũng có thể thấy mọi người trong nhóm và
+                            những bài đăng
+                          </span>
+                        </div>
+                      </div>
+                      <div className="item">
+                        <div className="icon">
+                          <VisibilityOutlinedIcon />
+                        </div>
 
-                    <div className="detail">
-                      <span className="title"> Hiển thị</span>
-                      <span className="nd">
-                        Ai cũng có thể tìm thấy nhóm này
-                      </span>
-                    </div>
-                  </div>
-                </>
-              ) : (
-                <>
-                  {" "}
-                  <div className="item">
-                    <div className="icon">
-                      <PublicOutlinedIcon />
-                    </div>
-                    <div className="detail">
-                      <span className="title"> Riêng tư</span>
-                      <span className="nd">
-                        Chỉ thành viên mới nhìn thấy mọi người trong nhóm và
-                        những bài đăng
-                      </span>
-                    </div>
-                  </div>
-                  <div className="item">
-                    <div className="icon">
-                      <VisibilityOutlinedIcon />
-                    </div>
+                        <div className="detail">
+                          <span className="title"> Hiển thị</span>
+                          <span className="nd">
+                            Ai cũng có thể tìm thấy nhóm này
+                          </span>
+                        </div>
+                      </div>
+                    </>
+                  ) : (
+                    <>
+                      {" "}
+                      <div className="item">
+                        <div className="icon">
+                          <PublicOutlinedIcon />
+                        </div>
+                        <div className="detail">
+                          <span className="title"> Riêng tư</span>
+                          <span className="nd">
+                            Chỉ thành viên mới nhìn thấy mọi người trong nhóm và
+                            những bài đăng
+                          </span>
+                        </div>
+                      </div>
+                      <div className="item">
+                        <div className="icon">
+                          <VisibilityOutlinedIcon />
+                        </div>
 
-                    <div className="detail">
-                      <span className="title"> Hiển thị</span>
-                      <span className="nd">
-                        Chỉ thành viên mới có thể tìm thấy nhóm này
-                      </span>
-                    </div>
-                  </div>
-                </>
-              )}
-            </div>
-            <div className="more" onClick={openIntroduce}>
-              <span>Tìm hiểu thêm</span>
+                        <div className="detail">
+                          <span className="title"> Hiển thị</span>
+                          <span className="nd">
+                            Chỉ thành viên mới có thể tìm thấy nhóm này
+                          </span>
+                        </div>
+                      </div>
+                    </>
+                  )}
+                </div>
+                <div className="more" onClick={openIntroduce}>
+                  <span>Tìm hiểu thêm</span>
+                </div>
+              </div>
             </div>
           </div>
         </div>
-      </div>
     </div>
   );
 };

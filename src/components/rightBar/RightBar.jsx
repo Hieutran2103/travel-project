@@ -2,17 +2,21 @@ import {useTranslation} from "react-i18next";
 import {useGlobalContextAuth} from "../../context/AuthContext";
 import "./rightBar.scss";
 import MoreVertOutlinedIcon from "@mui/icons-material/MoreVertOutlined";
-import {Link} from "react-router-dom";
+import {Link, useNavigate} from "react-router-dom";
 const RightBar = () => {
   const {currentUser} = useGlobalContextAuth();
   const [t, i18] = useTranslation("global");
+  const navigate = useNavigate()
+  const navigateAccUser = () => {
+    return navigate('/setting/account')
+  }
 
   return (
     <div className="rightBar">
       <div className="container">
         <div className="menu">
       
-          <div className="myself">
+          <div className="myself" onClick={navigateAccUser}>
             
             <img
               src={

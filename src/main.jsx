@@ -29,7 +29,6 @@ i18next.init({
 });
 
 ReactDOM.createRoot(document.getElementById("root")).render(
-  <React.StrictMode>
     <DarkMode>
       <Auth>
         <Search>
@@ -46,5 +45,4 @@ ReactDOM.createRoot(document.getElementById("root")).render(
         </Search>
       </Auth>
     </DarkMode>
-  </React.StrictMode>
 );

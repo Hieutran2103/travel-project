@@ -35,15 +35,15 @@ const RightBar = () => {
     refetchOnWindowFocus: false,
   });
 
-  if (isVacationsLoading) {
-    return;
-  }
+  // if (isVacationsLoading) {
+  //   return;
+  // }
 
-  if (isVacationsError) {
-    return;
-  }
+  // if (isVacationsError) {
+  //   return;
+  // }
 
-  const vacations = vacationsData.data;
+  const vacations = vacationsData?.data;
 
   return (
     <div className="rightBar">
@@ -73,7 +73,7 @@ const RightBar = () => {
           <div className="suggestCon">
             <p className="suggest"> {t("rightBar.suggest")} </p>
             <div className="others">
-              {vacations.slice(0, 5).map((vacation) => (
+              {vacations?.slice(0, 5)?.map((vacation) => (
                 <div key={vacation._id} className="other">
                   <img src={vacation.vacation_avatar} alt="" />
                   <div className="info">
@@ -84,10 +84,8 @@ const RightBar = () => {
                     className="follow"
                     onClick={() => {
                       navigate(`/vacation/${vacation?._id}`);
-                      // window.location.reload();
                     }}
                   >
-                    {" "}
                     {t("rightBar.visit")}
                   </div>
                 </div>

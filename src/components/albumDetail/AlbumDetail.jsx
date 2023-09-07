@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, {useState, useEffect} from "react";
 import {useNavigate} from "react-router-dom";
 import ImageList from "@mui/material/ImageList";
 import ImageListItem from "@mui/material/ImageListItem";
@@ -17,6 +17,7 @@ import {toast} from "react-toastify";
 import {ToastContainer} from "react-toastify";
 import {useGlobalContextAuth} from "../../context/AuthContext";
 import "./albumDetail.scss";
+import {IconButton} from "@mui/material";
 
 const StyledMenu = styled((props) => (
   <Menu
@@ -65,7 +66,13 @@ function AlbumDetail() {
   const {currentUser} = useGlobalContextAuth();
   const [modalOpen, setModalOpen] = useState(false);
   const [selectedImage, setSelectedImage] = useState(null);
-  const [anchorEl, setAnchorEl] = React.useState(null);
+  const [anchorEl, setAnchorEl] = useState(null);
+  const [isEditing, setIsEditing] = useState(false);
+  const [editedAlbum, setEditedAlbum] = useState({});
+  const [editmediaName, setEditMediaName] = useState("");
+  const [editmediaDes, setEditMediaDes] = useState("");
+  const [editmediaItems, setEditMediaItems] = useState([]);
+  const [newImage, setNewImage] = useState("");
   const open = Boolean(anchorEl);
   const navigate = useNavigate();
   const queryClient = useQueryClient();
@@ -73,7 +80,6 @@ function AlbumDetail() {
   const url = window.location.pathname.split("/");
   const albumId = url[url.length - 1];
   const userID = url[url.length - 2];
-  console.log(userID);
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
   };
@@ -93,6 +99,7 @@ function AlbumDetail() {
   };
 
   const apiUrlAlbumDetail = `/albums/${albumId}`;
+  const apiUrlAlbumEdit = `/albums/${albumId}`;
 
   const fetchAlbumDetail = async () => {
     try {
@@ -125,6 +132,97 @@ function AlbumDetail() {
     isError: isAlbumDetailError,
   } = useQuery(["albumDataDetail", apiUrlAlbumDetail], fetchAlbumDetail);
 
+  const mediaItems = albumDataDetail?.data?.medias || [];
+  const mediaName = albumDataDetail?.data?.album_name || "";
+  const mediaDes = albumDataDetail?.data?.album_description || "";
+
+  useEffect(() => {
+    if (editedAlbum) {
+      setEditMediaName(editedAlbum.album_name);
+      setEditMediaDes(editedAlbum.album_description);
+    }
+  }, [editedAlbum]);
+
+  useEffect(() => {
+    if (albumDataDetail?.data) {
+      setEditMediaName(albumDataDetail.data.album_name);
+      setEditMediaDes(albumDataDetail.data.album_description);
+      if (albumDataDetail.data.medias) {
+        setEditMediaItems(albumDataDetail.data.medias);
+      }
+    }
+  }, [albumDataDetail?.data]);
+
+  const handleDelete = () => {
+    deleteAlbumMutation();
+  };
+
+  const handleEditClick = () => {
+    setIsEditing(true);
+    setEditedAlbum({
+      album_name: editmediaName,
+      album_description: editmediaDes,
+    });
+  };
+
+  const handleSave = async () => {
+    try {
+      const updatedAlbum = {
+        album_name: editmediaName,
+        album_description: editmediaDes,
+        medias: editmediaItems,
+      };
+      const response = await customFetch.put(apiUrlAlbumEdit, updatedAlbum);
+      setIsEditing(false);
+      setEditMediaName(updatedAlbum.album_name);
+      setEditMediaDes(updatedAlbum.album_description);
+      toast.success("Album updated successfully");
+      setTimeout(() => {
+        window.location.reload();
+      }, 3000);
+    } catch (error) {
+      console.error(error);
+      toast.error("Error updating album");
+    }
+  };
+
+  const handleCancel = () => {
+    setIsEditing(false);
+  };
+
+  const handleAddImage = () => {
+    if (newImage.trim() !== "") {
+      const updatedMediaItems = [...mediaItems, {url: newImage}];
+      setEditMediaItems(updatedMediaItems);
+      setNewImage("");
+    }
+  };
+
+  const handleDeleteImage = (index) => {
+    const updatedMediaItems = [...editmediaItems];
+    updatedMediaItems.splice(index, 1);
+    setEditMediaItems(updatedMediaItems);
+  };
+
+  const handleImageUpload = async (event) => {
+    const file = event.target.files[0];
+    if (file) {
+      try {
+        const formData = new FormData();
+        formData.append("image", file);
+        const response = await customFetch.uploadImage(formData);
+        if (response.data && response.data.url) {
+          const imageUrl = response.data.url;
+          const updatedMediaItems = [...mediaItems, {url: imageUrl}];
+          setEditMediaItems(updatedMediaItems);
+        } else {
+        }
+      } catch (error) {
+        console.error(error);
+      }
+    }
+  };
+
   if (isAlbumDetailLoading) {
     return;
   }
@@ -132,13 +230,6 @@ function AlbumDetail() {
   if (isAlbumDetailError) {
     return;
   }
-
-  const mediaItems = albumDataDetail.data.medias;
-  const mediaName = albumDataDetail.data.album_name;
-  const mediaDes = albumDataDetail.data.album_description;
-  const handleDelete = () => {
-    deleteAlbumMutation();
-  };
 
   return (
     <div className="albumDetail">
@@ -163,35 +254,120 @@ function AlbumDetail() {
           fontWeight: 600,
         }}
       >
-        <div
-          style={{
-            fontSize: "30px",
-          }}
-        >
-          {mediaName}
-        </div>
-
-        {currentUser._id === userID && (
-          <Button
-            id="demo-customized-button"
-            aria-controls={open ? "demo-customized-menu" : undefined}
-            aria-haspopup="true"
-            aria-expanded={open ? "true" : undefined}
-            variant="contained"
-            disableElevation
-            onClick={handleClick}
-            endIcon={<KeyboardArrowDownIcon />}
-            sx={{
-              backgroundColor: "#EFEFEF",
-              color: "black",
-              fontWeight: 600,
-              "&:hover": {
-                backgroundColor: "#d6d6d6",
-              },
+        {isEditing ? (
+          <div>
+            <input
+              type="text"
+              className="inputText"
+              value={editedAlbum.album_name}
+              onChange={(e) =>
+                setEditedAlbum({...editedAlbum, album_name: e.target.value})
+              }
+            />
+          </div>
+        ) : (
+          <div
+            style={{
+              fontSize: "30px",
             }}
           >
-            Action
-          </Button>
+            {mediaName}
+          </div>
+        )}
+        {currentUser._id === userID && (
+          <div>
+            {isEditing ? (
+              <div>
+                {/* <input type="file" id="file-upload" style={{display: "none"}} />
+                <Button
+                  id="demo-customized-button-save"
+                  aria-controls={open ? "demo-customized-menu" : undefined}
+                  aria-haspopup="true"
+                  aria-expanded={open ? "true" : undefined}
+                  variant="contained"
+                  disableElevation
+                  onClick={() => {
+                    // handleSave();
+                  }}
+                  sx={{
+                    backgroundColor: "#EFEFEF",
+                    color: "black",
+                    fontWeight: 600,
+                    "&:hover": {
+                      backgroundColor: "#d6d6d6",
+                    },
+                  }}
+                >
+                  Upload Image
+                </Button> */}
+                <Button
+                  id="demo-customized-button-save"
+                  aria-controls={open ? "demo-customized-menu" : undefined}
+                  aria-haspopup="true"
+                  aria-expanded={open ? "true" : undefined}
+                  variant="contained"
+                  disableElevation
+                  onClick={() => {
+                    handleSave();
+                  }}
+                  sx={{
+                    backgroundColor: "#EFEFEF",
+                    color: "black",
+                    fontWeight: 600,
+                    marginLeft: "10px",
+                    "&:hover": {
+                      backgroundColor: "#d6d6d6",
+                    },
+                  }}
+                >
+                  Save
+                </Button>
+                <Button
+                  id="demo-customized-button-cancel"
+                  aria-controls={open ? "demo-customized-menu" : undefined}
+                  aria-haspopup="true"
+                  aria-expanded={open ? "true" : undefined}
+                  variant="contained"
+                  disableElevation
+                  onClick={() => {
+                    handleCancel();
+                  }}
+                  sx={{
+                    backgroundColor: "#EFEFEF",
+                    color: "black",
+                    fontWeight: 600,
+                    marginLeft: "10px",
+                    "&:hover": {
+                      backgroundColor: "#d6d6d6",
+                    },
+                  }}
+                >
+                  Cancel
+                </Button>
+              </div>
+            ) : (
+              <Button
+                id="demo-customized-button"
+                aria-controls={open ? "demo-customized-menu" : undefined}
+                aria-haspopup="true"
+                aria-expanded={open ? "true" : undefined}
+                variant="contained"
+                disableElevation
+                onClick={handleClick}
+                endIcon={<KeyboardArrowDownIcon />}
+                sx={{
+                  backgroundColor: "#EFEFEF",
+                  color: "black",
+                  fontWeight: 600,
+                  "&:hover": {
+                    backgroundColor: "#d6d6d6",
+                  },
+                }}
+              >
+                Action
+              </Button>
+            )}
+          </div>
         )}
         <StyledMenu
           id="demo-customized-menu"
@@ -202,7 +378,13 @@ function AlbumDetail() {
           open={open}
           onClose={handleClose}
         >
-          <MenuItem onClick={handleClose} disableRipple>
+          <MenuItem
+            onClick={() => {
+              handleEditClick();
+              handleClose();
+            }}
+            disableRipple
+          >
             <EditIcon />
             Edit
           </MenuItem>
@@ -218,16 +400,39 @@ function AlbumDetail() {
           </MenuItem>
         </StyledMenu>
       </div>
-      <div
-        style={{
-          fontSize: "20px",
-          marginLeft: "20px",
-        }}
-      >
-        {mediaDes}
-      </div>
+      {isEditing ? (
+        <div
+          style={{
+            fontSize: "20px",
+            marginLeft: "20px",
+            display: "flex",
+            justifyContent: "space-between",
+          }}
+        >
+          <input
+            type="text"
+            className="inputText"
+            value={editedAlbum.album_description}
+            onChange={(e) =>
+              setEditedAlbum({
+                ...editedAlbum,
+                album_description: e.target.value,
+              })
+            }
+          />
+        </div>
+      ) : (
+        <div
+          style={{
+            fontSize: "20px",
+            marginLeft: "20px",
+          }}
+        >
+          {mediaDes}
+        </div>
+      )}
       <ImageList cols={3} rowHeight={250}>
-        {mediaItems.map((item, index) => (
+        {editmediaItems.map((item, index) => (
           <ImageListItem key={index} className="imageList">
             <img
               src={item.url}
@@ -240,6 +445,9 @@ function AlbumDetail() {
               }}
               onClick={() => openModal(item)}
             />
+            {isEditing && (
+              <button onClick={() => handleDeleteImage(index)}>Delete</button>
+            )}
           </ImageListItem>
         ))}
       </ImageList>

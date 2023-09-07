@@ -1,11 +1,12 @@
-import { Link } from "react-router-dom";
+import {Link} from "react-router-dom";
 import "./listSearch.scss";
 import logoNewfeed from "../../assets/NotFound.svg";
-import { useGlobalSearch } from "../../context/Search&Notification";
+import {useGlobalSearch} from "../../context/Search&Notification";
 
-const ListSearch = ({ dataUser }) => {
-  const { closeSearch } = useGlobalSearch();
+const ListSearch = ({dataUser}) => {
+  const {closeSearch} = useGlobalSearch();
 
+  console.log(dataUser);
   return (
     <div className="listSearch">
       <div className="listUser">
@@ -19,7 +20,7 @@ const ListSearch = ({ dataUser }) => {
               <div className="user" key={post?._id}>
                 <Link
                   to={`/profile/${post?._id}`}
-                  style={{ textDecoration: "none", color: "inherit" }}
+                  style={{textDecoration: "none", color: "inherit"}}
                 >
                   <img
                     src={
@@ -33,8 +34,8 @@ const ListSearch = ({ dataUser }) => {
 
                 <div className="detail">
                   <Link
-                    to={`/profile/${post?._id}`}
-                    style={{ textDecoration: "none", color: "inherit" }}
+                    to={`/profile/${post?._id}/posts`}
+                    style={{textDecoration: "none", color: "inherit"}}
                     onClick={closeSearch}
                   >
                     <span className="name">{post?.name}</span>

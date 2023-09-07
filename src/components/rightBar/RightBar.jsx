@@ -41,7 +41,6 @@ const RightBar = () => {
 
   const vacations = vacationsData.data;
 
-  console.log(vacations);
   return (
     <div className="rightBar">
       <div className="container">

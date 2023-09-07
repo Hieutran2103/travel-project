@@ -134,12 +134,12 @@ const LeftBar = () => {
                 alt=""
               />
 
-              <Link
+              <a
+                href={`/profile/${currentUser._id}/posts`}
                 style={{textDecoration: "none", color: "inherit"}}
-                to={`/profile/${currentUser._id}/posts`}
               >
                 <span>{t("leftBar.profile")}</span>
-              </Link>
+              </a>
             </div>
 
             <div className="logout ">

@@ -16,7 +16,7 @@ import {useTranslation} from "react-i18next";
 import "./postList.scss";
 
 function PostList() {
-  // const {currentUser} = useGlobalContextAuth();
+  const {currentUser} = useGlobalContextAuth();
   const {page, limit, handleNextLimit} = useGlobalPage();
   const [modalOpen, setModalOpen] = useState(false);
   const [selectedImage, setSelectedImage] = useState(null);
@@ -25,12 +25,15 @@ function PostList() {
   const url = window.location.pathname.split("/");
   const userID = url[url.length - 2];
 
-  const apiUrlPost = `posts/status/${userID}?limit=${limit}&page=${page}`;
+  const isCurrentUser = userID === currentUser._id;
   const apiUrlUser = `users/get-profile`;
+  const apiUrlFriend = `users/${userID}`;
+  const apiUrl = isCurrentUser ? apiUrlUser : apiUrlFriend;
+  const apiUrlPost = `posts/status/${userID}?limit=${limit}&page=${page}`;
 
   const fetchUserInfo = async () => {
     try {
-      const response = await customFetch.get(apiUrlUser);
+      const response = await customFetch.get(apiUrl);
       return response.data;
     } catch (error) {
       throw new Error("Error fetching follower data");
@@ -50,7 +53,7 @@ function PostList() {
     data: userData,
     isLoading: isUserLoading,
     isError: isUserError,
-  } = useQuery(["userData", apiUrlUser], fetchUserInfo);
+  } = useQuery(["userData", apiUrl], fetchUserInfo);
 
   const {
     data: postData,
@@ -67,8 +70,6 @@ function PostList() {
   }
 
   const post = postData.data;
-  const userName = userData.user.name;
-  const userAva = userData.user.avatar;
 
   const openModal = (image) => {
     setSelectedImage(image);
@@ -79,7 +80,15 @@ function PostList() {
     setSelectedImage(null);
     setModalOpen(false);
   };
-  console.log(userID);
+
+  if (post.length === 0) {
+    return (
+      <div className="postList">
+        <p className="noAlbumsMessage">No post to show</p>
+      </div>
+    );
+  }
+
   return (
     <div className="postList">
       <ImageList cols={3} rowHeight={250} className="noGapImageList">
@@ -174,8 +183,10 @@ function PostList() {
                   >
                     <img
                       src={
-                        userAva ||
-                        "https://antimatter.vn/wp-content/uploads/2022/11/anh-avatar-trang-fb-mac-dinh.jpg"
+                        apiUrl === apiUrlUser
+                          ? userData.user.avatar
+                          : userData.data.avatar ||
+                            "https://antimatter.vn/wp-content/uploads/2022/11/anh-avatar-trang-fb-mac-dinh.jpg"
                       }
                       alt="avatar"
                       style={{
@@ -193,7 +204,9 @@ function PostList() {
                         fontWeight: 600,
                       }}
                     >
-                      {userName}
+                      {apiUrl === apiUrlUser
+                        ? userData.user.name
+                        : userData.data.name}
                     </div>
                   </div>
                   <div

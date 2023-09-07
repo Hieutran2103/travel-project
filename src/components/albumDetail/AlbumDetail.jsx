@@ -135,7 +135,7 @@ function AlbumDetail() {
 
   const mediaItems = albumDataDetail.data.medias;
   const mediaName = albumDataDetail.data.album_name;
-
+  const mediaDes = albumDataDetail.data.album_description;
   const handleDelete = () => {
     deleteAlbumMutation();
   };
@@ -170,7 +170,8 @@ function AlbumDetail() {
         >
           {mediaName}
         </div>
-        {currentUser.id === userID && (
+
+        {currentUser._id === userID && (
           <Button
             id="demo-customized-button"
             aria-controls={open ? "demo-customized-menu" : undefined}
@@ -216,6 +217,14 @@ function AlbumDetail() {
             Delete
           </MenuItem>
         </StyledMenu>
+      </div>
+      <div
+        style={{
+          fontSize: "20px",
+          marginLeft: "20px",
+        }}
+      >
+        {mediaDes}
       </div>
       <ImageList cols={3} rowHeight={250}>
         {mediaItems.map((item, index) => (

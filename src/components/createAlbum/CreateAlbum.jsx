@@ -19,7 +19,7 @@ function CreateAlbum() {
   const queryClient = useQueryClient();
   const navigate = useNavigate();
 
-  const userID = currentUser.id;
+  const userID = currentUser._id;
 
   const {mutate: createTask} = useMutation({
     mutationFn: (album) => customFetch.post("/albums", album),

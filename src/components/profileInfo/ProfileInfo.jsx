@@ -19,17 +19,17 @@ function ProfileInfo() {
   const {postsData} = usePostsData();
   const url = window.location.pathname.split("/");
   const userID = url[url.length - 2];
-  const username = "user64d0c2d495b2d6b429e09bc4";
 
   useEffect(() => {
     if (postsData) {
       console.log(postsData);
     }
   }, [postsData]);
-  //Current user
+
+  const isCurrentUser = userID === currentUser._id;
   const apiUrlUser = `users/get-profile`;
-  //Friend profile
-  const apiUrlFriend = `users/${username}`;
+  const apiUrlFriend = `users/${userID}`;
+  const apiUrl = isCurrentUser ? apiUrlUser : apiUrlFriend;
   const apiUrlFollower = `users/follower/${userID}?limit=${limit}&page=${page}`;
   const apiUrlFollowing = `users/following/${userID}?limit=${limit}&page=${page}`;
   const apiUrlPost = `posts/status/${userID}?limit=${limit}&page=${page}`;
@@ -54,7 +54,7 @@ function ProfileInfo() {
 
   const fetchUserInfo = async () => {
     try {
-      const response = await customFetch.get(apiUrlUser);
+      const response = await customFetch.get(apiUrl);
       return response.data;
     } catch (error) {
       throw new Error("Error fetching follower data");
@@ -86,7 +86,7 @@ function ProfileInfo() {
     data: userData,
     isLoading: isUserLoading,
     isError: isUserError,
-  } = useQuery(["userData", apiUrlUser], fetchUserInfo);
+  } = useQuery(["userData", apiUrl], fetchUserInfo);
 
   const {
     data: postData,
@@ -134,14 +134,16 @@ function ProfileInfo() {
       toggleModalFollowing();
     }
   };
-  console.log(userID);
+
   return (
     <div className="profileInfo">
       <div className="leftProfile">
         <img
           src={
-            userData.user.avatar ||
-            "https://antimatter.vn/wp-content/uploads/2022/11/anh-avatar-trang-fb-mac-dinh.jpg"
+            apiUrl === apiUrlUser
+              ? userData.user.avatar
+              : userData.data.avatar ||
+                "https://antimatter.vn/wp-content/uploads/2022/11/anh-avatar-trang-fb-mac-dinh.jpg"
           }
           alt="avatar"
           className="avatar"
@@ -149,8 +151,10 @@ function ProfileInfo() {
       </div>
       <div className="rightProfile">
         <div className="info">
-          <div className="userName">{userData.user.name}</div>
-          {currentUser.id === userID ? (
+          <div className="userName">
+            {apiUrl === apiUrlUser ? userData.user.name : userData.data.name}
+          </div>
+          {currentUser._id === userID ? (
             <>
               <button className="editButton">
                 <Link
@@ -183,7 +187,13 @@ function ProfileInfo() {
             <div className="modal">
               <div onClick={toggleModalFollower} className="overlay"></div>
               <div className="modal-content">
-                <div className="modalTitle"> {t("profile.follower")}</div>
+                <div className="modalTitle">
+                  {" "}
+                  {t("profile.follower")}{" "}
+                  <div className="close-modal" onClick={toggleModalFollower}>
+                    <CloseIcon />
+                  </div>
+                </div>
                 {followerInfo.map((followersArray, index) => (
                   <div className="modalContent" key={index}>
                     {followersArray.map((follower) => (
@@ -210,9 +220,6 @@ function ProfileInfo() {
                     ))}
                   </div>
                 ))}
-                <div className="close-modal" onClick={toggleModalFollower}>
-                  <CloseIcon />
-                </div>
               </div>
             </div>
           )}
@@ -223,7 +230,13 @@ function ProfileInfo() {
             <div className="modal">
               <div onClick={toggleModalFollowing} className="overlay"></div>
               <div className="modal-content">
-                <div className="modalTitle"> {t("profile.following")}</div>
+                <div className="modalTitle">
+                  {" "}
+                  {t("profile.following")}
+                  <div className="close-modal" onClick={toggleModalFollowing}>
+                    <CloseIcon />
+                  </div>
+                </div>
                 {followingInfo.map((followingsArray, index) => (
                   <div className="modalContent" key={index}>
                     {followingsArray?.map((following) => (
@@ -250,9 +263,6 @@ function ProfileInfo() {
                     ))}
                   </div>
                 ))}
-                <div className="close-modal" onClick={toggleModalFollowing}>
-                  <CloseIcon />
-                </div>
               </div>
             </div>
           )}

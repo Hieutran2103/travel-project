@@ -1,46 +1,79 @@
 import React from "react";
+import {useQuery} from "@tanstack/react-query";
+import {useGlobalPage} from "../../context/Page";
+import customFetch from "../../utils/url";
 import "./vacationList.scss";
 
-const itemData = [
-  {
-    img: "https://images.unsplash.com/photo-1551963831-b3b1ca40c98e",
-    title: "Breakfast",
-    user: "Hien",
-    status: "Public",
-    date: "22/07/2023",
-  },
-];
-
 function VacationList() {
+  const {page, limit, handleNextLimit} = useGlobalPage();
   const url = window.location.pathname.split("/");
   const userID = url[url.length - 2];
 
+  const apiUrlVacation = `vacations/vacation-user/${userID}?limit=${limit}&page=${page}`;
+
+  const fetchVacationInfo = async () => {
+    try {
+      const response = await customFetch.get(apiUrlVacation);
+      return response.data;
+    } catch (error) {
+      throw new Error("Error fetching vacation data");
+    }
+  };
+
+  const {
+    data: vacationData,
+    isLoading: isVacationLoading,
+    isError: isVacationError,
+  } = useQuery(["userData", apiUrlVacation], fetchVacationInfo);
+
+  if (isVacationLoading) {
+    return;
+  }
+
+  if (isVacationError) {
+    return;
+  }
+
+  const vacation = vacationData.data;
+
+  if (vacation.length === 0) {
+    return (
+      <div className="vacationContainer">
+        <p className="noAlbumsMessage">No vacation to show</p>
+      </div>
+    );
+  }
+
+  console.log(vacation);
   return (
     <div className="vacationContainer">
-      {itemData.map((item) => (
+      {vacation.map((item) => (
         <div className="vacationList">
           <div className="container">
-            <img className="imgVacation" src={`${item.img}`} alt="image" />
+            <img
+              className="imgVacation"
+              src={`${item.vacation_avatar}`}
+              alt="image"
+            />
             <div className="details">
               <div className="info">
                 <div>
-                  <h3>{item.title}</h3>
+                  <h3>{item.vacation_name}</h3>
                 </div>
                 <div
                   style={{
                     fontSize: "15px",
                   }}
                 >
-                  Paris, capital of France, is one of the most important and
-                  influential cities in the world. In terms of tourism, Paris is
-                  the second most visited city in Europe after London.
+                  {item.vacation_intro}
                 </div>
                 <div
                   style={{
-                    marginTop: "5px",
+                    fontSize: "15px",
+                    marginTop: "10px",
                   }}
                 >
-                  By {item.user}
+                  {item.vacation_description}
                 </div>
               </div>
               <div>

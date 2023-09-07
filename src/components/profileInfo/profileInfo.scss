@@ -31,9 +31,6 @@
         justify-content: space-between;
         margin-bottom: 15px;
         max-width: 700px;
-        .postNum {
-          margin-left: 5px;
-        }
         .editButton {
           font-family: themed("fontFamily");
           font-size: 15px;
@@ -90,9 +87,15 @@
           .modalTitle {
             display: flex;
             justify-content: center;
+            position: sticky;
             font-weight: 700;
             font-size: 30px;
-            margin: 10px 0px;
+            padding-top: 10px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid grey;
+            top: 0;
+            background-color: white;
+            box-shadow: 0px 5px 10px rgba(221, 221, 221, 0.8);
           }
           .followerUser {
             display: flex;
@@ -129,7 +132,6 @@
         }
         .close-modal {
           position: absolute;
-          top: 14px;
           right: 10px;
           padding: 5px 7px;
           cursor: pointer;

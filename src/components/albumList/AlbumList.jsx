@@ -22,12 +22,10 @@ function AlbumList() {
   const url = window.location.pathname.split("/");
   const userID = url[url.length - 2];
   const apiUrlAlbum = `albums/user/${userID}?limit=${limit}&page=${page}`;
-  console.log(userID);
-  const fetchAlbumInfo = async (userID) => {
+
+  const fetchAlbumInfo = async () => {
     try {
-      const response = await customFetch.get(
-        `albums/user/${userID}?limit=${limit}&page=${page}`
-      );
+      const response = await customFetch.get(apiUrlAlbum);
       return response.data;
     } catch (error) {
       throw new Error("Error fetching album data");
@@ -38,7 +36,7 @@ function AlbumList() {
     data: albumData,
     isLoading: isAlbumLoading,
     isError: isAlbumError,
-  } = useQuery(["albumData", userID], () => fetchAlbumInfo(userID));
+  } = useQuery(["albumData", apiUrlAlbum], fetchAlbumInfo);
 
   if (isAlbumLoading) {
     return;
@@ -50,14 +48,14 @@ function AlbumList() {
 
   const albums = albumData.data;
   const modifiedItemData =
-    currentUser.id === userID
+    currentUser._id === userID
       ? [createAlbumItem, ...(albums || [])]
       : [...(albums || [])];
 
   if (albums.length === 0) {
     return (
       <div className="albumList">
-        <p className="noAlbumsMessage">No albums to show</p>
+        <p className="noAlbumsMessage">No album to show</p>
       </div>
     );
   }
@@ -77,7 +75,7 @@ function AlbumList() {
             key={item._id || "createAlbum"}
           >
             {item.isCreateAlbum ? (
-              currentUser.id === userID ? (
+              currentUser._id === userID ? (
                 <Link
                   to="/profile/createAlbum"
                   style={{
@@ -134,7 +132,7 @@ function AlbumList() {
                       {item.album_name || "Unknown Album"}
                     </span>
                   }
-                  subtitle={<span>{item.album_description || ""}</span>}
+                  subtitle={<span>{item.medias.length + " items" || ""}</span>}
                   position="below"
                 />
               </Link>

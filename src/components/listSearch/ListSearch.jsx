@@ -6,7 +6,6 @@ import {useGlobalSearch} from "../../context/Search&Notification";
 const ListSearch = ({dataUser}) => {
   const {closeSearch} = useGlobalSearch();
 
-  console.log(dataUser);
   return (
     <div className="listSearch">
       <div className="listUser">
@@ -34,7 +33,7 @@ const ListSearch = ({dataUser}) => {
 
                 <div className="detail">
                   <Link
-                    to={`/profile/${post?._id}/posts`}
+                    to={`/profile/${post?._id}`}
                     style={{textDecoration: "none", color: "inherit"}}
                     onClick={closeSearch}
                   >

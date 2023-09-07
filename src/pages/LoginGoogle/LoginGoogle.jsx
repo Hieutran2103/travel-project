@@ -22,5 +22,5 @@ export default function LoginGoogle() {
       window.location.reload();
     }, 500);
   }, [params, navigate]);
-  return <div style={{textAlign: "center"}}>Redirecting...</div>;
+  return <div style={{display: "flex", justifyContent:"center", alignItems: "center", height: "100vh", fontSize: 25}}>Redirecting...</div>;
 }

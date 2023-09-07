@@ -5,9 +5,7 @@ import logoNewfeed from "../../assets/NotFound.svg";
 import {useGlobalSearch} from "../../context/Search&Notification";
 
 const ListSearch = ({dataUser}) => {
-  console.log(dataUser);
   const {closeSearch} = useGlobalSearch();
-  const navigate = useNavigate();
 
   return (
     <div className="listSearch">
@@ -43,7 +41,7 @@ const ListSearch = ({dataUser}) => {
 
                 <div className="detail">
                   <Link
-                    to={`/profile/${post._id}/posts`}
+                    to={`/profile/${post?._id}`}
                     style={{textDecoration: "none", color: "inherit"}}
                     onClick={closeSearch}
                   >

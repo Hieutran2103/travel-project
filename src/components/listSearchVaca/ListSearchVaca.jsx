@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import "./listSearchVaca.scss";
 import { useNavigate } from "react-router-dom";
 import logoNewfeed from "../../assets/NotFound.svg";
@@ -9,7 +10,7 @@ const ListSearchVaca = ({ dataVacation }) => {
   const navigaVacation = (e) => {
     navigate(`/vacation/${e?._id}`);
     window.location.reload();
-  };
+  }
 
   return (
     <div className="listSearchz">

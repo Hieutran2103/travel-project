@@ -174,7 +174,7 @@ const Vacation = () => {
       }
     },
     refetchOnReconnect: false,
-    // refetchOnWindowFocus: false,
+    refetchOnWindowFocus: false,
   });
 
   

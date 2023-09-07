@@ -194,9 +194,9 @@ function ProfileInfo() {
                     <CloseIcon />
                   </div>
                 </div>
-                {followerInfo.map((followersArray, index) => (
+                {followerInfo?.map((followersArray, index) => (
                   <div className="modalContent" key={index}>
-                    {followersArray.map((follower) => (
+                    {followersArray?.map((follower) => (
                       <div className="followerUser" key={follower._id}>
                         <div className="modalContainer">
                           <img
@@ -237,7 +237,7 @@ function ProfileInfo() {
                     <CloseIcon />
                   </div>
                 </div>
-                {followingInfo.map((followingsArray, index) => (
+                {followingInfo?.map((followingsArray, index) => (
                   <div className="modalContent" key={index}>
                     {followingsArray?.map((following) => (
                       <div className="followerUser" key={following._id}>

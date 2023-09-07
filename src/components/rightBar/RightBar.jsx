@@ -17,7 +17,6 @@ const RightBar = () => {
 
   const apiUrlRandom = `vacations/random`;
 
-
   const fetchVacationsRandom = async () => {
     try {
       const response = await customFetch.get(apiUrlRandom);
@@ -33,7 +32,7 @@ const RightBar = () => {
     isError: isVacationsError,
   } = useQuery(["vacationsData", apiUrlRandom], fetchVacationsRandom, {
     refetchOnReconnect: false,
-    refetchOnWindowFocus: false
+    refetchOnWindowFocus: false,
   });
 
   if (isVacationsLoading) {
@@ -44,11 +43,9 @@ const RightBar = () => {
     return;
   }
 
-
   const vacations = vacationsData.data;
-  console.log(vacations)
-
   console.log(vacations);
+
   return (
     <div className="rightBar">
       <div className="container">
@@ -84,10 +81,16 @@ const RightBar = () => {
                     <div className="name">{vacation.vacation_name}</div>
                     <div className="text">{vacation.vacation_intro}</div>
                   </div>
-                  <div className="follow" onClick={() => {
-                     navigate(`/vacation/${vacation?._id}`);
-                     window.location.reload();
-                  }}> {t("rightBar.visit")}</div>
+                  <div
+                    className="follow"
+                    onClick={() => {
+                      navigate(`/vacation/${vacation?._id}`);
+                      window.location.reload();
+                    }}
+                  >
+                    {" "}
+                    {t("rightBar.visit")}
+                  </div>
                 </div>
               ))}
             </div>

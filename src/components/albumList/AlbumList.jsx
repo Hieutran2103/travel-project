@@ -52,13 +52,15 @@ function AlbumList() {
       ? [createAlbumItem, ...(albums || [])]
       : [...(albums || [])];
 
-  if (albums.length === 0) {
+  if ((currentUser._id !== userID && albums.length) === 0) {
     return (
       <div className="albumList">
         <p className="noAlbumsMessage">No album to show</p>
       </div>
     );
   }
+
+  console.log(modifiedItemData);
 
   return (
     <div className="albumList">
@@ -132,7 +134,13 @@ function AlbumList() {
                       {item.album_name || "Unknown Album"}
                     </span>
                   }
-                  subtitle={<span>{item.medias.length + " items" || ""}</span>}
+                  subtitle={
+                    <span>
+                      {item.medias.length !== null
+                        ? item.medias.length + " items"
+                        : "0 items"}
+                    </span>
+                  }
                   position="below"
                 />
               </Link>

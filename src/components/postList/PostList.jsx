@@ -209,7 +209,7 @@ function PostList() {
                         : userData.data.name}
                     </div>
                   </div>
-                  <div
+                  {/* <div
                     style={{
                       display: "flex",
                       alignItems: "center",
@@ -243,7 +243,7 @@ function PostList() {
                     >
                       anh dep zai qua
                     </div>
-                  </div>
+                  </div> */}
                   <div
                     style={{
                       position: "sticky",

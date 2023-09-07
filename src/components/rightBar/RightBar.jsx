@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/rules-of-hooks */
 import {useTranslation} from "react-i18next";
 import {useGlobalContextAuth} from "../../context/AuthContext";
 import MoreVertOutlinedIcon from "@mui/icons-material/MoreVertOutlined";
@@ -16,6 +17,7 @@ const RightBar = () => {
 
   const apiUrlRandom = `vacations/random`;
 
+
   const fetchVacationsRandom = async () => {
     try {
       const response = await customFetch.get(apiUrlRandom);
@@ -29,7 +31,10 @@ const RightBar = () => {
     data: vacationsData,
     isLoading: isVacationsLoading,
     isError: isVacationsError,
-  } = useQuery(["vacationsData", apiUrlRandom], fetchVacationsRandom);
+  } = useQuery(["vacationsData", apiUrlRandom], fetchVacationsRandom, {
+    refetchOnReconnect: false,
+    refetchOnWindowFocus: false
+  });
 
   if (isVacationsLoading) {
     return;
@@ -39,7 +44,9 @@ const RightBar = () => {
     return;
   }
 
+
   const vacations = vacationsData.data;
+  console.log(vacations)
 
   console.log(vacations);
   return (
@@ -77,7 +84,10 @@ const RightBar = () => {
                     <div className="name">{vacation.vacation_name}</div>
                     <div className="text">{vacation.vacation_intro}</div>
                   </div>
-                  <div className="follow"> {t("rightBar.visit")}</div>
+                  <div className="follow" onClick={() => {
+                     navigate(`/vacation/${vacation?._id}`);
+                     window.location.reload();
+                  }}> {t("rightBar.visit")}</div>
                 </div>
               ))}
             </div>

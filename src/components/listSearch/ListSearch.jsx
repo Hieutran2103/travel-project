@@ -1,10 +1,13 @@
-import { Link } from "react-router-dom";
+/* eslint-disable react/prop-types */
+import { Link, useNavigate } from "react-router-dom";
 import "./listSearch.scss";
 import logoNewfeed from "../../assets/NotFound.svg";
 import { useGlobalSearch } from "../../context/Search&Notification";
 
 const ListSearch = ({ dataUser }) => {
+  console.log(dataUser)
   const { closeSearch } = useGlobalSearch();
+  const navigate = useNavigate()
 
   return (
     <div className="listSearch">
@@ -16,9 +19,12 @@ const ListSearch = ({ dataUser }) => {
         ) : (
           dataUser?.map((post) => {
             return (
-              <div className="user" key={post?._id}>
+              <div className="user" key={post._id} onClick={() => {
+                navigate(`/profile/${post._id}/posts`);
+                window.location.reload();
+              }}>
                 <Link
-                  to={`/profile/${post?._id}`}
+                  to={`/profile/${post._id}/posts`}
                   style={{ textDecoration: "none", color: "inherit" }}
                 >
                   <img
@@ -33,7 +39,7 @@ const ListSearch = ({ dataUser }) => {
 
                 <div className="detail">
                   <Link
-                    to={`/profile/${post?._id}`}
+                    to={`/profile/${post._id}/posts`}
                     style={{ textDecoration: "none", color: "inherit" }}
                     onClick={closeSearch}
                   >

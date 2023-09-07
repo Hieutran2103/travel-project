@@ -105,8 +105,8 @@ function PostList() {
           >
             <img
               className="imagePost"
-              src={`${item.medias[0]?.url}?w=250&h=250&fit=crop&auto=format`}
-              srcSet={`${item.medias[0]?.url}?w=250&h=250&fit=crop&auto=format&dpr=2 2x`}
+              src={`${item.medias[0].url}?w=250&h=250&fit=crop&auto=format`}
+              srcSet={`${item.medias[0].url}?w=250&h=250&fit=crop&auto=format&dpr=2 2x`}
               alt="Error"
               loading="lazy"
               style={{objectFit: "cover", width: "100%", height: "100%"}}

@@ -1,15 +1,15 @@
 import React from "react";
-import { useQuery } from "@tanstack/react-query";
-import { useGlobalPage } from "../../context/Page";
+import {useQuery} from "@tanstack/react-query";
+import {useGlobalPage} from "../../context/Page";
 import customFetch from "../../utils/url";
 import "./vacationList.scss";
-import { useNavigate } from "react-router-dom";
+import {useNavigate} from "react-router-dom";
 
 function VacationList() {
-  const { page, limit, handleNextLimit } = useGlobalPage();
+  const {page, limit, handleNextLimit} = useGlobalPage();
   const url = window.location.pathname.split("/");
   const userID = url[url.length - 2];
-  const navigate = useNavigate()
+  const navigate = useNavigate();
 
   const apiUrlVacation = `vacations/vacation-user/${userID}?limit=${limit}&page=${page}`;
 

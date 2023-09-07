@@ -226,7 +226,7 @@ function CreateAlbum() {
       )}
       {file && (
         <ImageList
-          cols={4}
+          cols={3}
           gap={10}
           style={{marginTop: "20px", marginLeft: "5px", marginRight: "5px"}}
         >
@@ -237,7 +237,7 @@ function CreateAlbum() {
                 alt={`Selected ${index + 1}`}
                 style={{width: "100%"}}
               />
-              <div
+              {/* <div
                 style={{
                   height: "100px",
                   background: "#d6d6d6",
@@ -264,7 +264,7 @@ function CreateAlbum() {
                   }}
                   placeholder="Description"
                 />
-              </div>
+              </div> */}
             </ImageListItem>
           ))}
         </ImageList>

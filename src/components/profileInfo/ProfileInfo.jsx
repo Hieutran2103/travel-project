@@ -86,8 +86,6 @@ function ProfileInfo() {
     }
   })
 
-  console.log(followData)
-
   const handleFollowUser = (id) => {
     followUser({
       followed_user_id: id
@@ -102,8 +100,6 @@ function ProfileInfo() {
       setFollowed(false)
     }
   })
-
-  console.log(unFollowData)
 
   const handleUnfollow = (id) => {
     unFollow(id)

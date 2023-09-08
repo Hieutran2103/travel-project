@@ -26,7 +26,7 @@ import { useGlobalContextAuth } from "../../context/AuthContext";
 
 const Post = ({ post }) => {
   const { medias, content, user, created_at, _id } = post;
-  const { currentUser } = useGlobalContextAuth();
+  const { currentUser} = useGlobalContextAuth();
 
   // const currentPost = index;
   const { setImagePost, setContextPost } = useGlobalPage();
@@ -35,27 +35,29 @@ const Post = ({ post }) => {
   //State Comments
   const [commentOpen, setCommentOpen] = useState(false);
 
-  const getLikeFromLS = () => localStorage.getItem("like") || false;
+  // const getLikeFromLS = () => localStorage.getItem("like") || false;
 
-  const [liked, setLiked] = useState(Boolean(getLikeFromLS));
+  const [liked, setLiked] = useState(false);
   // console.log(liked);
 
-  const { mutate: postLike } = useMutation({
+  const { mutate: postLike} = useMutation({
     mutationFn: (posts) => customFetch.post(`/likes`, posts),
     onSuccess: (data) => {
       queryClient.invalidateQueries({ queryKey: ["likes"] });
-      localStorage.setItem("like", true);
+      // localStorage.setItem("like", true);
       setLiked(true);
     },
     onError: (error) => {
       toast.error("error");
     },
   });
-  const { mutate: deletePostLike } = useMutation({
+
+
+  const { mutate: deletePostLike} = useMutation({
     mutationFn: (posts) => customFetch.delete(`/likes/post/${posts}`),
     onSuccess: (data) => {
       queryClient.invalidateQueries({ queryKey: ["likes"] });
-      localStorage.removeItem("like");
+      // localStorage.removeItem("like");
       setLiked(false);
     },
     onError: (error) => {
@@ -244,13 +246,13 @@ const Post = ({ post }) => {
         <div className="info">
           <div className="item">
             {/* {!liked && <FavoriteBorderOutlinedIcon onClick={handleLike} />} */}
-            {liked && data?.total >= 1 ? (
-              <FavoriteOutlinedIcon
+            {liked && data?.total > 0 ? (
+              <FavoriteOutlinedIcon 
                 style={{ color: "red" }}
                 onClick={handleDisLike}
               />
-            ) : (
-              <FavoriteBorderOutlinedIcon onClick={handleLike} />
+            ):(
+               <FavoriteBorderOutlinedIcon onClick={handleLike} />
             )}
             {""}
             {data?.total} {t("newfeed.like")}

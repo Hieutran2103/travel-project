@@ -79,9 +79,7 @@ const Setting = () => {
         localStorage.setItem("user", JSON.stringify(data.data.data))
       );
       refetch()
-      setTimeout(() => {
         window.location.reload();
-      }, 500);
     },
   });
 

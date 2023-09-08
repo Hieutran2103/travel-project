@@ -14,6 +14,7 @@ import customFetch from "../../utils/url";
 import {useGlobalContextAuth} from "../../context/AuthContext";
 import {useTranslation} from "react-i18next";
 import "./postList.scss";
+import Comments from "../comments/Comments";
 
 function PostList() {
   const {currentUser} = useGlobalContextAuth();
@@ -61,15 +62,15 @@ function PostList() {
     isError: isPostError,
   } = useQuery(["postData", apiUrlPost], fetchPostInfo);
 
-  if (isPostLoading || isUserLoading) {
-    return;
-  }
+  // if (isPostLoading || isUserLoading) {
+  //   return;
+  // }
 
-  if (isPostError || isUserError) {
-    return;
-  }
+  // if (isPostError || isUserError) {
+  //   return;
+  // }
 
-  const post = postData.data;
+  const post = postData?.data;
 
   const openModal = (image) => {
     setSelectedImage(image);
@@ -81,18 +82,20 @@ function PostList() {
     setModalOpen(false);
   };
 
-  if (post.length === 0) {
+  if (post?.length === 0) {
     return (
       <div className="postList">
-        <p className="noAlbumsMessage">No post to show</p>
+        <p className="noAlbumsMessage">{t("profile.noP")}</p>
       </div>
     );
   }
 
+  // console.log(selectedImage);
+
   return (
     <div className="postList">
       <ImageList cols={3} rowHeight={250} className="noGapImageList">
-        {post.map((item) => (
+        {post?.map((item) => (
           <ImageListItem
             className="imageList"
             key={item._id}
@@ -108,7 +111,12 @@ function PostList() {
               srcSet={`${item.medias?.[0]?.url}?w=250&h=250&fit=crop&auto=format&dpr=2 2x`}
               alt="Error"
               loading="lazy"
-              style={{objectFit: "cover", width: "100%", height: "100%"}}
+              style={{
+                objectFit: "cover",
+                width: "100%",
+                height: "100%",
+                borderRadius: "20px",
+              }}
             />
 
             <div className="info">
@@ -209,41 +217,25 @@ function PostList() {
                         : userData.data.name}
                     </div>
                   </div>
-                  {/* <div
+                  <div
                     style={{
                       display: "flex",
                       alignItems: "center",
                       marginBottom: "10px",
                     }}
-                  >
-                    <img
-                      src="https://i.ebayimg.com/images/g/ksYAAOSwD7ljaYRn/s-l1600.jpg"
-                      alt="avatar"
-                      style={{
-                        width: "50px",
-                        height: "50px",
-                        borderRadius: "50%",
-                        marginBottom: "10px",
-                        marginLeft: "10px",
-                        marginTop: "10px",
-                      }}
-                    />
-                    <div
-                      style={{
-                        marginLeft: "10px",
-                        fontWeight: 600,
-                      }}
-                    >
-                      chinhdo
-                    </div>
-                    <div
-                      style={{
-                        marginLeft: "10px",
-                      }}
-                    >
-                      anh dep zai qua
-                    </div>
-                  </div> */}
+                  ></div>
+                  <div style={{marginLeft: "10px"}}>
+                    {selectedImage &&
+                      selectedImage.comments.map((comment, index) => (
+                        <div key={index} style={{display: "flex"}}>
+                          <div style={{fontWeight: 600, marginRight: "5px"}}>
+                            {comment.user_id}:
+                          </div>
+                          <div>{comment.comment}</div>
+                        </div>
+                      ))}
+                  </div>
+
                   <div
                     style={{
                       position: "sticky",
@@ -285,7 +277,7 @@ function PostList() {
                         fontWeight: 600,
                       }}
                     >
-                      {`${selectedImage.like}`} likes
+                      {`${selectedImage.like}`} {t("profile.like")}
                     </div>
                     <div
                       style={{

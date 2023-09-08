@@ -57,6 +57,22 @@
     "album": "Album",
     "vacation": "Kì nghỉ",
     "comment": "Bình luận...",
-    "dm": "Nhắn tin"
+    "like": "Lượt thích",
+    "dm": "Nhắn tin",
+    "createAlbum": "Tạo Album",
+    "back": "Quay về",
+    "create": "Tạo",
+    "file": "Chọn hoặc kéo file vào đây",
+    "albumName": "Tên Album",
+    "albumDes": "Mô tả Album",
+    "items": "Mục",
+    "saveAlbum": "Lưu",
+    "cancelAlbum": "Hủy",
+    "actionAlbum": "HÀNH ĐỘNG",
+    "deleteAlbum": "Xóa",
+    "editAlbum": "Sửa",
+    "noA": "Không có album",
+    "noP": "Không có bài đăng",
+    "noV": "Không có kì nghỉ"
   }
 }

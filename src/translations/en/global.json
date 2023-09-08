@@ -57,6 +57,22 @@
     "album": "Album",
     "vacation": "Vacation",
     "comment": "Add a comment...",
-    "dm": "Message"
+    "like": "Likes",
+    "dm": "Message",
+    "createAlbum": "Create Album",
+    "back": "Back",
+    "create": "Create",
+    "file": "Choose a file or drag it here",
+    "albumName": "Album Name",
+    "albumDes": "Album Description",
+    "items": "Items",
+    "saveAlbum": "Save",
+    "cancelAlbum": "Cancel",
+    "actionAlbum": "ACTION",
+    "deleteAlbum": "Delete",
+    "editAlbum": "Edit",
+    "noA": "No album to show",
+    "noP": "No post to show",
+    "noV": "No vacation to show"
   }
 }

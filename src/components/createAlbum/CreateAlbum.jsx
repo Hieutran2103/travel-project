@@ -7,6 +7,7 @@ import {ImageList, ImageListItem} from "@mui/material";
 import {Link, useNavigate} from "react-router-dom";
 import FileUploadOutlinedIcon from "@mui/icons-material/FileUploadOutlined";
 import {useGlobalContextAuth} from "../../context/AuthContext";
+import {useTranslation} from "react-i18next";
 import "./createAlbum.scss";
 
 function CreateAlbum() {
@@ -14,7 +15,8 @@ function CreateAlbum() {
   const [file, setFile] = useState(null);
   const [desc, setDesc] = useState("");
   const [name, setName] = useState("");
-  const [imageNames, setImageNames] = useState([]);
+  const [t, i18] = useTranslation("global");
+  // const [imageNames, setImageNames] = useState([]);
   const [unSelectedFile, setunSelectedFile] = useState(false);
   const queryClient = useQueryClient();
   const navigate = useNavigate();
@@ -95,11 +97,11 @@ function CreateAlbum() {
     setName(e.target.value);
   };
 
-  const handleImageNameChange = (index, newName) => {
-    const updatedNames = [...imageNames];
-    updatedNames[index] = newName;
-    setImageNames(updatedNames);
-  };
+  // const handleImageNameChange = (index, newName) => {
+  //   const updatedNames = [...imageNames];
+  //   updatedNames[index] = newName;
+  //   setImageNames(updatedNames);
+  // };
 
   return (
     <div className="createAlbum">
@@ -123,7 +125,7 @@ function CreateAlbum() {
         >
           <div class="button button--piyo">
             <div class="button__wrapper">
-              <span class="button__text">BACK</span>
+              <span class="button__text">{t("profile.back")}</span>
             </div>
           </div>
         </Link>
@@ -136,7 +138,7 @@ function CreateAlbum() {
           fontWeight: 600,
         }}
       >
-        Create Album
+        {t("profile.createAlbum")}
       </div>
       <div className="mainCon">
         <div
@@ -148,7 +150,7 @@ function CreateAlbum() {
         >
           <div onClick={handleCreate} class="button button--piyo">
             <div class="button__wrapper">
-              <span class="button__text">CREATE</span>
+              <span class="button__text">{t("profile.create")}</span>
             </div>
             <div class="characterBox">
               <div class="character wakeup">
@@ -169,7 +171,7 @@ function CreateAlbum() {
             id="album_name"
             name="album_name"
             onChange={handleName}
-            placeholder="Album Name "
+            placeholder={t("profile.albumName")}
             className="inputText"
             value={name}
           />
@@ -178,7 +180,7 @@ function CreateAlbum() {
             id="album_description"
             name="album_description"
             onChange={handleDesc}
-            placeholder="Album Description"
+            placeholder={t("profile.albumDes")}
             className="inputText"
             value={desc}
           />
@@ -213,7 +215,7 @@ function CreateAlbum() {
               className="labelInput"
               htmlFor="file"
             >
-              Choose a file or drag it here.
+              {t("profile.file")}
               <div>
                 <FileUploadOutlinedIcon
                   className="icon"

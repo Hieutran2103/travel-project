@@ -8,13 +8,15 @@ import customFetch from "../../utils/url";
 import {useQuery} from "@tanstack/react-query";
 import {useGlobalPage} from "../../context/Page";
 import {useGlobalContextAuth} from "../../context/AuthContext";
+import {useTranslation} from "react-i18next";
 import "./albumList.scss";
 
 function AlbumList() {
   const {currentUser} = useGlobalContextAuth();
   const {page, limit} = useGlobalPage();
+  const [t, i18] = useTranslation("global");
   const createAlbumItem = {
-    title: "Create Album",
+    title: t("profile.createAlbum"),
     num: 0,
     isCreateAlbum: true,
   };
@@ -38,29 +40,27 @@ function AlbumList() {
     isError: isAlbumError,
   } = useQuery(["albumData", apiUrlAlbum], fetchAlbumInfo);
 
-  if (isAlbumLoading) {
-    return;
-  }
+  // if (isAlbumLoading) {
+  //   return;
+  // }
 
-  if (isAlbumError) {
-    return;
-  }
+  // if (isAlbumError) {
+  //   return;
+  // }
 
-  const albums = albumData.data;
+  const albums = albumData?.data;
   const modifiedItemData =
     currentUser._id === userID
       ? [createAlbumItem, ...(albums || [])]
       : [...(albums || [])];
 
-  if ((currentUser._id !== userID && albums.length) === 0) {
+  if ((currentUser._id !== userID && albums?.length) === 0) {
     return (
       <div className="albumList">
-        <p className="noAlbumsMessage">No album to show</p>
+        <p className="noAlbumsMessage">{t("profile.noA")}</p>
       </div>
     );
   }
-
-  console.log(modifiedItemData);
 
   return (
     <div className="albumList">
@@ -69,7 +69,7 @@ function AlbumList() {
         className="noGapImageList"
         style={{paddingTop: 0, paddingBottom: 0}}
       >
-        {modifiedItemData.map((item) => (
+        {modifiedItemData?.map((item) => (
           <ImageListItem
             className={`imageList ${
               item.isCreateAlbum ? "createAlbumItem" : ""
@@ -137,7 +137,7 @@ function AlbumList() {
                   subtitle={
                     <span>
                       {item.medias.length !== null
-                        ? item.medias.length + " items"
+                        ? item.medias.length + " " + t("profile.items")
                         : "0 items"}
                     </span>
                   }

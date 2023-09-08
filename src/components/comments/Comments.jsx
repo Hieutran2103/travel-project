@@ -67,6 +67,7 @@ const Comments = ({postID, user}) => {
     <div className="comments">
       <div className="write">
         <img
+          className="avaC"
           src={
             !currentUser?.avatar
               ? "https://antimatter.vn/wp-content/uploads/2022/11/anh-avatar-trang-fb-mac-dinh.jpg"

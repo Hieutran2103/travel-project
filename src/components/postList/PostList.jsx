@@ -13,8 +13,8 @@ import {useGlobalPage} from "../../context/Page";
 import customFetch from "../../utils/url";
 import {useGlobalContextAuth} from "../../context/AuthContext";
 import {useTranslation} from "react-i18next";
-import "./postList.scss";
 import Comments from "../comments/Comments";
+import "./postList.scss";
 
 function PostList() {
   const {currentUser} = useGlobalContextAuth();
@@ -89,8 +89,6 @@ function PostList() {
       </div>
     );
   }
-
-  // console.log(selectedImage);
 
   return (
     <div className="postList">
@@ -217,94 +215,55 @@ function PostList() {
                         : userData.data.name}
                     </div>
                   </div>
-                  <div
-                    style={{
-                      display: "flex",
-                      alignItems: "center",
-                      marginBottom: "10px",
-                    }}
-                  ></div>
-                  <div style={{marginLeft: "10px"}}>
-                    {selectedImage &&
-                      selectedImage.comments.map((comment, index) => (
-                        <div key={index} style={{display: "flex"}}>
-                          <div style={{fontWeight: 600, marginRight: "5px"}}>
-                            {comment.user_id}:
-                          </div>
-                          <div>{comment.comment}</div>
+                  <div>
+                    <div
+                      style={{
+                        position: "sticky",
+                        bottom: 0,
+                        backgroundColor: "white",
+                      }}
+                    >
+                      <div
+                        style={{
+                          display: "flex",
+                          paddingTop: "10px",
+                        }}
+                      >
+                        <div
+                          className="icon"
+                          style={{
+                            marginLeft: "10px",
+                            marginBottom: "10px",
+                          }}
+                        >
+                          <FavoriteBorderOutlinedIcon />
                         </div>
-                      ))}
-                  </div>
-
-                  <div
-                    style={{
-                      position: "sticky",
-                      bottom: 0,
-                      backgroundColor: "white",
-                    }}
-                  >
-                    <div
-                      style={{
-                        display: "flex",
-                        borderTop: "1px solid rgb(239,239,239)",
-                        paddingTop: "10px",
-                      }}
-                    >
+                        <div
+                          className="icon"
+                          style={{
+                            marginLeft: "20px",
+                            marginBottom: "10px",
+                          }}
+                        >
+                          <ModeCommentOutlinedIcon />
+                        </div>
+                      </div>
                       <div
-                        className="icon"
+                        className="count"
                         style={{
                           marginLeft: "10px",
                           marginBottom: "10px",
+                          fontWeight: 600,
                         }}
                       >
-                        <FavoriteBorderOutlinedIcon />
-                      </div>
-                      <div
-                        className="icon"
-                        style={{
-                          marginLeft: "20px",
-                          marginBottom: "10px",
-                        }}
-                      >
-                        <ModeCommentOutlinedIcon />
+                        {`${selectedImage.like}`} {t("profile.like")}
                       </div>
                     </div>
-                    <div
-                      className="count"
-                      style={{
-                        marginLeft: "10px",
-                        marginBottom: "10px",
-                        fontWeight: 600,
-                      }}
-                    >
-                      {`${selectedImage.like}`} {t("profile.like")}
-                    </div>
-                    <div
-                      style={{
-                        display: "flex",
-                        alignItems: "center",
-                        marginBottom: "10px",
-                      }}
-                    >
-                      <input
-                        placeholder={t("profile.comment")}
-                        style={{
-                          border: "none",
-                          marginLeft: "10px",
-                          width: "90%",
-                          display: "flex",
-                          alignItems: "center",
-                          height: "20px",
-                        }}
-                      />
-                      <SendOutlinedIcon
-                        sx={{
-                          display: "flex",
-                          alignItems: "center",
-                          marginRight: "10px",
-                        }}
-                      />
-                    </div>
+                    <Comments
+                      className="comment"
+                      postID={selectedImage?._id}
+                      user={userData.user}
+                    />
                   </div>
                 </div>
               </div>

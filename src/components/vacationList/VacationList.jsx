@@ -2,8 +2,8 @@ import React from "react";
 import {useQuery} from "@tanstack/react-query";
 import {useGlobalPage} from "../../context/Page";
 import customFetch from "../../utils/url";
-import "./vacationList.scss";
 import {useNavigate} from "react-router-dom";
+import "./vacationList.scss";
 
 function VacationList() {
   const {page, limit, handleNextLimit} = useGlobalPage();
@@ -28,28 +28,27 @@ function VacationList() {
     isError: isVacationError,
   } = useQuery(["userData", apiUrlVacation], fetchVacationInfo);
 
-  if (isVacationLoading) {
-    return;
-  }
+  // if (isVacationLoading) {
+  //   return;
+  // }
 
-  if (isVacationError) {
-    return;
-  }
+  // if (isVacationError) {
+  //   return;
+  // }
 
-  const vacation = vacationData.data;
+  const vacation = vacationData?.data;
 
-  if (vacation.length === 0) {
+  if (vacation?.length === 0) {
     return (
       <div className="vacationContainer">
-        <p className="noAlbumsMessage">No vacation to show</p>
+        <p className="noAlbumsMessage">{t("profile.noV")}</p>
       </div>
     );
   }
 
-  console.log(vacation);
   return (
     <div className="vacationContainer">
-      {vacation.map((item) => (
+      {vacation?.map((item) => (
         <div key={item._id} className="vacationList">
           <div
             className="container"

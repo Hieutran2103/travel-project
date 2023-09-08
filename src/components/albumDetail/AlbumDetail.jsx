@@ -16,8 +16,8 @@ import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import {toast} from "react-toastify";
 import {ToastContainer} from "react-toastify";
 import {useGlobalContextAuth} from "../../context/AuthContext";
+import {useTranslation} from "react-i18next";
 import "./albumDetail.scss";
-import {IconButton} from "@mui/material";
 
 const StyledMenu = styled((props) => (
   <Menu
@@ -73,6 +73,8 @@ function AlbumDetail() {
   const [editmediaDes, setEditMediaDes] = useState("");
   const [editmediaItems, setEditMediaItems] = useState([]);
   const [newImage, setNewImage] = useState("");
+  const [tempAlbum, setTempAlbum] = useState({});
+  const [t, i18] = useTranslation("global");
   const open = Boolean(anchorEl);
   const navigate = useNavigate();
   const queryClient = useQueryClient();
@@ -117,7 +119,7 @@ function AlbumDetail() {
       toast.success("Successfully deleted album");
       setTimeout(() => {
         navigate(`/profile/${userID}/albums`);
-      }, 1000);
+      }, 2000);
       console.log(data);
     },
     onError: (error) => {
@@ -163,6 +165,7 @@ function AlbumDetail() {
       album_name: editmediaName,
       album_description: editmediaDes,
     });
+    setTempAlbum({medias: [...mediaItems]});
   };
 
   const handleSave = async () => {
@@ -188,6 +191,7 @@ function AlbumDetail() {
 
   const handleCancel = () => {
     setIsEditing(false);
+    setEditMediaItems([...tempAlbum.medias]);
   };
 
   const handleAddImage = () => {
@@ -200,6 +204,9 @@ function AlbumDetail() {
 
   const handleDeleteImage = (index) => {
     const updatedMediaItems = [...editmediaItems];
+    if (updatedMediaItems.length === 1) {
+      return;
+    }
     updatedMediaItems.splice(index, 1);
     setEditMediaItems(updatedMediaItems);
   };
@@ -223,13 +230,13 @@ function AlbumDetail() {
     }
   };
 
-  if (isAlbumDetailLoading) {
-    return;
-  }
+  // if (isAlbumDetailLoading) {
+  //   return;
+  // }
 
-  if (isAlbumDetailError) {
-    return;
-  }
+  // if (isAlbumDetailError) {
+  //   return;
+  // }
 
   return (
     <div className="albumDetail">
@@ -320,7 +327,7 @@ function AlbumDetail() {
                     },
                   }}
                 >
-                  Save
+                  {t("profile.saveAlbum")}
                 </Button>
                 <Button
                   id="demo-customized-button-cancel"
@@ -342,7 +349,7 @@ function AlbumDetail() {
                     },
                   }}
                 >
-                  Cancel
+                  {t("profile.cancelAlbum")}
                 </Button>
               </div>
             ) : (
@@ -364,7 +371,7 @@ function AlbumDetail() {
                   },
                 }}
               >
-                Action
+                {t("profile.actionAlbum")}
               </Button>
             )}
           </div>
@@ -386,7 +393,7 @@ function AlbumDetail() {
             disableRipple
           >
             <EditIcon />
-            Edit
+            {t("profile.editAlbum")}
           </MenuItem>
           <MenuItem
             onClick={() => {
@@ -396,7 +403,7 @@ function AlbumDetail() {
             disableRipple
           >
             <DeleteIcon />
-            Delete
+            {t("profile.deleteAlbum")}
           </MenuItem>
         </StyledMenu>
       </div>
@@ -432,7 +439,7 @@ function AlbumDetail() {
         </div>
       )}
       <ImageList cols={3} rowHeight={250}>
-        {editmediaItems.map((item, index) => (
+        {editmediaItems?.map((item, index) => (
           <ImageListItem key={index} className="imageList">
             <img
               src={item.url}
@@ -449,9 +456,14 @@ function AlbumDetail() {
               <div
                 onClick={() => handleDeleteImage(index)}
                 style={{
-                  display: "flex",
-                  justifyContent: "flex-end",
-                  alignItems: "center",
+                  position: "absolute",
+                  top: 0,
+                  right: 0,
+                  cursor: "pointer",
+                  background: "rgba(0, 0, 0, 0.7)",
+                  color: "white",
+                  padding: "4px 8px",
+                  borderRadius: "4px",
                 }}
               >
                 <DeleteIcon />

@@ -1,24 +1,30 @@
+/* eslint-disable react-hooks/rules-of-hooks */
 import React, {useState} from "react";
 import CloseIcon from "@mui/icons-material/Close";
 import {Link} from "react-router-dom";
 import {useGlobalPage} from "../../context/Page";
-import {useQuery} from "@tanstack/react-query";
+import {useMutation, useQuery, useQueryClient} from "@tanstack/react-query";
 import customFetch from "../../utils/url";
 import {useGlobalContextAuth} from "../../context/AuthContext";
 import {useTranslation} from "react-i18next";
 import {usePostsData} from "../../context/PostsDataContext";
 import "./profileInfo.scss";
 import {useEffect} from "react";
+import { ToastContainer, toast } from "react-toastify";
 
 function ProfileInfo() {
   const [followerModal, setFollowerModal] = useState(false);
   const [followingModal, setFollowingModal] = useState(false);
+  const queryClient = useQueryClient();
   const {page, limit} = useGlobalPage();
   const [t, i18] = useTranslation("global");
   const {currentUser} = useGlobalContextAuth();
   const {postsData} = usePostsData();
   const url = window.location.pathname.split("/");
   const userID = url[url.length - 2];
+
+  const getLikeFromLS = () => localStorage.getItem("follow") || false;
+  const [followed, setFollowed] = useState(Boolean(getLikeFromLS()));
 
   useEffect(() => {
     if (postsData) {
@@ -69,6 +75,39 @@ function ProfileInfo() {
       throw new Error("Error fetching post data");
     }
   };
+
+  
+  const {mutate: followUser, data: followData} = useMutation({
+    mutationFn: (data) => customFetch.post('/users/follow', data),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["followingData"] });
+      localStorage.setItem("follow", true)
+      setFollowed(true)
+    }
+  })
+
+  console.log(followData)
+
+  const handleFollowUser = (id) => {
+    followUser({
+      followed_user_id: id
+    })
+  }
+
+  const {mutate: unFollow, data: unFollowData} = useMutation({
+    mutationFn: (id) => customFetch.delete(`/users/follow/${id}`),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["followingData"] });
+      localStorage.removeItem("follow"),
+      setFollowed(false)
+    }
+  })
+
+  console.log(unFollowData)
+
+  const handleUnfollow = (id) => {
+    unFollow(id)
+  }
 
   const {
     data: followerData,
@@ -171,7 +210,12 @@ function ProfileInfo() {
             </>
           ) : (
             <>
-              <button className="editButton">{t("profile.follow")}</button>
+            {followed ? (
+               <button className="editButton" onClick={() => handleUnfollow(userID)} >Un Follow</button>
+            ):(
+               <button className="editButton" onClick={() => handleFollowUser(userID)} >{t("profile.follow")}</button>
+            )}
+              
               <button className="editButton">{t("profile.dm")}</button>
             </>
           )}

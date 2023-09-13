@@ -6,14 +6,17 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { useForm } from "react-hook-form";
 import { resetPasswordSchema, userSchema } from "../../utils/rules";
 // import InputForm from "../../components/input/inputForm";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import InputPassword from "../../components/input/inputPassword";
 import { omit } from "lodash";
 import { useMutation } from "@tanstack/react-query";
 import customFetch from "../../utils/url";
-import { toast } from "react-toastify";
+import { ToastContainer, toast } from "react-toastify";
+import { useTranslation } from "react-i18next";
 export default function ResetPass() {
   const location = useLocation()
+  const [t, i18] = useTranslation("global");
+  const navigate = useNavigate()
   // console.log(location.state)
   const {
     handleSubmit,
@@ -34,6 +37,9 @@ export default function ResetPass() {
     }),
     onSuccess: (data) => {
       toast.success(t("auth.Login"));
+      setTimeout(() => {
+        navigate('/login')
+      }, 1000) 
     }
   })
 
@@ -44,6 +50,18 @@ export default function ResetPass() {
   };
   return (
     <div className="resetForm">
+      <ToastContainer
+        position="top-center"
+        autoClose={5000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="light"
+      />
       <div className="container">
         <div className="item">
           <div className="logo">

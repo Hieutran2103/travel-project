@@ -135,7 +135,7 @@ const LeftBar = () => {
               />
 
               <a
-                href={`/profile/${currentUser._id}/posts`}
+                href={`/profile/${currentUser?._id}/posts`}
                 style={{textDecoration: "none", color: "inherit"}}
               >
                 <span>{t("leftBar.profile")}</span>

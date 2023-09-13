@@ -10,24 +10,6 @@ import customFetch from "../../utils/url";
 import { toast } from "react-toastify";
 import { useState } from "react";
 
-// const scheme = yup.object({
-//   old_password: yup
-//     .string()
-//     .required("old_password is required")
-//     .min(5, "Do dai ky tu 5-15")
-//     .max(15, "Do dai ky tu 5-15"),
-//   password: yup
-//     .string()
-//     .required("password is required")
-//     .min(5, "Do dai ky tu 5-15")
-//     .max(15, "Do dai ky tu 5-15"),
-//   confirm_password: yup
-//     .string()
-//     .required("confirm_password is required lew")
-//     .min(5, "Do dai ky tu 5-15")
-//     .max(15, "Do dai ky tu 5-15")
-//     .oneOf([yup.ref("password")], "nhap lai mk chua khop"),
-// });
 const SettingPass = () => {
   const location = useLocation();
   console.log(location.state);
@@ -37,6 +19,7 @@ const SettingPass = () => {
     register,
     handleSubmit,
     formState: { errors },
+    reset
   } = useForm({
     defaultValues: {
       old_password: "",
@@ -59,6 +42,7 @@ const SettingPass = () => {
   });
   const formSubmit = (data) => {
     settingPassword.mutate(data);
+    reset()
   };
   return (
     <>
